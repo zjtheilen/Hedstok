@@ -1,18 +1,131 @@
 {
     "listings": [
-        "so this guy said his dad has a guitar that was passed down from HIS father. he doesn't know how old or the manufacturer, but it can't be any younger than 1970. Acoustic, unsure if it has electronics. Thinks manufacturer's name MIGHT start with 'M'. His father doesn't know anything about guitars, but he was told by HIS father to never sell this guitar, it's too personal.",
-        "from craigslist: fender. 1992. ssh strat. off-brand active pickups installed (original pickups included). setup for mammoth heavy gauge strings. locking nut installed. small signs of rust on bridge.",
-        "squier stratocaster and 10 watt amp. xmas present but mostly lived in my closet. [image shows bad angle and fuzzy quality - two strings are broken]",
-        "rickenbacker 12-string. 2006. all original parts. brand new strings (light-medium). for sale ($2000) or open to trade + cash for tube-amps or high-gain solid state stacks.",
-        "my dad's guitar. he was a session player and this particular guitar (and his playing) is featured on a few late 80's metal albums, including Reign in Blood (1986) and Master of Puppets (1986). Jackson, active pickups, buckle scuffs from Kirk Hammet",
-        "really old guitar. ugly goldish color and black plastic. really heavy. it says gibbons or gibson or something on the top. been in my garage as long as i can remember. needs to go.",
-        "3/4 size KAY guitar. acoustic.",
-        "my dad's guitar. has four thick strings. kind of long. says fender and it also says precision. there is also a ampeg b-15 amp that i can sell as well. make an offer.",
-        "large collection of instruments. sell and trade. my inventory typically contains late 60s to early 90s single coil guitars, but i also have soapbar and p90 equipped classics as well. willing to make deals if long term business is potential",
-        "squier electric guitar sonic stratocaster 2025. $250",
-        "1958 les paul $4000 [image is of a kid-size stratocaster style guitar]",
-        "1950s Harmony Broadway Archtop Acoustic Guitar - $695 (Morongo Valley) - Offering the 1950s Harmony Broadway guitar shown, model H954, Made in U.S.A. ! It comes complete with the original pickguard and a period correct guitar 'strap' in its original chipboard case. It features cream body binding at the bottom edge and appealing checkerboard binding at the top edge. Nice guitar and a great, affordable addition to any collection of vintage guitars.",
-        "New Classic Singlecut Acoustic Guitar - $150 (Morongo Valley) - Offering the classic acoustic guitar pictured, new in gig bag. Well built acoustic guitar featuring a solid spruce top, mahogany back and sides mated with a mahogany neck with a 19 fret rosewood fretboard. Sounds as beautiful as it looks !!",
-        "Fender HotShot Telecaster in AS NEW MINT condition - $1,350 (La Quinta) - UP for sale is this NEW Series Fender HotShot Telecaster in MINT condition. Tele and Strat in one guitar! Sounds great!"
+      {
+        "id": "listing-01",
+        "expected_signals": [
+          "multi-generation provenance",
+          "unknown age and manufacturer",
+          "strong personal significance",
+          "explicit instruction never to sell",
+          "potentially identifiable manufacturer clue"
+        ]
+      },
+      {
+        "id": "listing-02",
+        "expected_signals": [
+          "significant modifications",
+          "original pickups retained",
+          "specialized setup for heavy strings",
+          "locking nut modification",
+          "minor corrosion"
+        ]
+      },
+      {
+        "id": "listing-03",
+        "expected_signals": [
+          "neglected instrument",
+          "image provides additional evidence",
+          "broken strings"
+        ]
+      },
+      {
+        "id": "listing-04",
+        "expected_signals": [
+          "all-original claim",
+          "seller has a specific trade motivation",
+          "trade interest in tube amps or high-gain stacks"
+        ]
+      },
+      {
+        "id": "listing-05",
+        "expected_signals": [
+          "claimed professional provenance",
+          "claimed recording history",
+          "specific association with notable metal recordings",
+          "claimed association with Kirk Hammett"
+        ]
+      },
+      {
+        "id": "listing-06",
+        "expected_signals": [
+          "uncertain instrument identification",
+          "possible Gibson identification",
+          "claimed long-term ownership history",
+          "low-information description",
+          "seller is motivated to dispose of the instrument"
+        ]
+      },
+      {
+        "id": "listing-07",
+        "expected_signals": [
+          "ordinary identifiable instrument",
+          "no obvious unusual acquisition signal"
+        ]
+      },
+      {
+        "id": "listing-08",
+        "expected_signals": [
+          "seller appears uncertain about instrument terminology",
+          "possible Fender Precision bass",
+          "additional equipment included or available",
+          "Ampeg B-15 association",
+          "seller is asking for an offer"
+        ]
+      },
+      {
+        "id": "listing-09",
+        "expected_signals": [
+          "large instrument collection",
+          "historical instrument concentration",
+          "multiple pickup types represented",
+          "seller explicitly values long-term business relationships"
+        ]
+      },
+      {
+        "id": "listing-10",
+        "expected_signals": [
+          "ordinary current-production instrument",
+          "explicit model and year",
+          "no obvious unusual acquisition signal"
+        ]
+      },
+      {
+        "id": "listing-11",
+        "expected_signals": [
+          "strong text-image contradiction",
+          "claimed 1958 Les Paul",
+          "image appears inconsistent with claimed instrument",
+          "potential misidentification or misrepresentation"
+        ]
+      },
+      {
+        "id": "listing-12",
+        "expected_signals": [
+            "specific vintage identification",
+            "model H954 identification",
+            "Made in U.S.A. claim",
+            "original pickguard",
+            "period-correct strap",
+            "original chipboard case",
+            "vintage-specific binding details"
+        ]
+      },
+      {
+        "id": "listing-13",
+        "expected_signals": [
+          "ordinary modern acoustic",
+          "specific construction details",
+          "no obvious unusual acquisition signal"
+        ]
+      },
+      {
+        "id": "listing-14",
+        "expected_signals": [
+          "potentially nonstandard model identification",
+          "conflicting new/mint terminology",
+          "unusual 'Tele and Strat in one' description",
+          "potential identification or marketing claim requiring verification"
+        ]
+      }
     ]
-}
+  }
