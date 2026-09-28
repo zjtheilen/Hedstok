@@ -157,17 +157,35 @@ AI may be used to interpret messy natural-language information, but it is not th
 
 Potential uses include:
 
-- extracting structured information from descriptions;
-- identifying claims;
-- identifying provenance;
-- recognizing uncertainty;
-- comparing related pieces of information;
-- identifying potentially contradictory information;
-- generating evidence-grounded explanations.
+* extracting structured information from descriptions;
+* identifying claims;
+* identifying provenance;
+* recognizing uncertainty;
+* comparing related pieces of information;
+* identifying potentially contradictory information;
+* generating evidence-grounded explanations.
 
 AI output should remain traceable to the source material.
 
 Hedstok should not use an LLM as an opaque "interestingness" oracle.
+
+### AI Extraction Finding
+
+Initial testing demonstrated that Gemini can convert unstructured listing text into structured observations containing:
+
+* a signal type;
+* a concise claim;
+* source text supporting the claim.
+
+The extraction prompt explicitly requires claims to remain source-grounded and prohibits fact-checking, inference, valuation, or other interpretation.
+
+Testing also showed that unconstrained extraction can introduce interpretation beyond the source, such as attempting to fact-check claims or characterize them as unsupported. The extraction boundary was therefore tightened so that verification and interpretation remain outside the AI extraction step.
+
+This establishes the current architectural boundary:
+
+> **AI extracts. Software reasons. Human evaluates.**
+
+The extraction output is intended to preserve the distinction between what a listing claims and what Hedstok may later determine through deterministic analysis or investigation.
 
 ---
 
