@@ -157,13 +157,13 @@ AI may be used to interpret messy natural-language information, but it is not th
 
 Potential uses include:
 
-* extracting structured information from descriptions;
-* identifying claims;
-* identifying provenance;
-* recognizing uncertainty;
-* comparing related pieces of information;
-* identifying potentially contradictory information;
-* generating evidence-grounded explanations.
+- extracting structured information from descriptions;
+- identifying claims;
+- identifying provenance;
+- recognizing uncertainty;
+- comparing related pieces of information;
+- identifying potentially contradictory information;
+- generating evidence-grounded explanations.
 
 AI output should remain traceable to the source material.
 
@@ -173,19 +173,32 @@ Hedstok should not use an LLM as an opaque "interestingness" oracle.
 
 Initial testing demonstrated that Gemini can convert unstructured listing text into structured observations containing:
 
-* a signal type;
-* a concise claim;
-* source text supporting the claim.
+- a signal type;
+
+- a concise claim;
+
+- source text supporting the claim.
 
 The extraction prompt explicitly requires claims to remain source-grounded and prohibits fact-checking, inference, valuation, or other interpretation.
 
 Testing also showed that unconstrained extraction can introduce interpretation beyond the source, such as attempting to fact-check claims or characterize them as unsupported. The extraction boundary was therefore tightened so that verification and interpretation remain outside the AI extraction step.
 
+A full extraction run was then performed against all 14 Experiment 0 listings in a single request. The resulting observations were generally source-grounded and preserved important distinctions such as uncertain identification, provenance claims, seller context, image-derived observations, and potentially conflicting information.
+
+The extraction did not reproduce every signal represented in the separate evaluation dataset, and signal categories were sometimes broad or inconsistent. These results do not currently justify expanding the extraction schema. The extraction layer's purpose is to establish a faithful observation layer; it should not encode the discovery logic itself.
+
+The full run demonstrated that potentially interesting cases can be represented as combinations or relationships between extracted observations. Examples include:
+
+- conflicting text and image descriptions;
+- provenance combined with unusual historical claims;
+- uncertain identification combined with ownership history;
+- seller context combined with instrument characteristics.
+
 This establishes the current architectural boundary:
 
 > **AI extracts. Software reasons. Human evaluates.**
 
-The extraction output is intended to preserve the distinction between what a listing claims and what Hedstok may later determine through deterministic analysis or investigation.
+The extraction output is therefore considered sufficient to proceed to deterministic discovery analysis. Further refinement of the extraction stage should be driven by failures discovered during that analysis rather than by attempting to make the AI independently determine what is "interesting."
 
 ---
 
@@ -221,7 +234,7 @@ Did Hedstok overlook cases containing meaningful signals?
 
 ### Explanation quality
 
-Does the explanation describe *why* the candidate was surfaced rather than simply restating the listing?
+Does the explanation describe _why_ the candidate was surfaced rather than simply restating the listing?
 
 ### Hallucination
 
