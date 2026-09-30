@@ -200,6 +200,25 @@ This establishes the current architectural boundary:
 
 The extraction output is therefore considered sufficient to proceed to deterministic discovery analysis. Further refinement of the extraction stage should be driven by failures discovered during that analysis rather than by attempting to make the AI independently determine what is "interesting."
 
+### Deterministic Discovery Finding
+
+The initial deterministic discovery layer successfully surfaced several distinct relationship types from the frozen extraction baseline:
+
+- ownership history combined with uncertain identification;
+- ownership history combined with recording-history claims;
+- multiple modification or specialized-configuration signals;
+- conflicting instrument identification and image-based observations.
+
+The discovery layer deliberately operates on extracted observations rather than attempting to determine whether individual claims are true.
+
+Initial adversarial testing also identified a false-positive path in the modification rule. The rule initially treated unrelated uses of terms such as "pickup" and "setup" as evidence of modification. The rule was tightened to require stronger modification-oriented language, and the resulting behavior passed six targeted tests covering positive cases and plausible false positives.
+
+This establishes an important boundary for the discovery layer:
+
+> **Discovery rules must identify relationships between observations, not merely the presence of interesting-sounding words.**
+
+The current rules are intentionally narrow and experiment-specific. Generalization will be driven by observed failures rather than by attempting to anticipate a complete discovery taxonomy.
+
 ---
 
 ## 9. Evaluation

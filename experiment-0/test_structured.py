@@ -20,7 +20,7 @@ with open("experiment-0/input/listings.json") as file:
 
 listing = next(
     item for item in data["listings"]
-    if item["id"] == "listing-05"
+    if item["id"] == "listing-04"
 )
 
 client = genai.Client(

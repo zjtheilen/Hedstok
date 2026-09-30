@@ -62,6 +62,42 @@ def find_uncertain_identification(listing):
     return None
 
 
+def find_modification_cluster(listing):
+    signals = listing["signals"]
+
+    modification_terms = (
+        "aftermarket",
+        "off-brand",
+        "locking nut",
+        "heavy gauge",
+        "modified",
+        "modification",
+        "setup for",
+    )
+
+    modification_signals = [
+        signal
+        for signal in signals
+        if any(term in signal["claim"].lower() for term in modification_terms)
+    ]
+
+    if len(modification_signals) >= 2:
+        return {
+            "listing_id": listing["listing_id"],
+            "reason": (
+                "The listing contains multiple signals describing "
+                "modifications or specialized configuration."
+            ),
+            "signals": modification_signals,
+            "investigate": (
+                "Determine which modifications are present and "
+                "whether the original configuration is available."
+            ),
+        }
+
+    return None
+
+
 def find_contradictions(listing):
     signals = listing["signals"]
 
@@ -76,9 +112,7 @@ def find_contradictions(listing):
     ]
 
     image_signals = [
-        signal
-        for signal in signals
-        if "image" in signal["source_text"].lower()
+        signal for signal in signals if "image" in signal["source_text"].lower()
     ]
 
     if identity_signals and image_signals:
@@ -98,6 +132,49 @@ def find_contradictions(listing):
     return None
 
 
+def find_seller_motivation(listing):
+    signals = listing["signals"]
+
+    has_original_claim = any(
+        "original" in signal["claim"].lower() for signal in signals
+    )
+
+    motivation_signals = [
+        signal
+        for signal in signals
+        if any(
+            term in signal["claim"].lower()
+            for term in (
+                "trade",
+                "tube amp",
+                "high-gain",
+                "high gain",
+            )
+        )
+    ]
+
+    if has_original_claim and motivation_signals:
+        return {
+            "listing_id": listing["listing_id"],
+            "reason": (
+                "The listing combines an originality claim "
+                "with a specific seller trade motivation."
+            ),
+            "signals": [
+                signal
+                for signal in signals
+                if signal in motivation_signals or "original" in signal["claim"].lower()
+            ],
+            "investigate": (
+                "Determine what the seller wants in trade and "
+                "whether the instrument's original configuration "
+                "can be verified."
+            ),
+        }
+
+    return None
+
+
 def discover(extractions):
     discoveries = []
 
@@ -105,6 +182,8 @@ def discover(extractions):
         for rule in (
             find_provenance_clusters,
             find_uncertain_identification,
+            find_modification_cluster,
+            find_seller_motivation,
             find_contradictions,
         ):
             discovery = rule(listing)
@@ -115,9 +194,10 @@ def discover(extractions):
     return discoveries
 
 
-with open("experiment-0/output/extraction-baseline.json") as file:
-    extractions = json.load(file)
+if __name__ == "__main__":
+    with open("experiment-0/output/extraction-baseline.json") as file:
+        extractions = json.load(file)
 
-results = discover(extractions)
+    results = discover(extractions)
 
-print(json.dumps(results, indent=2))
+    print(json.dumps(results, indent=2))
