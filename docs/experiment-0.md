@@ -341,7 +341,7 @@ The fixture contains three representative cases:
 
 | Listing      | Expected behavior                    | Observed behavior                                                          |
 | ------------ | ------------------------------------ | -------------------------------------------------------------------------- |
-| `listing-08` | Identity + configuration convergence | Convergence discovery produced                                             |
+| `listing-08` | Identity + configuration convergence | Identity + configuration convergence discovery produced                    |
 | `listing-06` | Uncertain identity                   | Uncertain-identity discovery produced; convergence discovery also produced |
 | `listing-03` | Intentional non-discovery            | No discovery produced                                                      |
 
@@ -476,7 +476,7 @@ These findings indicate that "interesting" cannot yet be represented as a single
 
 Experiment 0 established that Hedstok can separate AI-assisted evidence extraction from deterministic discovery reasoning, and that a semantic evidence schema can express at least some useful relationships between observations.
 
-Experiment 1 will test whether this architecture can evaluate whether this architecture can produce useful investigation candidates from the same set of messy listings.
+Experiment 1 will test whether this architecture can produce useful investigation candidates from the same set of messy listings.
 
 The central question is:
 
@@ -619,6 +619,66 @@ The revised extraction has demonstrated that the evidence needed to explore thes
 This finding also reinforces the separation established earlier in the experiment:
 
 > **AI extracts evidence. Deterministic logic reasons about relationships. Human judgment determines whether the resulting candidate is worth investigating.**
+
+### Experiment 1 — Relationship Audit
+
+The human audit of the initial discovery candidates was used to determine whether the current discovery model could describe the relationships that made listings worth investigating.
+
+The audit showed that the existing `identity + configuration` rule primarily detected evidence-domain co-occurrence rather than meaningful relationships between evidence. The nine resulting candidates therefore provided a useful test set for identifying relationship patterns without adding additional fixture-specific discovery rules.
+
+#### Working Relationship Definitions
+
+The audit identified the following relationship concepts:
+
+- **Convergence** — multiple distinct pieces of evidence point toward the same underlying possibility or meaning, reducing the range of plausible interpretations.
+- **Association** — evidence establishes a meaningful relationship between the instrument and another entity, such as associated equipment, a person, recording, collection, or seller context.
+- **Historical Association** — evidence connects an instrument to a person, event, work, or historical context beyond ordinary ownership history.
+- **Contradiction** — two or more pieces of evidence make materially incompatible claims about the same aspect of an instrument or listing.
+- **Distinctiveness** — evidence indicates an unusual, uncommon, or otherwise notable characteristic or configuration relative to an appropriate reference context.
+
+These relationships are not mutually exclusive. A listing may contain multiple relationships simultaneously.
+
+The relationship definitions describe the structure of the evidence. They do not determine whether a relationship is significant, valuable, desirable, or sufficient to justify acquisition. Those judgments remain downstream of relationship detection.
+
+#### Relationship Audit Results
+
+The nine initial discovery candidates were evaluated against the working relationship definitions:
+
+| Listing | Observed relationship(s)                          | Finding                                                                                                                                                                              |
+| ------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 01      | Historical association                            | Multi-generational ownership provides meaningful historical context, but the evidence does not clearly represent convergence.                                                        |
+| 02      | No clean relationship                             | The listing contains meaningful modification and upgrade history that may warrant a distinct evidence domain.                                                                        |
+| 05      | Historical association; Association               | The claimed session-player and recording history creates historical association, while the claimed connection to a musician creates an additional association.                       |
+| 06      | Convergence                                       | Multiple distinct clues narrow toward the possibility of an older Gibson/Les Paul-type instrument.                                                                                   |
+| 08      | Convergence; Association                          | Identity and physical clues reinforce an interpretation while associated equipment creates a separate relationship.                                                                  |
+| 11      | Contradiction                                     | Textual and image evidence make materially incompatible identity claims.                                                                                                             |
+| 12      | Association; possible market-context relationship | Original and period-associated equipment contributes evidence, while the significance of the asking price requires external market knowledge.                                        |
+| 13      | No meaningful relationship                        | The instrument and gig bag are associated, but the relationship does not provide a meaningful acquisition signal by itself.                                                          |
+| 14      | Distinctiveness                                   | The claimed Telecaster/Stratocaster combination provides a potentially distinctive configuration, but establishing actual distinctiveness requires an appropriate reference context. |
+
+The audit demonstrates that useful discovery cannot be represented by a single relationship type. Different candidates become interesting for different structural reasons, and multiple relationships may apply to the same listing.
+
+#### Evidence Structure Is Not Significance
+
+A central finding of the relationship audit is:
+
+> **Relationships describe how evidence is connected. They do not determine whether that connection is significant.**
+
+For example, an instrument may have associated equipment such as an included gig bag, but the existence of that association does not necessarily make the listing interesting. Another instrument may be associated with an Ampeg B-15, which a domain expert may consider more significant. The relationship detector should represent the association without independently deciding its value.
+
+Similarly, contradiction should identify evidence that requires reconciliation rather than automatically rejecting a listing. A textual claim that conflicts with image evidence may indicate an error, unusual instrument, mislabeled image, or other explanation that requires human investigation.
+
+This reinforces the architectural boundary:
+
+```text
+evidence extraction
+        ↓
+relationship detection
+        ↓
+investigation candidate and explanation
+        ↓
+human judgment
+```
 
 ---
 
