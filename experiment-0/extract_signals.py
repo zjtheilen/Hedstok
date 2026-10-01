@@ -1,9 +1,12 @@
 import json
 from typing import Literal
 
+from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from pydantic import BaseModel
+
+load_dotenv()
 
 
 class Signal(BaseModel):
