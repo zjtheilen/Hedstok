@@ -198,7 +198,51 @@ This establishes the current architectural boundary:
 
 > **AI extracts. Software reasons. Human evaluates.**
 
-The extraction output is therefore considered sufficient to proceed to deterministic discovery analysis. Further refinement of the extraction stage should be driven by failures discovered during that analysis rather than by attempting to make the AI independently determine what is "interesting."
+The frozen extraction output was considered sufficient to proceed to deterministic discovery analysis. Evaluation of that output identified both discovery failures and limitations in the organization of extracted observations. These findings motivated a targeted revision of the extraction schema rather than an attempt to make the AI independently determine what is "interesting."
+
+The original extraction baseline remains preserved as an experimental reference point. The revised schema represents the next extraction iteration and should be evaluated against the discovery failures identified during Experiment 0 rather than treated as an assumption that the revised categories are universally correct.
+
+### Semantic Extraction Schema Finding
+
+The initial extraction vocabulary used several narrowly defined categories, including separate categories for brand, ownership history, recording history, electronics, and miscellaneous information.
+
+The evaluation showed that these categories were inconsistent in granularity. Some represented semantic domains, while others represented specific attributes or implementation details. This made it difficult to reason consistently about relationships between observations.
+
+The extraction schema was therefore revised to use a smaller set of semantic evidence categories:
+
+- `identity` — manufacturer, model, instrument type, or other evidence about what the instrument is or may be;
+- `configuration` — physical, electronic, hardware, construction, or unusual configuration characteristics;
+- `story` — human history, ownership, personal significance, previous players, recordings, use, or other narrative associated with the instrument;
+- `associated_equipment` — amplifiers, accessories, or other equipment connected to the listing or instrument;
+- `seller_context` — seller inventory, collection, selling or trading motivation, or business context;
+- `condition` — physical condition, damage, wear, or originality;
+- `market_context` — price, date, trade terms, or other listing or market context.
+
+Uncertainty is treated as a property of an observation rather than as a separate semantic category.
+
+This creates a deliberate distinction between **what an observation is about** and **how that observation relates to other observations**.
+
+For example:
+
+> `identity + configuration`
+
+is a relationship that can be evaluated by the deterministic discovery layer. It is not itself an extraction category.
+
+Similarly, contradiction and convergence are relationships between observations rather than properties that the extraction model must independently classify.
+
+The revised schema intentionally does not introduce subtypes beneath categories such as `story`. For example, ownership history and recording history are both represented as `story` observations rather than creating a premature taxonomy of story types.
+
+This creates a temporary limitation for existing discovery rules that depended on those distinctions. That limitation is intentional. The experiment should not expand the extraction taxonomy solely to preserve previously implemented rules.
+
+The schema should become more specific only when an observed discovery failure demonstrates that the additional distinction is necessary.
+
+The resulting architectural boundary is:
+
+> **AI classifies evidence semantically. Discovery reasons about relationships between evidence.**
+
+This preserves the principle:
+
+> **AI extracts. Software reasons. Human evaluates.**
 
 ### Deterministic Discovery Finding
 
@@ -218,6 +262,55 @@ This establishes an important boundary for the discovery layer:
 > **Discovery rules must identify relationships between observations, not merely the presence of interesting-sounding words.**
 
 The current rules are intentionally narrow and experiment-specific. Generalization will be driven by observed failures rather than by attempting to anticipate a complete discovery taxonomy.
+
+### Discovery Schema Boundary
+
+The revised extraction schema changes the appropriate unit of deterministic discovery from individual signal keywords or narrowly defined signal types toward relationships between semantic evidence categories.
+
+The first relationship implemented under this model is **identity + configuration convergence**.
+
+The rule does not require knowledge of specific manufacturers, models, instrument types, or configuration terminology. It only requires the presence of both identity evidence and configuration evidence. The rule therefore tests whether semantic classification by the extraction layer can enable deterministic relationship analysis without transferring the judgment of "interestingness" to the AI.
+
+This approach also exposes a boundary in the existing discovery rules. Some earlier rules depended on distinctions that are no longer represented as separate extraction categories. For example, the previous provenance rule distinguished ownership history from recording history, while both are now represented as `story`.
+
+Rather than restoring those distinctions as subtypes, such rules should be considered candidates for redesign or deferral. Their future implementation should be driven by an observed need for the distinction, not by a requirement to preserve the original rule structure.
+
+This establishes a broader design principle:
+
+> **Discovery rules should operate on relationships that the evidence schema can express meaningfully. The extraction schema should not grow solely to accommodate a pre-existing rule.**
+
+The identity/configuration convergence rule passed four targeted tests covering:
+
+- positive identity + configuration convergence;
+- identity without configuration;
+- configuration without identity;
+- identity combined with unrelated evidence.
+
+This demonstrates the relationship in isolation without yet establishing that the relationship itself represents a useful acquisition opportunity. Human evaluation remains responsible for that determination.
+
+### Schema Decision
+
+Experiment 0 will treat signal categories as **semantic evidence domains**, not as a taxonomy of every possible fact that may appear in a listing.
+
+The current categories are:
+
+- `identity`
+- `configuration`
+- `story`
+- `associated_equipment`
+- `seller_context`
+- `condition`
+- `market_context`
+
+Discovery rules may combine these categories to identify relationships worth presenting for human evaluation.
+
+The experiment will not introduce additional signal subtypes solely to preserve an existing discovery rule. If a discovery failure demonstrates that a distinction within one category is necessary, that need will be documented as an observed requirement and evaluated before expanding the schema.
+
+This means that some earlier discovery rules may be retired, redesigned, or deferred when their original distinctions cannot be expressed meaningfully by the revised evidence model.
+
+This is intentional.
+
+> **The evidence schema should describe what the system observed. Discovery rules should describe relationships the system can reason about.**
 
 ---
 
@@ -275,7 +368,72 @@ A technically impressive implementation that does not produce useful discoveries
 
 ---
 
-## 11. Non-Goals
+## 11. Sample Listing Evaluations
+
+[Samples](../experiment-0/output/extraction-baseline.json)
+
+1. listing-03
+    - Classification: intentional non-discovery
+    - Reason: Signals describe an ordinary beginner-oriented package with minor condition issues, but do not indicate an acquisition opportunity worth investigating.
+    - Implication: Unusual or negative condition signals should not automatically become discoveries. Discovery requires a meaningful acquisition relationship, not merely something notable about a listing.
+
+2. listing-04
+    - Classification: extraction failure
+    - Reason: The source listing includes a specific seller trade motivation (tube/high-gain amplifiers) that was not preserved in the frozen extraction. The extracted signals identify a Rickenbacker 12-string, its 2006 date, an all-original claim, and new strings, but do not preserve the seller's motivation.
+    - Implication: Potential discoveries can be lost when extraction omits contextual signals that become meaningful only in combination with instrument characteristics and seller intent.
+
+3. listing-07
+    - Classification: domain-context candidate
+    - Reason: The extraction identifies a 3/4-size KAY acoustic, but the potential acquisition significance depends on information not contained in the listing itself, including the historical context of the KAY brand and the relative rarity or utility of the 3/4-size configuration.
+    - Implication: Some potentially interesting opportunities cannot be identified from listing evidence alone and may require external domain knowledge. This should remain distinct from extraction failure and deterministic discovery failure.
+
+4. listing-08
+    - Classification: discovery failure
+    - Reason: The extracted signals contain enough information to identify a potentially interesting instrument relationship: an uncertain Fender/Precision identification is supported by physical characteristics consistent with a bass, while an Ampeg B-15 is also available. The discovery layer does not currently connect these signals.
+    - Implication: Discovery may require relationships between instrument-identification clues, physical characteristics, provenance, and associated equipment. Basses are currently treated as part of Hedstok's guitar acquisition domain.
+
+5. listing-09
+    - Classification: discovery failure
+    - Reason: The extracted signals describe a seller with a collection spanning late-1960s through early-1990s instruments, including multiple pickup configurations. These signals provide enough evidence to identify a potentially interesting collection-level opportunity, but the discovery layer does not currently reason about seller inventory or historical concentration.
+    - Implication: Opportunities may exist at the seller or collection level rather than within a single instrument. Seller inventory characteristics and relationship context can be relevant discovery signals.
+
+6. listing-10
+    - Classification: external-context-dependent candidate
+    - Reason: The listing identifies a recent Squier Sonic Stratocaster at $250. Domain knowledge suggests the asking price may be substantially above the instrument's typical market level, but the listing itself does not provide enough evidence to establish that.
+    - Implication: Price anomalies may be useful acquisition signals, but identifying them requires external market context rather than listing evidence alone.
+
+7. listing-12
+    - Classification: discovery failure
+    - Reason: The extracted signals provide a detailed identification of a 1950s Harmony Broadway H954, including its U.S. manufacture, original pickguard, period-correct strap, original chipboard case, and specific binding details. This combination provides substantial evidence of a historically specific and potentially desirable instrument, but the discovery layer does not currently recognize dense vintage-identification and originality relationships.
+    - Implication: Detailed combinations of model identification, manufacturing history, original or period-appropriate accessories, and construction details may represent acquisition opportunities even when no single extracted signal is sufficient on its own.
+
+8. listing-13
+    - Classification: investigation candidate
+    - Reason: The listing provides specific construction details, including a solid spruce top and mahogany back, sides, and neck, but does not identify a manufacturer. Combined with the $150 asking price, the incomplete manufacturer information creates enough uncertainty to warrant further investigation.
+    - Implication: Missing identity information can itself be useful when a listing contains unusually specific characteristics that may justify verifying the instrument's manufacturer, construction, and market context.
+
+9. listing-14
+    - Classification: investigation candidate
+    - Reason: The listing describes an unusual Telecaster/Stratocaster hybrid configuration and specifically characterizes the instrument as combining elements of both designs. The unusual configuration alone makes the listing worth investigating, while the lack of date information leaves an important identification detail unresolved.
+    - Implication: Unusual instrument configurations can be acquisition signals in their own right. Identification gaps may increase the value of investigating an otherwise well-described instrument.
+
+### Evaluation Finding
+
+The sample audit identified multiple distinct sources of acquisition interest:
+
+- relationships between extracted observations;
+- contradictions or unresolved identification;
+- seller and collection context;
+- unusual instrument configurations;
+- domain knowledge not contained in the listing;
+- external market context;
+- information that warrants investigation without yet establishing a specific discovery rule.
+
+These findings indicate that "interesting" cannot yet be represented as a single deterministic signal or score. The next discovery iteration should address observed failure modes selectively rather than attempting to define a complete taxonomy of acquisition opportunities.
+
+---
+
+## 12. Non-Goals
 
 Experiment 0 will not attempt to build:
 
@@ -296,7 +454,7 @@ These may be considered only if the experiment demonstrates that the underlying 
 
 ---
 
-## 12. Guiding Principle
+## 13. Guiding Principle
 
 > **The experiment should earn the right to become a product.**
 

@@ -98,6 +98,31 @@ def find_modification_cluster(listing):
     return None
 
 
+def find_identity_configuration_convergence(listing):
+    signals = listing["signals"]
+    signal_types = {signal["type"] for signal in signals}
+
+    if {"identity", "configuration"} <= signal_types:
+        return {
+            "listing_id": listing["listing_id"],
+            "reason": (
+                "The listing combines instrument-identification evidence "
+                "with configuration evidence."
+            ),
+            "signals": [
+                signal
+                for signal in signals
+                if signal["type"] in {"identity", "configuration"}
+            ],
+            "investigate": (
+                "Verify the instrument's identity and determine whether "
+                "the configuration is consistent with that identification."
+            ),
+        }
+
+    return None
+
+
 def find_contradictions(listing):
     signals = listing["signals"]
 
@@ -182,6 +207,7 @@ def discover(extractions):
         for rule in (
             find_provenance_clusters,
             find_uncertain_identification,
+            find_identity_configuration_convergence,
             find_modification_cluster,
             find_seller_motivation,
             find_contradictions,

@@ -1,4 +1,5 @@
 import json
+from typing import Literal
 
 from google import genai
 from google.genai import types
@@ -6,7 +7,15 @@ from pydantic import BaseModel
 
 
 class Signal(BaseModel):
-    type: str
+    type: Literal[
+        "identity",
+        "configuration",
+        "story",
+        "associated_equipment",
+        "seller_context",
+        "condition",
+        "market_context",
+    ]
     claim: str
     source_text: str
 
@@ -50,10 +59,27 @@ STRICT RULES:
 - Include every listing, even if it has no unusual signals.
 
 For each signal provide:
-- type: a short category such as ownership_history, recording_history,
-  brand, electronics, condition, or other
+- type: exactly one of:
+  identity, configuration, story, associated_equipment,
+  seller_context, condition, or market_context
 - claim: a concise restatement of exactly what the listing claims
 - source_text: the exact text from the listing supporting that claim
+
+Use these semantic categories:
+- identity: manufacturer, model, instrument type, or other evidence
+  about what the instrument is or may be
+- configuration: physical, electronic, hardware, construction, or
+  unusual configuration characteristics
+- story: human history, ownership, personal significance, previous
+  players, recordings, use, or other narrative associated with the
+  instrument
+- associated_equipment: amps, accessories, or other equipment
+  connected to the listing or instrument
+- seller_context: seller inventory, collection, selling/trading
+  motivation, or business context
+- condition: physical condition, damage, wear, or originality
+- market_context: price, date, trade terms, or other listing/market
+  context
 
 LISTINGS:
 
