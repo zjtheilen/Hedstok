@@ -312,6 +312,25 @@ This is intentional.
 
 > **The evidence schema should describe what the system observed. Discovery rules should describe relationships the system can reason about.**
 
+### Discovery Rule Audit
+
+The original deterministic discovery rules were reviewed against the revised semantic evidence schema. The audit distinguishes between discovery concepts that remain useful, rules that require redesign, and rules that should be deferred rather than preserved solely for compatibility with the previous schema.
+
+| Original rule                             | Decision | Rationale                                                                                                                                                                                                                                                                       |
+| ----------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `find_provenance_clusters`                | Defer    | The rule depended on distinguishing ownership history from recording history. Both are now represented as `story`, and the experiment has not demonstrated that story subtypes are necessary.                                                                                   |
+| `find_uncertain_identification`           | Redesign | Uncertain instrument identity remains an observed investigation signal, but ownership history is not inherently required for the relationship. The revised rule should operate on uncertain `identity` evidence.                                                                |
+| `find_modification_cluster`               | Defer    | The original implementation relies on keyword matching across heterogeneous signal types. The revised schema represents these observations as `configuration`, but the experiment has not established a sufficiently general `configuration + configuration` relationship.      |
+| `find_identity_configuration_convergence` | Keep     | This is the first discovery rule implemented directly against the revised semantic schema. It demonstrates a relationship between `identity` and `configuration` evidence without requiring domain-specific vocabulary in the deterministic layer.                              |
+| `find_seller_motivation`                  | Defer    | The evaluation of listing-04 identified an extraction omission rather than a demonstrated discovery failure. Seller motivation is now represented as `seller_context`, but a useful relationship involving seller context has not yet been established.                         |
+| `find_contradictions`                     | Redesign | Contradiction remains a meaningful discovery relationship, but the current implementation is tied to listing-specific terminology and implicit image-source conventions. Contradiction should remain a relationship between evidence rather than become an extraction category. |
+
+The audit establishes that previously implemented discovery rules are experimental hypotheses, not architectural commitments. A rule may be retired, redesigned, or deferred when the revised evidence model no longer expresses its original assumptions meaningfully.
+
+The active discovery layer should therefore remain small and evidence-driven. New rules should be introduced when observed evaluation failures establish a useful relationship that can be expressed by the current evidence model.
+
+> **Do not preserve a discovery rule merely because it already exists. Preserve the discovery concept only when the evidence supports the relationship.**
+
 ---
 
 ## 9. Evaluation
