@@ -572,6 +572,54 @@ Evidence that useful candidates consistently require external knowledge, increas
 
 > **The goal is not to make the experiment find more opportunities. The goal is to determine whether relationship-oriented evidence can produce useful opportunities without turning discovery into a collection of special cases.**
 
+### Experiment 1 — Initial Discovery Finding
+
+The first execution of the revised extraction and discovery pipeline was evaluated against the 14 synthetic listings using the revised semantic evidence schema.
+
+The revised extraction successfully represented the evidence domains identified during the Experiment 0 audit. The discovery layer then applied the existing `identity + configuration` relationship to the revised extraction.
+
+The relationship produced discoveries for nine listings:
+
+- `listing-01`
+- `listing-02`
+- `listing-05`
+- `listing-06`
+- `listing-08`
+- `listing-11`
+- `listing-12`
+- `listing-13`
+- `listing-14`
+
+Human evaluation found that seven of these were worth investigating, one was probably not worth investigating, and one was not worth investigating.
+
+The human evaluation did not, however, consider `identity + configuration` to be the underlying reason for most discoveries.
+
+| Listing      | Human evaluation                 | Primary evidence driving evaluation                                                                      |
+| ------------ | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `listing-01` | Worth investigating              | Potential age combined with multi-generation ownership history                                           |
+| `listing-02` | Worth investigating              | Age, unusual configuration, modifications, and condition                                                 |
+| `listing-05` | Worth investigating              | Musician-associated history and condition attributed to a known musician                                 |
+| `listing-06` | Worth investigating              | Uncertain identity combined with multiple physical clues and long-term storage history                   |
+| `listing-08` | Worth investigating              | Recognizable identity combined with physical clues and associated equipment                              |
+| `listing-11` | Not worth investigating          | Strong contradiction between the textual identity claim and image evidence                               |
+| `listing-12` | Worth investigating              | Age, specific identity, original features, associated equipment, and potentially favorable price context |
+| `listing-13` | Probably not worth investigating | Low price, unidentified/generic identity, and ordinary included equipment                                |
+| `listing-14` | Worth investigating              | Specific identity and unusual configuration                                                              |
+
+This evaluation demonstrates that the current `identity + configuration` discovery rule functions primarily as a **category co-occurrence detector**. It identifies listings containing evidence from both domains, but it does not yet distinguish between different relationships those evidence domains may have.
+
+For example, `listing-08` contains identity, configuration, and associated-equipment evidence that may form a useful acquisition relationship. `listing-11` contains identity and configuration evidence that appear contradictory rather than convergent. `listing-12` contains identity, originality, accessory, and configuration evidence whose combined significance depends partly on external domain knowledge. `listing-13` demonstrates that detailed configuration evidence can coexist with identity evidence without creating a useful investigation candidate.
+
+The result therefore does not justify adding a collection of new rules to reproduce the human evaluations. Instead, it establishes a more specific experimental requirement:
+
+> **Discovery must distinguish meaningful relationships between evidence from simple co-occurrence of evidence categories.**
+
+The revised extraction has demonstrated that the evidence needed to explore these relationships can be represented without requiring the AI to determine interestingness. The next iteration should therefore investigate the structure and semantics of useful evidence relationships before expanding the discovery rule set.
+
+This finding also reinforces the separation established earlier in the experiment:
+
+> **AI extracts evidence. Deterministic logic reasons about relationships. Human judgment determines whether the resulting candidate is worth investigating.**
+
 ---
 
 ## 12. Non-Goals

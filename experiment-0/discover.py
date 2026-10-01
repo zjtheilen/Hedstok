@@ -77,7 +77,7 @@ def discover(extractions):
 
 
 if __name__ == "__main__":
-    with open("experiment-0/output/extraction-baseline.json") as file:
+    with open("experiment-0/output/extraction-revised.json") as file:
         extractions = json.load(file)
 
     results = discover(extractions)

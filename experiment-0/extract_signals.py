@@ -108,8 +108,7 @@ with open("experiment-0/input/listings.json") as file:
 
 results = extract_signals(data["listings"])
 
-for result in results:
-    print(json.dumps(
-        result.model_dump(),
-        indent=2
-    ))
+print(json.dumps(
+    [result.model_dump() for result in results],
+    indent=2
+))
