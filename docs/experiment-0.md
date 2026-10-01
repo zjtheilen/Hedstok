@@ -472,6 +472,106 @@ The sample audit identified multiple distinct sources of acquisition interest:
 
 These findings indicate that "interesting" cannot yet be represented as a single deterministic signal or score. The next discovery iteration should address observed failure modes selectively rather than attempting to define a complete taxonomy of acquisition opportunities.
 
+## Experiment 1 — Relationship Discovery Evaluation
+
+Experiment 0 established that Hedstok can separate AI-assisted evidence extraction from deterministic discovery reasoning, and that a semantic evidence schema can express at least some useful relationships between observations.
+
+Experiment 1 will test whether this architecture can evaluate whether this architecture can produce useful investigation candidates from the same set of messy listings.
+
+The central question is:
+
+> **Can Hedstok surface an investigation candidate because of a relationship between pieces of evidence that a conventional listing search would not naturally express?**
+
+### Objective
+
+Experiment 1 will evaluate the revised semantic extraction schema and a deliberately small set of relationship-oriented discovery hypotheses against the 14 synthetic listings used in Experiment 0.
+
+The experiment is not intended to maximize the number of discoveries.
+
+Instead, it will evaluate whether the system can:
+
+- extract relevant evidence into the revised semantic categories;
+- preserve source-grounded claims and uncertainty;
+- identify meaningful relationships between extracted evidence;
+- avoid producing discoveries from evidence that is merely notable but not useful;
+- explain each discovery through the evidence that caused it; and
+- produce candidates that a human evaluator considers worth investigating.
+
+### Evaluation Criteria
+
+Experiment 1 will evaluate four primary dimensions.
+
+#### Evidence quality
+
+Can the revised extraction represent the important observations identified during the Experiment 0 audit, particularly where the original schema limited discovery?
+
+#### Relationship coverage
+
+Can deterministic discovery identify useful candidates through relationships expressible in the revised evidence schema?
+
+#### Specificity
+
+Does discovery remain selective enough to avoid treating every unusual, damaged, cheap, or information-dense listing as an opportunity?
+
+Listing-03 remains an intentional non-discovery control.
+
+#### Human usefulness
+
+When a discovery is presented together with its supporting evidence, does the human evaluator consider it something worth investigating?
+
+This is the most important outcome of the experiment.
+
+### Initial Relationship Hypotheses
+
+Experiment 1 will begin with a deliberately small number of discovery relationships.
+
+The existing `identity + configuration` relationship provides the initial baseline.
+
+An additional hypothesis may examine relationships between `identity` and `associated_equipment`, motivated by the evidence observed in listing-08.
+
+Contradictory evidence will also be evaluated as a candidate relationship, but will not be implemented merely to reproduce the listing-11 fixture until a general evidence relationship can be defined.
+
+Other relationships will remain hypotheses until the experiment provides evidence that they are useful.
+
+### Controls
+
+Experiment 1 will retain the human-audited listings from Experiment 0 as evaluation cases rather than treating their previous classifications as implementation requirements.
+
+In particular:
+
+- listing-03 provides an intentional non-discovery control;
+- listing-08 provides a case in which multiple evidence domains may form a potentially useful relationship;
+- listing-11 provides a contradiction case;
+- listings-09 and other seller/context cases test whether useful evidence may exist beyond an individual instrument;
+- listings-12 through 14 provide cases involving information density, unusual configuration, and potential investigation value.
+
+The purpose of these cases is to evaluate the behavior of the system, not to encode predetermined outcomes as rules.
+
+### Experimental Boundary
+
+Experiment 1 will not attempt to solve:
+
+- comprehensive market valuation;
+- external instrument knowledge;
+- real-time marketplace ingestion;
+- seller reputation;
+- automated acquisition decisions;
+- collection-level modeling unless the experiment demonstrates that it is necessary;
+- a complete contradiction framework; or
+- a comprehensive taxonomy of discovery relationships.
+
+The experiment will continue to use the existing synthetic listing set.
+
+### Success and Failure
+
+Experiment 1 should be considered informative whether the results are positive or negative.
+
+Evidence that the revised extraction and relationship model produces useful, explainable candidates without excessive rule-specific logic would support continuing the architecture.
+
+Evidence that useful candidates consistently require external knowledge, increasingly specific domain rules, or discovery logic that cannot be expressed cleanly through the semantic evidence model would instead identify a boundary or weakness in the current approach.
+
+> **The goal is not to make the experiment find more opportunities. The goal is to determine whether relationship-oriented evidence can produce useful opportunities without turning discovery into a collection of special cases.**
+
 ---
 
 ## 12. Non-Goals
