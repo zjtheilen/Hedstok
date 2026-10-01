@@ -331,6 +331,28 @@ The active discovery layer should therefore remain small and evidence-driven. Ne
 
 > **Do not preserve a discovery rule merely because it already exists. Preserve the discovery concept only when the evidence supports the relationship.**
 
+### Revised-Schema Fixture Evaluation
+
+Because the frozen extraction baseline uses the original signal schema, it cannot be passed directly to the revised discovery rules. A small hand-authored fixture was therefore created using the revised semantic schema.
+
+The fixture is a controlled evaluation artifact, not a replacement for AI extraction. Its purpose is to test discovery behavior against known evidence without requiring another live AI extraction.
+
+The fixture contains three representative cases:
+
+| Listing      | Expected behavior                    | Observed behavior                                                          |
+| ------------ | ------------------------------------ | -------------------------------------------------------------------------- |
+| `listing-08` | Identity + configuration convergence | Convergence discovery produced                                             |
+| `listing-06` | Uncertain identity                   | Uncertain-identity discovery produced; convergence discovery also produced |
+| `listing-03` | Intentional non-discovery            | No discovery produced                                                      |
+
+The results matched the intended behavior of the current discovery rules.
+
+The evaluation also exposed an architectural behavior: a listing may produce multiple discoveries when multiple independent rules apply. `listing-06` triggered both uncertain identification and identity + configuration convergence. No deduplication or merging mechanism is introduced at this stage.
+
+The fixture therefore validates the current discovery boundary without implying that the current rules are sufficient for the full experiment.
+
+> **The fixture validates discovery mechanics; it does not substitute for evaluating AI-generated extraction.**
+
 ---
 
 ## 9. Evaluation
