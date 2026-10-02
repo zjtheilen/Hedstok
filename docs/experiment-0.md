@@ -890,6 +890,8 @@ If the hypothesis is not supported, the result will still provide evidence about
 
 The first candidate relationship derivation run and its human evaluation are documented separately in `docs/experiment-1-2-audit.md`.
 
+The first Experiment 1.2 audit suggests that the five concepts may not constitute a homogeneous relationship vocabulary. Association, Historical Association, and Contradiction describe relationships between evidence, instruments, or entities; Convergence describes a pattern across multiple signals; and Distinctiveness describes a potentially investigation-worthy characteristic. This distinction corresponds with several observed classification and representation issues and should be evaluated before treating the five concepts as a single permanent relationship model.
+
 ---
 
 ## 12. Non-Goals
