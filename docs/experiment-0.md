@@ -763,6 +763,133 @@ This preserves the project's architectural principle:
 
 > **AI may propose meaning; deterministic analysis and human judgment determine what that meaning is allowed to become.**
 
+### Experiment 1.2 — Candidate Relationship Derivation
+
+The interpretation derivation experiment demonstrated that AI can synthesize multiple signals into useful descriptions, but also showed that free-form interpretation can introduce unsupported assumptions or simply restate relationships already implicit in the evidence.
+
+The next experiment narrows the task from general interpretation to **candidate relationship derivation**.
+
+#### Objective
+
+Determine whether AI can identify and describe candidate relationships between extracted signals when given:
+
+* a fixed vocabulary of experimental relationship types;
+* frozen, source-grounded signals as input;
+* explicit requirements to reference the supporting signals;
+* no outside knowledge or market context.
+
+The experiment does not attempt to determine whether a relationship is significant, valuable, rare, desirable, or sufficient to recommend acquisition.
+
+#### Relationship Vocabulary
+
+The experiment will use the following experimental relationship types:
+
+* **Convergence** — multiple distinct pieces of evidence point toward the same underlying possibility or meaning.
+* **Association** — evidence establishes a meaningful relationship between the instrument and another entity.
+* **Historical Association** — evidence connects the instrument to a person, event, work, or historical context beyond ordinary ownership.
+* **Contradiction** — two or more pieces of evidence make materially incompatible claims about the same aspect.
+* **Distinctiveness** — evidence indicates an unusual or potentially notable characteristic relative to an appropriate reference context.
+
+These relationship types describe the structure of the evidence. They do not establish significance, value, rarity, desirability, authenticity, or acquisition suitability.
+
+#### Experimental Input
+
+The experiment will use the revised extraction output as frozen input.
+
+The initial fixture set will include:
+
+* **Listing 01** — multi-generational ownership and personal significance
+* **Listing 02** — configuration modifications and retained original pickups
+* **Listing 03** — intentional non-discovery control
+* **Listing 05** — claimed recording history and musician association
+* **Listing 06** — uncertain identification with multiple potentially convergent clues
+* **Listing 08** — identity/configuration clues and associated equipment
+* **Listing 09** — collection and seller-context evidence
+* **Listing 11** — text/image identity contradiction
+* **Listing 12** — original components and associated case/accessories
+* **Listing 14** — claimed unusual instrument configuration
+
+Listings 04, 07, 10, and 13 are excluded from the initial fixture set because meaningful evaluation of some of their possible relationships depends more heavily on external domain or market context.
+
+#### Experimental Constraints
+
+The AI will be instructed to:
+
+* derive candidate relationships only from the supplied signals;
+* use only the defined relationship vocabulary;
+* reference the specific signals supporting each proposed relationship;
+* preserve uncertainty present in the source evidence;
+* distinguish claims from established facts;
+* avoid outside knowledge;
+* avoid verification or fact-checking;
+* avoid introducing new factual premises;
+* avoid value, rarity, authenticity, desirability, or acquisition judgments;
+* avoid treating the existence of multiple signals as sufficient by itself;
+* return no relationship when the supplied evidence does not support one.
+
+For **Distinctiveness**, the experiment will test whether the evidence contains a claim or configuration that may warrant distinctiveness investigation. It will not establish actual rarity or unusualness without an appropriate reference context.
+
+#### Evaluation Criteria
+
+Candidate relationships will be evaluated against the human relationship audit using four criteria:
+
+1. **Evidence grounding** — every relationship is supported by specific extracted signals.
+2. **Relationship classification** — the proposed relationship type corresponds to the structure represented by the supporting evidence.
+3. **Restraint** — the relationship does not introduce unsupported facts, assumptions, or acquisition judgments.
+4. **Control behavior** — the non-discovery control does not produce a relationship merely because multiple signals are present.
+
+The evaluation will distinguish between a relationship being correctly identified and the relationship being considered significant. The latter remains outside the scope of this experiment.
+
+#### Success and Failure
+
+The experiment will be considered informative if AI can consistently propose candidate relationships that are:
+
+* grounded in the supplied evidence;
+* assigned an appropriate relationship type;
+* traceable to specific supporting signals;
+* appropriately uncertain where the evidence is uncertain;
+* and free of unsupported value or acquisition judgments.
+
+Failure modes include:
+
+* invented facts or premises;
+* unsupported domain knowledge;
+* treating plausible explanations as established facts;
+* converting relationships into acquisition judgments;
+* generating relationships solely because multiple signals exist;
+* repeatedly confusing relationship types;
+* or producing descriptions that merely restate individual signals without identifying a meaningful relationship.
+
+#### Architectural Boundary
+
+This experiment does not establish that AI-derived relationships should become a permanent architectural layer.
+
+The experimental flow is:
+
+```text
+frozen extracted signals
+        ↓
+AI candidate relationship proposals
+        ↓
+human audit
+        ↓
+accepted / rejected / revised relationship understanding
+```
+
+Deterministic relationship validation and automatic discovery remain unimplemented until the experiment provides evidence that they are justified.
+
+The purpose of this experiment is therefore to determine whether **relationship structure is a more useful intermediate abstraction than free-form interpretation**, not to commit the application to that architecture in advance.
+
+#### Experiment 1.2 Hypothesis
+
+> **If AI can reliably propose source-grounded candidate relationships from extracted signals without introducing unsupported premises, then relationships may provide a more constrained and useful intermediate representation than free-form interpretations.**
+
+If the hypothesis is not supported, the result will still provide evidence about which aspects of relationship detection should be deterministic, AI-assisted, or deferred.
+
+#### Experiment 1.2 Audit
+
+The first candidate relationship derivation run and its human evaluation are documented separately in `docs/experiment-1-2-audit.md`.
+
 ---
 
 ## 12. Non-Goals
