@@ -680,6 +680,89 @@ investigation candidate and explanation
 human judgment
 ```
 
+### Experiment 1 — Interpretation Derivation Finding
+
+The relationship audit identified several fixtures where meaningful relationships appeared to exist between extracted signals. Before implementing additional deterministic relationship rules, an experiment was conducted to determine whether an intermediate interpretation layer could derive useful semantic meaning from multiple signals.
+
+The experiment used four deliberately selected fixtures:
+
+- **Listing 03** — intentional non-discovery control
+- **Listing 06** — uncertain identification / possible convergence
+- **Listing 08** — possible convergence and associated-equipment relationship
+- **Listing 11** — text/image identity contradiction
+
+The existing revised extraction output was treated as frozen input. Each prompt iteration used a single AI request containing all four fixtures.
+
+#### Initial Prompt Finding
+
+The initial interpretation prompt required interpretations to be supported by multiple signals and allowed an empty result when no meaningful interpretation was supported.
+
+The model returned no interpretations for any of the four fixtures.
+
+This demonstrated that the initial definition of semantic interpretation was too restrictive or insufficiently specified to reliably produce the intended form of evidence synthesis.
+
+#### Revised Prompt Finding
+
+The prompt was then expanded to clarify that an interpretation could synthesize multiple signals into a possible meaning, including:
+
+- possible identity or configuration explanations;
+- relationships between pieces of evidence;
+- conflicting claims;
+- associations between an instrument and another entity.
+
+The revised prompt continued to prohibit outside knowledge, unsupported factual assumptions, value judgments, ranking, and acquisition recommendations.
+
+This produced substantially more useful output, but also exposed a second boundary problem. The model sometimes transformed ordinary combinations of evidence into plausible narratives or domain-informed interpretations that were not justified by the supplied signals.
+
+Examples included interpreting a Squier Stratocaster with a 10-watt amplifier as a beginner-oriented package, or describing an older guitar stored in a garage as neglected or subject to an urgent clear-out.
+
+These interpretations were plausible but introduced assumptions beyond the supplied evidence.
+
+#### Constrained Prompt Finding
+
+A further prompt revision explicitly prohibited new factual premises derived from common knowledge, domain knowledge, or typical associations.
+
+This reduced unsupported extrapolation. However, the resulting interpretations frequently remained descriptive rather than providing a distinct semantic object that was clearly useful downstream.
+
+For example, Listing 08 produced an interpretation describing the relationship between the seller's father's instrument and the available Ampeg B-15 amplifier. While evidence-grounded, this largely restated an association already represented by the extracted signals.
+
+Listing 11 produced the clearest useful interpretation:
+
+> The textual identity claim of a 1958 Les Paul conflicts with image evidence showing a kid-size Stratocaster-style guitar.
+
+This interpretation combined two independent evidence sources into a meaningful relationship without deciding which claim was correct.
+
+#### Interpretation Layer Finding
+
+The experiment demonstrates that AI can perform useful semantic synthesis across extracted signals, but it does not yet establish that **Interpretation** should be a distinct persistent layer in the application architecture.
+
+Two boundaries became apparent:
+
+1. An interpretation must add semantic meaning without introducing unsupported factual premises.
+2. Some useful interpretations are effectively descriptions of relationships that can be represented directly as relationship types such as convergence, association, or contradiction.
+
+The experiment therefore raises an architectural question:
+
+> **Should AI derive intermediate interpretations, or should AI propose candidate relationships directly for deterministic validation and classification?**
+
+No architectural change is made at this stage.
+
+The current working architecture remains an experimental hypothesis rather than a finalized implementation decision.
+
+#### Experiment 1 Conclusion
+
+The interpretation experiment was successful in identifying a meaningful boundary, even though it did not establish a final interpretation model.
+
+The strongest result was that AI could synthesize independent pieces of evidence into an explicit relationship description, particularly contradiction, while preserving uncertainty and avoiding a final judgment.
+
+The weaker results showed that unconstrained semantic interpretation tends toward plausible narrative generation rather than strictly useful evidence relationships.
+
+The next experiment should therefore investigate whether AI can propose **candidate relationships between signals** directly, while deterministic logic remains responsible for validating and classifying those relationships.
+
+This preserves the project's architectural principle:
+
+> **AI may propose meaning; deterministic analysis and human judgment determine what that meaning is allowed to become.**
+
 ---
 
 ## 12. Non-Goals
