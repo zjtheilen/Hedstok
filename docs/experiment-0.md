@@ -892,6 +892,101 @@ The first candidate relationship derivation run and its human evaluation are doc
 
 The first Experiment 1.2 audit suggests that the five concepts may not constitute a homogeneous relationship vocabulary. Association, Historical Association, and Contradiction describe relationships between evidence, instruments, or entities; Convergence describes a pattern across multiple signals; and Distinctiveness describes a potentially investigation-worthy characteristic. This distinction corresponds with several observed classification and representation issues and should be evaluated before treating the five concepts as a single permanent relationship model.
 
+#### Experiment 1.3 — Conceptual Classification
+
+**Objective**
+
+Determine whether the concepts identified during the Experiment 1.2 architectural review represent meaningfully different kinds of evidence structure.
+
+The experiment tests four provisional functional categories:
+
+* Evidence Relationship
+* Evidence Pattern
+* Investigation Indicator
+* None / Unsupported
+
+The purpose is to evaluate conceptual boundaries before deciding whether any of these distinctions should be represented in Hedstok's architecture.
+
+**Method**
+
+Use representative examples from the existing frozen Experiment 1.2 evidence and human-audited relationships.
+
+No new AI generation, external market/domain data, implementation, or permanent schema is introduced.
+
+For each representative example, first describe in plain language what the evidence is doing, then classify it using the provisional categories.
+
+Representative examples:
+
+* Listing 05 — relationship between instrument, people, and historical works
+* Listing 06 — multiple clues concerning an unresolved instrument identity
+* Listing 14 — potentially unusual instrument configuration
+* Listing 03 — control with no meaningful structural relationship
+* Listing 08 — multiple structures occurring within the same evidence set
+
+**Hypothesis**
+
+> **If the concepts identified during the Experiment 1.2 architectural review represent meaningfully different kinds of evidence structure, then representative evidence examples should be understandable and consistently distinguishable as relationships, patterns, investigation indicators, or unsupported evidence without requiring additional domain knowledge or implementation assumptions.**
+
+If the hypothesis is not supported, the result will inform whether the concepts should remain combined, be redefined, or be deferred.
+
+**Evaluation Criteria**
+
+* Conceptual distinguishability
+* Evidence grounding
+* Boundary clarity
+* Ability to represent multiple structures within one evidence set
+* Architectural usefulness
+
+**Success**
+
+The concepts are understandable from representative evidence examples, meaningful boundaries can be described, classifications do not require unsupported assumptions, and the distinctions provide useful information for subsequent architectural investigation.
+
+**Failure**
+
+The categories routinely overlap without a meaningful distinction, require arbitrary terminology, depend on outside assumptions, or provide no useful architectural information.
+
+Partial support is allowed.
+
+**Non-Goals**
+
+This experiment does not:
+
+* modify the five Experiment 1.2 relationship definitions;
+* introduce new permanent relationship types;
+* establish a production evidence schema;
+* implement classification or discovery behavior;
+* use AI;
+* use external market or domain data;
+* establish rarity, authenticity, value, desirability, or acquisition suitability;
+* create investigation scores or rankings.
+
+The experiment asks only whether the provisional categories represent genuinely different kinds of evidence structure.
+
+**Experimental Flow**
+
+```text
+Existing frozen Experiment 1.2 evidence
+        ↓
+Representative audited examples
+        ↓
+Human conceptual classification
+        ↓
+Relationship / Pattern / Indicator / None
+        ↓
+Evaluate boundaries + usefulness
+        ↓
+Experiment 1.3 result
+        ↓
+Architectural decision or another targeted experiment
+```
+
+
+#### Experiment 1.3 Audit
+
+The human conceptual classification audit for Experiment 1.3 is documented separately in `docs/experiment-1-3-audit.md`.
+
+The audit provides preliminary support for the distinction between Evidence Relationships, Evidence Patterns, and Investigation Indicators as different functional roles. It also found that multiple categories can coexist within a single evidence set, suggesting these concepts should not necessarily be treated as mutually exclusive listing-level types.
+
 ---
 
 ## 12. Non-Goals

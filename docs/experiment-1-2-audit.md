@@ -196,3 +196,31 @@ accepted / rejected / revised relationship understanding
 ```
 
 No permanent relationship schema, deterministic validation layer, or automatic discovery behavior is established by this experiment alone.
+
+## Post-Experiment Architectural Observation
+
+The Experiment 1.2 audit suggests that the five candidate relationship concepts may operate at different semantic levels rather than forming a homogeneous relationship vocabulary.
+
+| Concept                | Primary function                                                                      | Preliminary role        |
+| ---------------------- | ------------------------------------------------------------------------------------- | ----------------------- |
+| Association            | Connects an instrument to another entity or contextual element                        | Entity relationship     |
+| Historical Association | Connects an instrument to historical ownership, usage, person, event, or work context | Historical relationship |
+| Contradiction          | Connects materially incompatible evidence about the same aspect                       | Evidence conflict       |
+| Convergence            | Describes multiple signals collectively narrowing an unresolved possibility           | Evidence pattern        |
+| Distinctiveness        | Identifies a characteristic or configuration that may warrant further examination     | Investigation indicator |
+
+This distinction corresponds with observed classification and representation issues in the first derivation run. In particular, Association, Historical Association, and Contradiction can be expressed as relationships between evidence, instruments, or entities; Convergence describes a pattern across multiple signals; and Distinctiveness describes a potentially investigation-worthy characteristic rather than a relationship between entities.
+
+This is an architectural observation, not an architectural decision. The experiment does not establish that these concepts should be separated, combined, renamed, or represented differently.
+
+### Current Hypothesis
+
+The five concepts may represent multiple kinds of evidence structure that can eventually contribute to investigation rather than a single relationship model.
+
+This hypothesis should be evaluated before introducing a permanent relationship architecture or modifying the current vocabulary.
+
+### Next Evaluation
+
+The next evaluation should determine whether the semantic distinction between relationship, evidence pattern, and investigation indicator is consistently meaningful when applied to the audited evidence.
+
+No implementation change is justified by this observation alone.
