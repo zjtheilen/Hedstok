@@ -180,8 +180,47 @@ Evidence
 
 No implementation decision is made by this experiment alone.
 
+## Relationship Representation Test
+
+The conceptual classification in Experiment 1.3 established that Evidence Relationships can be distinguished from Evidence Patterns and Investigation Indicators. A follow-up question is whether representing Evidence Relationships explicitly would provide a capability that the current signal model cannot represent cleanly.
+
+Listing 05 provides a useful test case.
+
+The current signal model can preserve evidence such as:
+
+* the instrument belonged to the seller's father;
+* the father was a session player;
+* the instrument or playing associated with recordings including *Reign in Blood* and *Master of Puppets*;
+* buckle scuffs were attributed to Kirk Hammett.
+
+These signals preserve the underlying evidence, but the relationships between the instrument and the relevant people, recordings, and historical context exist only implicitly within the signal claims.
+
+An explicit relationship representation would instead make those connections directly addressable. For example:
+
+```text
+Instrument → associated with → Dad
+Instrument → associated with → Recording history
+Instrument → associated with → Kirk Hammett
+```
+
+The immediate benefit is not additional factual information. The same source evidence is already present in the signals. The benefit is structural: Hedstok could identify and group the evidence supporting a particular connection rather than reconstructing that connection from the text of independent signals each time.
+
+This would support operations such as:
+
+* showing all evidence supporting an instrument's relationship with a particular person or context;
+* distinguishing separate relationships involving the same instrument;
+* treating a relationship as a unit of analysis rather than only as an interpretation of individual claims.
+
+The comparison therefore identifies a potentially useful capability gap between independent evidence signals and explicitly represented Evidence Relationships.
+
+However, this does not by itself justify implementation of a permanent relationship schema. The current experiment has not established that relationship-oriented operations are sufficiently important to require additional data structures, nor has it established the appropriate scope of such a structure. In particular, this finding does not justify introducing a generalized entity graph, entity-resolution system, or cross-listing identity model.
+
+### Preliminary Finding
+
+> **Explicit Evidence Relationships provide structural capabilities that independent signals do not represent cleanly, particularly the ability to group and address evidence supporting a specific connection. This is sufficient to justify continued architectural investigation, but not yet sufficient to justify implementation of a permanent relationship model.**
+
+This remains an architectural investigation rather than an architectural decision.
+
 ## Next Step
 
-The next investigation should determine whether these conceptual distinctions provide enough value to justify explicit representation in Hedstok, and if so, which distinctions require structured data versus remaining interpretive or investigative concepts.
-
-No production implementation should be introduced until that boundary is better understood.
+The next investigation should determine what the smallest useful representation of an Evidence Relationship would need to support the capability identified above. This should focus on the structure required to represent a relationship and its supporting evidence without assuming a generalized entity graph, entity-resolution system, or broader domain model.
