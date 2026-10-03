@@ -243,6 +243,36 @@ This suggests that an Evidence Relationship can initially identify its endpoints
 
 Independently represented entities would become necessary if Hedstok needs persistent identity, reuse, or resolution of the same endpoint across multiple pieces of evidence or listings. That requirement has not yet been established.
 
+### Supporting Evidence Reference
+
+The endpoint representation investigation identifies a further constraint. While an Evidence Relationship can identify its endpoints without requiring independently represented entities, the relationship must also be able to identify the evidence supporting it if that evidence is to remain directly addressable.
+
+The current `Signal` model does not provide a stable identifier for individual signals. Signals are currently contained within a listing extraction and are represented by their type, claim, and source text.
+
+For example, Listing 05 contains evidence from which the following relationship can be identified:
+
+```text
+Instrument → belonged to → Dad
+```
+
+The existing signal preserves the evidence needed to establish that relationship, but there is currently no stable signal reference that a relationship could use to identify that specific supporting evidence.
+
+The same constraint appears in Listing 08:
+
+```text
+Instrument → associated with → Ampeg B-15
+```
+
+The relationship can be identified from the existing evidence without introducing an independently represented equipment entity, but a relationship would require some reliable reference to the supporting signal if the evidence is to be explicitly associated with that relationship.
+
+This suggests that the smallest missing capability is not an entity model, but a mechanism for reliably referencing individual evidence signals.
+
+This investigation does not determine what form such a reference should take. It does not establish that a specific identifier scheme, relationship schema, or implementation is required.
+
+### Preliminary Finding
+
+> **Evidence Relationships can be represented without independently modeled entities, but explicit relationships require a reliable way to reference the evidence supporting them. The current signal model does not yet provide such a reference. This identifies a smaller architectural gap for further investigation without justifying an entity model or implementation decision.**
+
 ## Next Step
 
-The next investigation should determine the smallest useful representation of an Evidence Relationship using the existing evidence model. This should identify how the relationship's endpoints, relationship meaning, and supporting evidence could be represented without introducing independently modeled entities or a generalized entity graph.
+The next investigation should determine what constitutes a reliable reference to an individual evidence signal. This should establish the minimum requirements for identifying supporting evidence without prematurely selecting an identifier scheme or introducing additional domain entities.
