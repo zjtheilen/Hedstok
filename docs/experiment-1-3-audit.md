@@ -269,10 +269,69 @@ This suggests that the smallest missing capability is not an entity model, but a
 
 This investigation does not determine what form such a reference should take. It does not establish that a specific identifier scheme, relationship schema, or implementation is required.
 
+### Evidence Continuity Across Extractions
+
+The supporting evidence reference investigation raises a further question: whether individual evidence signals must retain their identity across multiple extractions of the same listing, or whether listing changes can be detected by comparing the existing evidence content.
+
+The current signal model already preserves three pieces of structured information:
+
+* `type`, which categorizes the signal;
+* `claim`, which represents the extracted semantic statement;
+* `source_text`, which preserves the source wording.
+
+For detecting changes to the observed listing, `source_text` provides the primary basis for comparison because it preserves what the source actually stated.
+
+For example, if two extractions contain the same source text:
+
+```text
+Extraction A
+story
+source_text: "my dad's guitar."
+
+Extraction B
+story
+source_text: "my dad's guitar."
+```
+
+the evidence can be recognized as unchanged without requiring the same signal identifier to persist across extractions.
+
+If the later extraction instead contains:
+
+```text
+story
+source_text: "my dad's guitar. bought in 1988."
+```
+
+the source evidence has changed.
+
+Similarly, newly appearing or disappearing source statements can indicate added or removed evidence.
+
+This comparison does not require relationships themselves to persist across extractions. An Evidence Relationship can remain scoped to the extraction from which it was derived, while the underlying evidence can be compared across observations of the same listing.
+
+The distinction between source evidence and extraction representation is also important. A change to `claim` or `type` while `source_text` remains unchanged may represent a change in Hedstok's extraction rather than a change to the listing itself.
+
+This establishes two separate concerns:
+
+```text
+Source change
+    ↓
+Compare source evidence
+
+Extraction change
+    ↓
+Compare structured representation
+```
+
+Content comparison does not establish persistent identity for an individual evidence item. Identical source text appearing in two extractions can be treated as corresponding evidence for change-detection purposes without establishing that the two signal instances are definitively the same persistent object.
+
+The current investigation has not demonstrated a requirement for that stronger form of cross-extraction identity. Introducing persistent signal identity would therefore add architectural complexity without a demonstrated capability need.
+
 ### Preliminary Finding
 
-> **Evidence Relationships can be represented without independently modeled entities, but explicit relationships require a reliable way to reference the evidence supporting them. The current signal model does not yet provide such a reference. This identifies a smaller architectural gap for further investigation without justifying an entity model or implementation decision.**
+> **Evidence Relationships require reliable references to supporting signals within their extraction scope, but those references do not currently need to persist across extractions. Hedstok can initially detect listing evidence changes by comparing existing source evidence, with `source_text` as the primary comparison basis and `claim` and `type` providing structured extraction context. Persistent cross-extraction signal identity is not currently justified.**
+
+This remains an architectural investigation rather than an architectural decision.
 
 ## Next Step
 
-The next investigation should determine what constitutes a reliable reference to an individual evidence signal. This should establish the minimum requirements for identifying supporting evidence without prematurely selecting an identifier scheme or introducing additional domain entities.
+The next investigation should determine the minimum requirements for a signal reference within an extraction. This should establish how a relationship can reliably identify its supporting signals without introducing persistent cross-extraction signal identity or independently modeled domain entities.
