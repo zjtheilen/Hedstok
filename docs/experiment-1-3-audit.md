@@ -221,6 +221,28 @@ However, this does not by itself justify implementation of a permanent relations
 
 This remains an architectural investigation rather than an architectural decision.
 
+### Endpoint Representation
+
+The relationship representation test raises a further question: whether relationship endpoints require independently represented entities, or whether they can remain references to information already present in the evidence.
+
+Listing 05 does not require a separately represented `Dad` entity to express the relationship:
+
+```text
+Instrument → belonged to → Dad
+```
+
+The evidence already identifies the endpoint as the seller's father. Similarly, Listing 08 can express the relationship:
+
+```text
+Instrument → associated with → Ampeg B-15
+```
+
+without requiring an independently represented equipment entity.
+
+This suggests that an Evidence Relationship can initially identify its endpoints from the evidence without establishing persistent entity identity. The relationship provides explicit structure between the endpoints, while the supporting signals preserve the evidence from which those endpoints are identified.
+
+Independently represented entities would become necessary if Hedstok needs persistent identity, reuse, or resolution of the same endpoint across multiple pieces of evidence or listings. That requirement has not yet been established.
+
 ## Next Step
 
-The next investigation should determine what the smallest useful representation of an Evidence Relationship would need to support the capability identified above. This should focus on the structure required to represent a relationship and its supporting evidence without assuming a generalized entity graph, entity-resolution system, or broader domain model.
+The next investigation should determine the smallest useful representation of an Evidence Relationship using the existing evidence model. This should identify how the relationship's endpoints, relationship meaning, and supporting evidence could be represented without introducing independently modeled entities or a generalized entity graph.
