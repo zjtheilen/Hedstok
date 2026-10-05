@@ -10,10 +10,10 @@ The experiment uses representative examples from the existing frozen Experiment 
 
 The purpose of the audit is to determine whether the provisional categories:
 
-* Evidence Relationship
-* Evidence Pattern
-* Investigation Indicator
-* None / Unsupported
+- Evidence Relationship
+- Evidence Pattern
+- Investigation Indicator
+- None / Unsupported
 
 provide a useful conceptual distinction.
 
@@ -109,10 +109,10 @@ This fixture demonstrates that multiple conceptual categories can legitimately c
 
 The audit found that the provisional categories can describe materially different kinds of evidence structure:
 
-* **Evidence Relationship** describes a connection between the instrument and another entity, person, work, event, ownership history, or associated context.
-* **Evidence Pattern** describes multiple pieces of evidence that collectively bear on an unresolved possibility.
-* **Investigation Indicator** describes a characteristic or configuration that may warrant investigation without itself establishing rarity, significance, or desirability.
-* **None / Unsupported** provides a control for evidence that does not establish meaningful structure.
+- **Evidence Relationship** describes a connection between the instrument and another entity, person, work, event, ownership history, or associated context.
+- **Evidence Pattern** describes multiple pieces of evidence that collectively bear on an unresolved possibility.
+- **Investigation Indicator** describes a characteristic or configuration that may warrant investigation without itself establishing rarity, significance, or desirability.
+- **None / Unsupported** provides a control for evidence that does not establish meaningful structure.
 
 These distinctions were understandable when examples were described in plain language before applying the terminology.
 
@@ -122,9 +122,9 @@ Listing 08 demonstrates that the categories are not necessarily mutually exclusi
 
 A single evidence set can contain:
 
-* a relationship,
-* a pattern,
-* and another relationship involving associated equipment.
+- a relationship,
+- a pattern,
+- and another relationship involving associated equipment.
 
 This suggests that the categories describe **properties of evidence**, rather than exclusive classifications of an entire listing.
 
@@ -148,14 +148,14 @@ The audit also exposed an important architectural property: these categories sho
 
 This experiment does not establish:
 
-* a permanent evidence model;
-* a final relationship vocabulary;
-* a production schema;
-* deterministic classification rules;
-* AI necessity;
-* investigation scoring;
-* rarity or market significance;
-* or automatic discovery behavior.
+- a permanent evidence model;
+- a final relationship vocabulary;
+- a production schema;
+- deterministic classification rules;
+- AI necessity;
+- investigation scoring;
+- rarity or market significance;
+- or automatic discovery behavior.
 
 The result supports retaining the conceptual distinction as a working model for subsequent investigation.
 
@@ -188,10 +188,10 @@ Listing 05 provides a useful test case.
 
 The current signal model can preserve evidence such as:
 
-* the instrument belonged to the seller's father;
-* the father was a session player;
-* the instrument or playing associated with recordings including *Reign in Blood* and *Master of Puppets*;
-* buckle scuffs were attributed to Kirk Hammett.
+- the instrument belonged to the seller's father;
+- the father was a session player;
+- the instrument or playing associated with recordings including _Reign in Blood_ and _Master of Puppets_;
+- buckle scuffs were attributed to Kirk Hammett.
 
 These signals preserve the underlying evidence, but the relationships between the instrument and the relevant people, recordings, and historical context exist only implicitly within the signal claims.
 
@@ -207,9 +207,9 @@ The immediate benefit is not additional factual information. The same source evi
 
 This would support operations such as:
 
-* showing all evidence supporting an instrument's relationship with a particular person or context;
-* distinguishing separate relationships involving the same instrument;
-* treating a relationship as a unit of analysis rather than only as an interpretation of individual claims.
+- showing all evidence supporting an instrument's relationship with a particular person or context;
+- distinguishing separate relationships involving the same instrument;
+- treating a relationship as a unit of analysis rather than only as an interpretation of individual claims.
 
 The comparison therefore identifies a potentially useful capability gap between independent evidence signals and explicitly represented Evidence Relationships.
 
@@ -275,9 +275,9 @@ The supporting evidence reference investigation raises a further question: wheth
 
 The current signal model already preserves three pieces of structured information:
 
-* `type`, which categorizes the signal;
-* `claim`, which represents the extracted semantic statement;
-* `source_text`, which preserves the source wording.
+- `type`, which categorizes the signal;
+- `claim`, which represents the extracted semantic statement;
+- `source_text`, which preserves the source wording.
 
 For detecting changes to the observed listing, `source_text` provides the primary basis for comparison because it preserves what the source actually stated.
 
@@ -491,16 +491,203 @@ Evidence Relationship
 
 The current evidence also supports the following boundaries:
 
-* endpoints do not require independently modeled entities;
-* supporting references identify complete signals rather than spans;
-* supporting evidence may contain multiple signal references;
-* a signal may support multiple relationships;
-* relationships are currently adequately represented as binary connections;
-* descriptive or configuration evidence should not automatically become relationships;
-* persistent cross-extraction relationship or signal identity has not been established as a requirement;
-* a controlled relationship vocabulary has not yet been justified.
+- endpoints do not require independently modeled entities;
+- supporting references identify complete signals rather than spans;
+- supporting evidence may contain multiple signal references;
+- a signal may support multiple relationships;
+- relationships are currently adequately represented as binary connections;
+- descriptive or configuration evidence should not automatically become relationships;
+- persistent cross-extraction relationship or signal identity has not been established as a requirement;
+- a controlled relationship vocabulary has not yet been justified.
 
 These findings remain provisional architectural investigation results. They do not establish a production schema or require immediate implementation.
+
+### Relationship Reuse, Uncertainty, and Correction
+
+The investigation then tested whether an explicit Evidence Relationship can provide a reusable interpretation of evidence without replacing or weakening the underlying evidence.
+
+This is important because repeatedly deriving relationships from the same source evidence could require Hedstok to reinterpret that evidence each time a later capability needs the relationship. Repeated interpretation could produce inconsistent results over time, particularly when AI-based extraction or interpretation is involved.
+
+The provisional model provides a separation between source evidence, extracted signals, and derived relationships:
+
+```text
+Source
+  ↓
+Signal
+  ↓
+Evidence Relationship
+```
+
+The Signal preserves what the source says. The Evidence Relationship represents a structured connection derived from that evidence. The relationship retains references to the supporting Signal or Signals so that the interpretation can be traced back to its evidence.
+
+#### Uncertainty Preservation
+
+The investigation tested whether different levels of uncertainty in the source evidence require separate uncertainty information on the relationship itself.
+
+For example:
+
+```text
+"Kirk Hammett used this guitar."
+
+"Seller says Kirk Hammett used this guitar."
+
+"I think Kirk Hammett may have used this guitar."
+```
+
+All three statements could support an Evidence Relationship such as:
+
+```text
+Instrument → associated with → Kirk Hammett
+```
+
+However, the supporting Signals preserve the important distinction between the three source claims.
+
+This suggests that the relationship does not need to independently encode the epistemic status of the evidence in order to preserve that distinction. The relationship can remain a structured representation of the connection while the supporting evidence remains the source of information about what was actually claimed and how certain that claim was.
+
+The relationship therefore does not establish the truth of the connection. It represents a connection identified from evidence.
+
+#### Conflicting Evidence
+
+The investigation also tested whether multiple Signals supporting the same relationship can disagree.
+
+For example:
+
+```text
+Signal A:
+"My dad played this guitar on Reign in Blood."
+
+Signal B:
+"I bought this guitar from someone who said it was used on Reign in Blood,
+but I don't know if that's true."
+```
+
+Both Signals may support an Evidence Relationship:
+
+```text
+Instrument → associated with → Reign in Blood
+```
+
+The conflicting or differently qualified evidence does not require the relationship itself to resolve the disagreement.
+
+Instead, the relationship can reference both supporting Signals, allowing the underlying evidence and its qualifications to remain independently inspectable.
+
+This suggests that relationship representation does not currently require relationship-level fields such as confidence, certainty, verification status, or strength merely to preserve conflicting evidence.
+
+The relationship represents the connection; the supporting Signals preserve the evidence surrounding that connection.
+
+#### Incorrect Relationship Interpretation
+
+The investigation then considered the case where the relationship itself is incorrectly derived.
+
+For example, a source may state:
+
+```text
+"My dad played Reign in Blood."
+```
+
+An incorrect interpretation could produce:
+
+```text
+Instrument → associated with → Reign in Blood
+```
+
+The source evidence does not establish that the instrument was used on the recording. The error exists in the derived relationship rather than in the underlying Signal.
+
+This distinction allows the relationship to be corrected or removed without altering the original evidence:
+
+```text
+Source
+  ↓
+Signal
+  ↓
+Relationship
+  X  ← incorrect interpretation
+```
+
+The Signal remains intact while the incorrect relationship can be replaced or discarded.
+
+A later interpretation could instead produce:
+
+```text
+Dad → associated with → Reign in Blood
+```
+
+without requiring the original Signal to change.
+
+This establishes an important architectural distinction:
+
+> **A relationship can be wrong without making the underlying evidence wrong.**
+
+The relationship is therefore a derived interpretation rather than an immutable statement of fact.
+
+#### Interpretation Change vs. Evidence Change
+
+The investigation identifies three distinct forms of change:
+
+```text
+Source Change
+    ↓
+Evidence Change
+    ↓
+Interpretation Change
+```
+
+A source listing may change. That may cause the extracted Signal to change. Separately, the interpretation represented by a Relationship may change even when the underlying Signal remains unchanged.
+
+These changes should not be treated as equivalent.
+
+In particular, correcting a Relationship does not imply that the source evidence was incorrect. It may instead mean that Hedstok's interpretation of the existing evidence has changed.
+
+The investigation does not establish a requirement for persistent relationship history or relationship versioning. Such capabilities would only become necessary if Hedstok demonstrates a need to answer questions about previous interpretations over time.
+
+#### Reusable Interpretation
+
+The combined investigation provides a potential architectural capability not represented cleanly by independent Signals alone.
+
+Without an explicit relationship, later features may need to repeatedly interpret source evidence to rediscover the same connection:
+
+```text
+Source Evidence
+    ↓
+Interpretation
+    ↓
+Feature A
+
+Source Evidence
+    ↓
+Interpretation
+    ↓
+Feature B
+
+Source Evidence
+    ↓
+Interpretation
+    ↓
+Feature C
+```
+
+An explicit Evidence Relationship provides a reusable intermediate representation:
+
+```text
+Source Evidence
+    ↓
+Signal
+    ↓
+Evidence Relationship
+    ├── Feature A
+    ├── Feature B
+    └── Feature C
+```
+
+This can reduce repeated interpretation of the same evidence while preserving the ability to trace the relationship back to its supporting Signals.
+
+The investigation therefore identifies **reusable, evidence-grounded interpretation** as a meaningful capability of explicit Evidence Relationships.
+
+### Preliminary Finding
+
+> **Explicit Evidence Relationships provide a potential reusable representation of connections derived from evidence. The relationship can preserve uncertainty and conflicting evidence through its supporting Signal references, and an incorrect relationship can be corrected or removed without altering the underlying evidence. This separates reusable interpretation from source evidence while avoiding a requirement for relationship-level confidence, verification, or historical versioning at the current stage.**
+
+This is stronger evidence for an explicit relationship representation than the earlier display and traceability tests alone. However, it remains a provisional architectural finding rather than a production implementation decision.
 
 ## Next Step
 
