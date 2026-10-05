@@ -191,7 +191,28 @@ This is intentionally a presentation/personality consideration rather than a cor
 
 Personalization should not affect the evidence, analysis, or reasoning produced by the system.
 
-## Relationship to Future Phases
+## Testing
+
+### Automated testing
+
+Hedstok should eventually be able to test itself at multiple levels:
+
+- Unit tests for deterministic code.
+- Structural tests for things like valid Signal schemas and source-text grounding.
+- Fixture-based extraction tests using known listings and expected evidence criteria.
+- Pipeline/integration tests to make sure changes don't break the end-to-end workflow.
+
+The Phase 2 structural evaluator and Experiment 0 fixtures provide the beginnings of this capability.
+
+### Regression testing
+
+This is especially valuable for Hedstok because the AI layer can change behavior without the Python code necessarily breaking.
+
+Regression testing could compare new extraction or discovery behavior against previously evaluated fixtures and identify meaningful losses or changes in evidence coverage.
+
+The exact regression strategy should be determined after the extraction and discovery behavior stabilizes enough to make such comparisons useful.
+
+### Relationship to Future Phases
 
 The ideas in this document should not be interpreted as a sequence of implementation phases.
 
