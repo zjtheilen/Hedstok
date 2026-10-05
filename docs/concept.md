@@ -500,3 +500,67 @@ The output should not include:
 * invented explanations for why an instrument is valuable.
 
 Phase 3.1 is an experiment to determine whether structured evidence can produce useful discoveries. It is not yet a commitment to a particular discovery algorithm, schema, or implementation architecture.
+
+### Phase 3.1 Initial Discovery Findings
+
+The first discovery experiment was run against the Phase 2 batch extraction artifact without additional extraction calls.
+
+The discovery process surfaced five candidate acquisition opportunities:
+
+* listing-01;
+* listing-05;
+* listing-06;
+* listing-08;
+* listing-11.
+
+Human review judged all five surfaced candidates worth investigating. This demonstrates that structured Signals can support discovery of acquisition opportunities that a human considers worth further investigation.
+
+A separate human review of all 14 listings identified 11 listings as worth investigating, one as potentially worth investigating, and two as not worth investigating. The first discovery run therefore did not demonstrate complete discovery coverage.
+
+Several clear discovery misses were identified. Listings 02, 04, 09, and 14 contained evidence that the human reviewer considered worth investigating but were not surfaced by the discovery process. The relevant evidence was already present in the structured Signals, so these cases represent discovery interpretation misses rather than extraction failures.
+
+The misses also revealed several distinct discovery requirements:
+
+* useful opportunities may emerge from combinations of otherwise ordinary Signals;
+* unusual configuration or identification evidence may itself warrant investigation;
+* seller or inventory context may represent an acquisition opportunity independently of an individual instrument;
+* some human discoveries depend on external knowledge that is intentionally unavailable under the current source-grounded discovery rules.
+
+Listings 07 and 12 illustrate the latter boundary. Their human-interest judgments included knowledge not established by the supplied Signals, such as knowledge about a brand's status or the market desirability of an instrument. These cases should not currently be treated as failures of source-grounded discovery.
+
+Listing 13 was treated as a weak or ambiguous opportunity during human review and does not currently provide strong evidence of a discovery capability failure.
+
+The first experiment also demonstrated that discovery can arise from relationships between Signals. Listing 11 was identified because the textual identification and image-description Signals conflict. This supports further investigation of multi-Signal discovery without establishing a general relationship or graph architecture.
+
+These findings are provisional. They do not establish a production discovery taxonomy, ranking system, external-knowledge architecture, or persistent relationship model.
+
+The next experiment revised the discovery prompt to more explicitly test combinations of Signals, unusual configurations, seller/inventory context, and the distinction between source-grounded evidence and external knowledge. The same discovery input was used so that the results could be compared with the first experiment.
+
+### Phase 3.1 Second Discovery Experiment Findings
+
+The second discovery experiment used the same structured evidence input, model, and execution process as the first experiment, with only the discovery prompt revised to more explicitly address combinations of Signals, unusual configurations, seller or inventory context, and external-knowledge boundaries.
+
+The revised discovery process surfaced seven candidate acquisition opportunities:
+
+* listing-01;
+* listing-02;
+* listing-05;
+* listing-06;
+* listing-08;
+* listing-09;
+* listing-11.
+
+Human review judged all seven surfaced candidates worth investigating. Compared with the first experiment, the revised prompt recovered listings 02 and 09, both of which had previously been identified as clear discovery misses. This indicates that prompt guidance about Signal combinations and seller or inventory context can improve discovery coverage without necessarily introducing false positives among the surfaced candidates.
+
+Listings 04 and 14 remained unsurfaced despite containing source-grounded evidence that the human reviewer considered worth investigating. Both were within the revised prompt's stated discovery scope. This provides evidence that prompt expansion alone does not reliably produce complete discovery coverage.
+
+The second experiment also showed continued interpretation drift beyond the supplied evidence. Some explanations introduced significance not established by the Signals, including descriptions such as "vintage," "period-appropriate," and "high-end." These cases demonstrate that source-grounded extraction does not by itself guarantee source-grounded discovery interpretation.
+
+The experiments therefore indicate two distinct discovery challenges:
+
+* useful opportunities can remain undiscovered even when the supporting Signals are present and the prompt explicitly identifies the relevant discovery pattern;
+* discovered opportunities can acquire unsupported significance during interpretation.
+
+The first two experiments provide evidence that structured Signals can support useful acquisition discovery, and that prompt guidance can improve discovery coverage. They do not yet establish that free-form AI discovery is sufficiently reliable as a production discovery mechanism.
+
+Further work should determine whether these limitations can be addressed through a more explicit discovery mechanism, deterministic evidence combinations, structured relationships, or another approach before committing to a production discovery architecture.
