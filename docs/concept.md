@@ -6,13 +6,13 @@ Used-instrument acquisition often depends on finding things that are not obvious
 
 Relevant information may be:
 
-* incomplete;
-* inconsistent;
-* poorly structured;
-* qualitative;
-* distributed across different sources;
-* buried in seller descriptions or personal leads;
-* uncertain or contradictory.
+- incomplete;
+- inconsistent;
+- poorly structured;
+- qualitative;
+- distributed across different sources;
+- buried in seller descriptions or personal leads;
+- uncertain or contradictory.
 
 A useful acquisition tool should therefore do more than retrieve instruments matching a search query.
 
@@ -55,11 +55,11 @@ AI may be useful for understanding messy, unstructured information.
 
 Potential uses include:
 
-* extracting structured information from natural-language listings;
-* identifying claims and provenance;
-* comparing descriptions;
-* detecting potentially contradictory information;
-* identifying information that warrants further investigation.
+- extracting structured information from natural-language listings;
+- identifying claims and provenance;
+- comparing descriptions;
+- detecting potentially contradictory information;
+- identifying information that warrants further investigation.
 
 AI should not be treated as the final authority.
 
@@ -79,10 +79,10 @@ Hedstok should surface approximately 1–3 candidates it considers worth investi
 
 For each candidate, Hedstok should provide:
 
-* what caught its attention;
-* the evidence supporting that observation;
-* what remains uncertain;
-* where the relevant information came from.
+- what caught its attention;
+- the evidence supporting that observation;
+- what remains uncertain;
+- where the relevant information came from.
 
 ### Human Evaluation
 
@@ -106,16 +106,16 @@ Technical sophistication alone does not constitute success.
 
 The initial experiment will not attempt to build:
 
-* autonomous purchasing or bidding;
-* universal marketplace scraping;
-* a general-purpose chatbot;
-* an authoritative guitar valuation system;
-* a full image-recognition system;
-* a trained machine-learning model;
-* a sophisticated entity-resolution platform;
-* notifications or continuous monitoring;
-* a complete marketplace;
-* the eventual production architecture.
+- autonomous purchasing or bidding;
+- universal marketplace scraping;
+- a general-purpose chatbot;
+- an authoritative guitar valuation system;
+- a full image-recognition system;
+- a trained machine-learning model;
+- a sophisticated entity-resolution platform;
+- notifications or continuous monitoring;
+- a complete marketplace;
+- the eventual production architecture.
 
 These may be considered later if the core concept proves useful.
 
@@ -137,26 +137,21 @@ Phase 2 should establish the minimum input, output, and evaluation conventions n
 
 Phase 2 will focus on:
 
-* **Multiple-listing input**
+- **Multiple-listing input**
+    - Establish a simple input format for processing a collection of listings rather than a single hard-coded listing.
 
-  * Establish a simple input format for processing a collection of listings rather than a single hard-coded listing.
+- **Repeatable extraction**
+    - Run the existing extraction capability across multiple listings and produce structured extraction artifacts.
 
-* **Repeatable extraction**
+- **Source preservation**
+    - Maintain a direct connection between each extracted Signal and the source text from which it was derived.
 
-  * Run the existing extraction capability across multiple listings and produce structured extraction artifacts.
+- **Extraction evaluation**
+    - Bring the useful evaluation principles from Experiment 0 into the working pipeline so extraction quality can be measured rather than assumed.
 
-* **Source preservation**
-
-  * Maintain a direct connection between each extracted Signal and the source text from which it was derived.
-
-* **Extraction evaluation**
-
-  * Bring the useful evaluation principles from Experiment 0 into the working pipeline so extraction quality can be measured rather than assumed.
-
-* **Uncertainty preservation**
-
-  * Preserve the distinction between what a listing claims and what is actually established.
-  * The extraction process must not silently convert uncertain or attributed claims into facts.
+- **Uncertainty preservation**
+    - Preserve the distinction between what a listing claims and what is actually established.
+    - The extraction process must not silently convert uncertain or attributed claims into facts.
 
 ### Evaluation Findings
 
@@ -182,9 +177,9 @@ Semantic review of the batch extraction showed that fewer signals do not necessa
 
 The review also showed that the current Experiment 0 expected-signal fixture contains several different kinds of evaluation criteria:
 
-* directly extractable source evidence;
-* interpretations or conclusions derived from source evidence;
-* absence-based observations.
+- directly extractable source evidence;
+- interpretations or conclusions derived from source evidence;
+- absence-based observations.
 
 These categories should not necessarily be treated as equivalent extraction requirements.
 
@@ -212,16 +207,16 @@ This does not establish that batch extraction is universally equivalent to indep
 
 Phase 2 does not currently include:
 
-* Evidence Relationship implementation
-* entity resolution or persistent entity modeling
-* database implementation
-* web UI
-* recommendation or ranking systems
-* marketplace integrations or automated web scraping
-* pricing intelligence
-* authentication or deployment infrastructure
-* generalized AI orchestration
-* graph architecture
+- Evidence Relationship implementation
+- entity resolution or persistent entity modeling
+- database implementation
+- web UI
+- recommendation or ranking systems
+- marketplace integrations or automated web scraping
+- pricing intelligence
+- authentication or deployment infrastructure
+- generalized AI orchestration
+- graph architecture
 
 These capabilities may become appropriate in later phases, but Phase 2 should not assume that they are required.
 
@@ -230,3 +225,155 @@ These capabilities may become appropriate in later phases, but Phase 2 should no
 Phase 2 is complete when Hedstok can repeatedly process a collection of listings and produce structured, source-grounded evidence with enough evaluation support to determine whether the extraction capability is reliable and useful enough to justify further development.
 
 > **Phase 2 is intended to establish whether the core evidence pipeline works well enough to earn the next capability.**
+
+## Phase 3 — Evidence-Based Discovery
+
+### Goal
+
+Determine whether structured, source-grounded evidence can be used to identify acquisition opportunities that are genuinely worth investigating.
+
+Phase 3 should investigate the missing capability between evidence extraction and acquisition discovery without assuming in advance what mechanism will provide it.
+
+The central question is:
+
+> **Can Hedstok turn structured evidence into useful discoveries that a conventional search would not necessarily surface?**
+
+### Scope
+
+Phase 3 will focus on:
+
+- **Discovery opportunities**
+    - Establish what makes a listing or acquisition lead potentially worth investigating.
+    - Investigate characteristics such as unusual provenance, contradictions, uncertain identification, unusual configuration, meaningful combinations of evidence, or other patterns that emerge from the experiment.
+
+- **Evidence-based discovery**
+    - Determine whether candidate opportunities can be identified from the Signals produced by the Phase 2 evidence pipeline.
+    - Investigate whether individual Signals are sufficient or whether useful discoveries require combinations of Signals.
+
+- **Discovery explanation**
+    - Each candidate opportunity should explain what made it interesting.
+    - Explanations should remain grounded in the underlying Signals and preserve the distinction between source claims, interpretation, and uncertainty.
+
+- **Human evaluation**
+    - Evaluate whether surfaced candidates are actually worth investigating rather than merely technically plausible.
+
+    - The primary evaluation question is:
+
+        > **Would I actually investigate this?**
+
+    - Where appropriate, a later evaluation may ask:
+
+        > **Would Dan actually investigate this?**
+
+- **Discovery comparison**
+    - Consider whether the discoveries provide information that would be difficult to identify through conventional keyword or attribute-based searching.
+    - The experiment should distinguish genuinely useful discoveries from ordinary listings that merely happen to match obvious search criteria.
+
+### Experimental Approach
+
+Phase 3 should begin with the existing Phase 2 listing collection and structured extraction artifacts rather than introducing a larger data-acquisition system.
+
+The initial workflow should remain conceptually simple:
+
+```text
+Listings
+    ↓
+Structured Signals
+    ↓
+Discovery mechanism
+    ↓
+Candidate opportunities
+    ↓
+Human evaluation
+    ↓
+Useful discovery?
+    ↓
+Supporting evidence
+```
+
+The discovery mechanism should be treated as an experimental component.
+
+It may involve deterministic rules, combinations of Signals, explicit relationships, AI-assisted interpretation, or another approach that emerges from the evidence.
+
+No particular mechanism is required at the beginning of Phase 3.
+
+The experiment should favor approaches that can explain their output through the existing evidence model.
+
+### Evaluation
+
+Phase 3 should evaluate both **discovery usefulness** and **evidence grounding**.
+
+#### Discovery usefulness
+
+For each surfaced candidate, determine:
+
+- Is there something genuinely interesting about this listing?
+- Would a human consider it worth investigating?
+- Is the discovery more than an obvious match to a conventional search criterion?
+- Does the discovery depend on information that would otherwise be easy to overlook?
+
+#### Evidence grounding
+
+For each candidate, determine:
+
+- What Signals support the discovery?
+- Can the supporting evidence be traced back to the original listing?
+- Are source claims distinguished from interpretation?
+- Is uncertainty preserved?
+- Does the explanation avoid asserting facts that are not established by the evidence?
+
+#### False positives
+
+The experiment should also record candidates that appear interesting mechanically but are not considered useful by human review.
+
+Understanding why apparently interesting candidates are not useful is part of determining what discovery should mean for Hedstok.
+
+### Evaluation Findings
+
+Phase 3 should document the characteristics of discoveries that are considered useful, including:
+
+- recurring types of opportunities;
+- combinations of evidence that produce useful discoveries;
+- evidence patterns that consistently produce false positives;
+- discoveries that are obvious from conventional search;
+- discoveries that appear genuinely non-obvious;
+- limitations of the current Signal model.
+
+These findings should determine whether a reusable discovery mechanism is justified.
+
+### Out of Scope
+
+Phase 3 does not currently include:
+
+- automated marketplace scraping or universal marketplace search;
+- marketplace API integrations;
+- persistent entity resolution;
+- cross-marketplace duplicate detection;
+- automated purchasing, bidding, or seller contact;
+- production recommendation or ranking systems;
+- pricing or valuation intelligence;
+- continuous background monitoring;
+- notification infrastructure;
+- production web UI;
+- generalized graph architecture;
+- persistent Evidence Relationship implementation unless the experiment demonstrates that relationships are necessary or useful for discovery;
+- a second AI model acting as an automated semantic judge;
+- a trained machine-learning model.
+
+These capabilities may become appropriate later, but Phase 3 should first establish whether evidence-based discovery itself is useful.
+
+### Phase 3 Completion Criterion
+
+Phase 3 is complete when Hedstok has experimentally demonstrated whether structured, source-grounded evidence can produce candidate acquisition opportunities that a human considers worth investigating, and can explain those opportunities through the underlying evidence.
+
+A successful result does not require a sophisticated discovery algorithm.
+
+It requires evidence that Hedstok can move meaningfully from:
+
+> **"Here is what the listing says."**
+
+to:
+
+> **"This is worth looking into, and here's why."**
+
+If the experiment does not demonstrate useful discovery, that result is still a valid Phase 3 finding and should guide the next phase rather than being hidden by implementation complexity.
