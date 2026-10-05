@@ -1,0 +1,15 @@
+{
+  "listing_id": "test-01",
+  "signals": [
+    {
+      "type": "story",
+      "claim": "The guitar belonged to the seller's dad.",
+      "source_text": "This was my dad's guitar."
+    },
+    {
+      "type": "story",
+      "claim": "The seller's dad played the guitar in local bands.",
+      "source_text": "He played it in local bands."
+    }
+  ]
+}
