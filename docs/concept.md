@@ -124,3 +124,59 @@ These may be considered later if the core concept proves useful.
 > **The experiment should earn the right to become a product.**
 
 Architecture, technology choices, and larger features should follow what is learned from the experiment rather than being assumed in advance.
+
+## Phase 2 — Evidence Pipeline
+
+### Goal
+
+Turn the initial extraction vertical slice into a repeatable workflow for processing listings and producing reliable, source-grounded structured evidence.
+
+Phase 2 should establish the minimum input, output, and evaluation conventions needed to determine whether the core extraction capability is useful enough to support further development.
+
+### Scope
+
+Phase 2 will focus on:
+
+* **Multiple-listing input**
+
+  * Establish a simple input format for processing a collection of listings rather than a single hard-coded listing.
+
+* **Repeatable extraction**
+
+  * Run the existing extraction capability across multiple listings and produce structured extraction artifacts.
+
+* **Source preservation**
+
+  * Maintain a direct connection between each extracted Signal and the source text from which it was derived.
+
+* **Extraction evaluation**
+
+  * Bring the useful evaluation principles from Experiment 0 into the working pipeline so extraction quality can be measured rather than assumed.
+
+* **Uncertainty preservation**
+
+  * Preserve the distinction between what a listing claims and what is actually established.
+  * The extraction process must not silently convert uncertain or attributed claims into facts.
+
+### Out of Scope
+
+Phase 2 does not currently include:
+
+* Evidence Relationship implementation
+* entity resolution or persistent entity modeling
+* database implementation
+* web UI
+* recommendation or ranking systems
+* marketplace integrations or automated web scraping
+* pricing intelligence
+* authentication or deployment infrastructure
+* generalized AI orchestration
+* graph architecture
+
+These capabilities may become appropriate in later phases, but Phase 2 should not assume that they are required.
+
+### Phase 2 Completion Criterion
+
+Phase 2 is complete when Hedstok can repeatedly process a collection of listings and produce structured, source-grounded evidence with enough evaluation support to determine whether the extraction capability is reliable and useful enough to justify further development.
+
+> **Phase 2 is intended to establish whether the core evidence pipeline works well enough to earn the next capability.**
