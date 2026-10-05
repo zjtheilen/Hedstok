@@ -377,3 +377,126 @@ to:
 > **"This is worth looking into, and here's why."**
 
 If the experiment does not demonstrate useful discovery, that result is still a valid Phase 3 finding and should guide the next phase rather than being hidden by implementation complexity.
+
+### Phase 3.1 — Discovery Experiment
+
+#### Input
+
+Phase 3.1 will use the existing artifacts produced during Phase 2:
+
+* `experiment-0/input/listings.json`
+
+  * The original collection of 14 guitar listings and their descriptions.
+
+* `extraction2.json`
+
+  * The structured Signals produced by the Phase 2 batch extraction.
+
+* `experiment-0/evaluation/expected-signals.json`
+
+  * Used as evaluation context rather than as instructions for what the discovery mechanism should find.
+
+The discovery experiment should operate primarily on the structured evidence while retaining access to the original listings so that discoveries can be traced back to their source text.
+
+No new listings or marketplace data will be introduced for the initial experiment.
+
+No new extraction calls are required.
+
+#### Task
+
+The experiment will ask Hedstok to examine the structured evidence and identify **candidate acquisition opportunities**.
+
+A candidate should represent something that appears potentially worth investigating because of the evidence present in the listing.
+
+The experiment should consider possibilities including:
+
+* unusual provenance or personal history;
+* contradictions or inconsistencies;
+* uncertain or potentially incorrect identification;
+* unusual instrument configurations;
+* meaningful combinations of otherwise ordinary Signals;
+* interesting stories or circumstances;
+* evidence that suggests useful follow-up investigation.
+
+These possibilities are not predefined definitions of a discovery. The experiment should remain open to other patterns that emerge from the evidence.
+
+The core task is:
+
+> **Review the available structured evidence and identify candidate acquisition opportunities supported by the available evidence. For each candidate, explain what makes it interesting using the available evidence.**
+
+The discovery process should not:
+
+* determine whether seller claims are true;
+* determine monetary value;
+* make a purchasing recommendation;
+* invent missing information;
+* convert uncertainty into certainty.
+
+#### Evaluation
+
+Human evaluation is the primary measure of Phase 3.1 success.
+
+For each surfaced candidate, evaluate:
+
+**Discovery usefulness**
+
+> **Would I actually investigate this listing further?**
+
+**Non-obviousness**
+
+> Does the discovery depend on evidence or a combination of evidence that ordinary keyword or attribute-based searching might miss?
+
+**Explanation usefulness**
+
+> Does the explanation make clear why the listing might be worth investigating?
+
+**Evidence grounding**
+
+> Can the explanation be traced back to the relevant Signals and original listing?
+
+**Uncertainty preservation**
+
+> Does the discovery distinguish source claims from established information and preserve unresolved questions?
+
+The evaluation should also record candidates that initially appear interesting but are ultimately not considered worth investigating.
+
+These false positives are useful experimental evidence because they help establish what discovery should and should not mean for Hedstok.
+
+A technically plausible or unusual observation is not sufficient for success. The goal is to identify opportunities that are genuinely useful for human investigation.
+
+#### Expected Output
+
+Each candidate opportunity should contain, at minimum:
+
+* **listing ID**
+* **discovery description** — what Hedstok noticed;
+* **reason** — why the observation might make the listing worth investigating;
+* **supporting Signals** — the evidence relevant to the discovery;
+* **source grounding** — the original source text supporting that evidence;
+* **uncertainty** — relevant claims or questions that remain unresolved.
+
+Conceptually:
+
+```text
+Candidate opportunity
+        ↓
+Listing ID
+        ↓
+What makes it interesting
+        ↓
+Supporting Signals
+        ↓
+Source evidence
+        ↓
+What remains uncertain
+```
+
+The output should not include:
+
+* purchasing recommendations;
+* monetary valuations;
+* confidence or ranking scores;
+* verification results;
+* invented explanations for why an instrument is valuable.
+
+Phase 3.1 is an experiment to determine whether structured evidence can produce useful discoveries. It is not yet a commitment to a particular discovery algorithm, schema, or implementation architecture.
