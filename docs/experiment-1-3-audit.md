@@ -332,6 +332,176 @@ The current investigation has not demonstrated a requirement for that stronger f
 
 This remains an architectural investigation rather than an architectural decision.
 
+### Minimum Signal-Reference Requirements
+
+The evidence continuity investigation established that supporting signal references need to be reliable within the scope of the extraction from which a relationship is derived.
+
+A reliable reference must distinguish one signal from another without depending on the signal's position in the extraction. It must resolve unambiguously to the specific signal so that the signal's `type`, `claim`, and `source_text` can be recovered. The reference must also have a defined scope.
+
+The investigation does not establish a requirement for the reference to remain valid across separate extractions of the same listing. Cross-extraction evidence comparison remains a separate concern.
+
+The reference should identify the evidence signal itself rather than encode the meaning of the relationship or identify an independently modeled domain entity.
+
+### Multiple Supporting Signals
+
+A relationship can legitimately be supported by multiple evidence signals.
+
+For example, a relationship may depend on several independently extracted pieces of evidence rather than a single signal. The relationship therefore cannot assume a one-to-one correspondence between a relationship and its supporting evidence.
+
+The distinction is between the relationship's endpoints and its supporting evidence:
+
+```text
+Evidence Relationship
+├── endpoint A
+├── endpoint B
+└── supporting signals
+      ├── signal reference
+      ├── signal reference
+      └── signal reference
+```
+
+Each reference identifies one individual signal, while a relationship may contain one or more supporting signal references.
+
+This establishes a one-to-many capability for supporting evidence without requiring independently modeled entities or persistent signal identity across extractions.
+
+### Signal-Level Reference vs. Span-Level Reference
+
+The investigation also considered whether a supporting evidence reference must identify a specific occurrence or span within a signal rather than the signal itself.
+
+Listing 05 provides a useful test because individual signals can contain multiple related claims. A single story signal can preserve the instrument's connection to the seller's father, the father's session-player history, and recording claims within the same source statement.
+
+A relationship can reference that complete signal while preserving the original source wording through `source_text`. The relationship's meaning identifies the connection being represented; the supporting signal reference identifies the evidence from which that connection is derived.
+
+The investigation did not identify a demonstrated capability that requires Hedstok to address a specific span within a signal independently of the signal as a whole.
+
+This suggests that the signal is currently a sufficient unit of supporting evidence. Span-level provenance would introduce a finer-grained evidence model without a demonstrated requirement.
+
+### Preliminary Finding
+
+> **Evidence Relationships require reliable references to supporting signals within their extraction scope. A relationship may reference one or more complete signals, and the same signal may support multiple relationships. The current evidence does not establish a need for span-level references or persistent cross-extraction signal identity.**
+
+This remains an architectural investigation rather than an architectural decision.
+
+### Minimum Relationship Representation
+
+The investigation then examined the minimum information required for an Evidence Relationship itself.
+
+Listing 05 provides three representative cases:
+
+```text
+Instrument → belonged to → Dad
+
+Instrument → associated with → Recording history
+
+Instrument → associated with → Kirk Hammett
+```
+
+Each can be represented using the same conceptual structure:
+
+```text
+Endpoint A
+    ↓
+Relationship meaning
+    ↓
+Endpoint B
+    ↓
+Supporting signal references
+```
+
+The endpoints identify the two things connected by the relationship. The relationship meaning communicates what connection is being represented. Supporting signal references preserve the evidence grounding that connection.
+
+The investigation did not identify a demonstrated need for additional relationship-level information such as confidence, scoring, timestamps, persistent endpoint identity, or relationship-specific explanations.
+
+### Binary Relationship Boundary
+
+The investigation also tested whether Evidence Relationships require more than two endpoints.
+
+Listing 05 contains compound evidence involving the instrument, the seller's father, and recordings. However, the evidence can be represented as separate binary relationships while preserving the original compound source claim in the supporting signal.
+
+For example:
+
+```text
+Instrument → associated with → Reign in Blood
+
+Dad → associated with → Reign in Blood
+```
+
+The source evidence can support both relationships without requiring a single relationship containing the instrument, Dad, and the recording as simultaneous endpoints.
+
+No encountered example has demonstrated a requirement for a relationship with more than two endpoints.
+
+This suggests that a binary relationship is sufficient for the current evidence model. This is a representation boundary established by the current investigation, not a decision to implement a generalized graph structure.
+
+### Relationship vs. Descriptive Evidence
+
+Listing 08 provides an adversarial test for distinguishing Evidence Relationships from ordinary descriptive or configuration evidence.
+
+The listing contains evidence such as:
+
+```text
+Instrument → belonged to → Dad
+
+Instrument → associated with → Ampeg B-15
+```
+
+These can be represented as Evidence Relationships.
+
+Other evidence describes the instrument itself:
+
+```text
+four thick strings
+kind of long
+Fender
+Precision
+```
+
+These signals may collectively form an Evidence Pattern or provide identity/configuration evidence. The fact that they can be expressed grammatically as connections to the instrument does not by itself make them Evidence Relationships.
+
+This establishes an important boundary:
+
+> **Not every connection between extracted information constitutes an Evidence Relationship.**
+
+Evidence Relationships should represent meaningful connections that provide a distinct structural capability rather than converting every descriptive or configuration signal into a graph edge.
+
+### Relationship Meaning and Normalization
+
+The minimum relationship representation requires the relationship to communicate its meaning, but the investigation has not yet established whether that meaning should use a controlled vocabulary or remain unnormalized.
+
+A controlled vocabulary could improve consistency for operations such as querying, aggregation, and comparison by relationship type. However, defining such a vocabulary would introduce semantic commitments and could force early assumptions about domain relationships that the current evidence does not yet justify.
+
+Free-form relationship meaning would preserve flexibility and avoid premature vocabulary design, but could make future semantic querying or aggregation more difficult if differently worded relationships represent the same concept.
+
+At the current stage, Hedstok has demonstrated a need to represent, display, and trace Evidence Relationships. Querying, aggregation, and comparison by normalized semantic type would make a controlled vocabulary more useful, but those capabilities have not been demonstrated as requirements for the current architecture.
+
+Therefore, a controlled relationship vocabulary is not currently justified.
+
+This does not establish that free-form relationship meanings are the permanent design. It establishes only that normalization has not yet been demonstrated as a required capability.
+
+### Current Architectural Finding
+
+The investigation now provides a provisional minimum representation for Evidence Relationships:
+
+```text
+Evidence Relationship
+├── endpoint A
+├── relationship meaning
+├── endpoint B
+└── one or more supporting signal references
+```
+
+The current evidence also supports the following boundaries:
+
+* endpoints do not require independently modeled entities;
+* supporting references identify complete signals rather than spans;
+* supporting evidence may contain multiple signal references;
+* a signal may support multiple relationships;
+* relationships are currently adequately represented as binary connections;
+* descriptive or configuration evidence should not automatically become relationships;
+* persistent cross-extraction relationship or signal identity has not been established as a requirement;
+* a controlled relationship vocabulary has not yet been justified.
+
+These findings remain provisional architectural investigation results. They do not establish a production schema or require immediate implementation.
+
 ## Next Step
 
-The next investigation should determine the minimum requirements for a signal reference within an extraction. This should establish how a relationship can reliably identify its supporting signals without introducing persistent cross-extraction signal identity or independently modeled domain entities.
+The next investigation should determine whether the provisional Evidence Relationship representation provides enough structure for the capabilities Hedstok has actually demonstrated a need for, without introducing additional entity, identity, or normalization machinery.
