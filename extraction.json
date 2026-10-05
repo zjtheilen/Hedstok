@@ -1,15 +1,492 @@
-{
-  "listing_id": "test-01",
-  "signals": [
-    {
-      "type": "story",
-      "claim": "The guitar belonged to the seller's dad.",
-      "source_text": "This was my dad's guitar."
-    },
-    {
-      "type": "story",
-      "claim": "The seller's dad played the guitar in local bands.",
-      "source_text": "He played it in local bands."
-    }
-  ]
-}
+[
+  {
+    "listing_id": "listing-01",
+    "signals": [
+      {
+        "type": "story",
+        "claim": "Guitar was passed down from the seller's grandfather to the seller's father.",
+        "source_text": "so this guy said his dad has a guitar that was passed down from HIS father."
+      },
+      {
+        "type": "identity",
+        "claim": "The seller does not know the age or manufacturer of the guitar.",
+        "source_text": "he doesn't know how old or the manufacturer"
+      },
+      {
+        "type": "identity",
+        "claim": "The guitar cannot be any younger than 1970.",
+        "source_text": "but it can't be any younger than 1970."
+      },
+      {
+        "type": "configuration",
+        "claim": "The guitar is acoustic, and it is unsure if it has electronics.",
+        "source_text": "Acoustic, unsure if it has electronics."
+      },
+      {
+        "type": "identity",
+        "claim": "The manufacturer's name might start with 'M'.",
+        "source_text": "Thinks manufacturer's name MIGHT start with 'M'."
+      },
+      {
+        "type": "seller_context",
+        "claim": "The seller's father does not know anything about guitars.",
+        "source_text": "His father doesn't know anything about guitars"
+      },
+      {
+        "type": "story",
+        "claim": "The seller's father was told by his father to never sell the guitar because it is too personal.",
+        "source_text": "but he was told by HIS father to never sell this guitar, it's too personal."
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-02",
+    "signals": [
+      {
+        "type": "market_context",
+        "claim": "The listing is from craigslist.",
+        "source_text": "from craigslist"
+      },
+      {
+        "type": "identity",
+        "claim": "The manufacturer is fender.",
+        "source_text": "fender."
+      },
+      {
+        "type": "identity",
+        "claim": "The year is 1992.",
+        "source_text": "1992."
+      },
+      {
+        "type": "identity",
+        "claim": "The instrument is an ssh strat.",
+        "source_text": "ssh strat."
+      },
+      {
+        "type": "configuration",
+        "claim": "Off-brand active pickups are installed.",
+        "source_text": "off-brand active pickups installed"
+      },
+      {
+        "type": "associated_equipment",
+        "claim": "Original pickups are included.",
+        "source_text": "(original pickups included)."
+      },
+      {
+        "type": "configuration",
+        "claim": "It is setup for mammoth heavy gauge strings.",
+        "source_text": "setup for mammoth heavy gauge strings."
+      },
+      {
+        "type": "configuration",
+        "claim": "A locking nut is installed.",
+        "source_text": "locking nut installed."
+      },
+      {
+        "type": "condition",
+        "claim": "There are small signs of rust on the bridge.",
+        "source_text": "small signs of rust on bridge."
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-03",
+    "signals": [
+      {
+        "type": "identity",
+        "claim": "The instrument is a Squier Stratocaster.",
+        "source_text": "squier stratocaster"
+      },
+      {
+        "type": "associated_equipment",
+        "claim": "A 10 watt amp is included.",
+        "source_text": "10 watt amp"
+      },
+      {
+        "type": "story",
+        "claim": "It was a Christmas present that mostly lived in the seller's closet.",
+        "source_text": "xmas present but mostly lived in my closet."
+      },
+      {
+        "type": "condition",
+        "claim": "Two strings are broken.",
+        "source_text": "two strings are broken"
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-04",
+    "signals": [
+      {
+        "type": "identity",
+        "claim": "The instrument is a Rickenbacker 12-string.",
+        "source_text": "rickenbacker 12-string."
+      },
+      {
+        "type": "market_context",
+        "claim": "The instrument was made in 2006.",
+        "source_text": "2006."
+      },
+      {
+        "type": "condition",
+        "claim": "The instrument has all original parts.",
+        "source_text": "all original parts."
+      },
+      {
+        "type": "condition",
+        "claim": "The instrument has brand new light-medium strings.",
+        "source_text": "brand new strings (light-medium)."
+      },
+      {
+        "type": "market_context",
+        "claim": "The price is $2000.",
+        "source_text": "for sale ($2000)"
+      },
+      {
+        "type": "market_context",
+        "claim": "The seller is open to a trade plus cash.",
+        "source_text": "or open to trade + cash"
+      },
+      {
+        "type": "associated_equipment",
+        "claim": "The trade is for tube-amps or high-gain solid state stacks.",
+        "source_text": "for tube-amps or high-gain solid state stacks."
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-05",
+    "signals": [
+      {
+        "type": "seller_context",
+        "claim": "The seller's dad owned the guitar.",
+        "source_text": "my dad's guitar."
+      },
+      {
+        "type": "story",
+        "claim": "The seller's dad was a session player.",
+        "source_text": "he was a session player"
+      },
+      {
+        "type": "story",
+        "claim": "The guitar and the dad's playing are featured on late 80's metal albums, including Reign in Blood (1986) and Master of Puppets (1986).",
+        "source_text": "this particular guitar (and his playing) is featured on a few late 80's metal albums, including Reign in Blood (1986) and Master of Puppets (1986)."
+      },
+      {
+        "type": "identity",
+        "claim": "The guitar is a Jackson.",
+        "source_text": "Jackson"
+      },
+      {
+        "type": "configuration",
+        "claim": "The guitar has active pickups.",
+        "source_text": "active pickups"
+      },
+      {
+        "type": "condition",
+        "claim": "The guitar has buckle scuffs from Kirk Hammet.",
+        "source_text": "buckle scuffs from Kirk Hammet"
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-06",
+    "signals": [
+      {
+        "type": "story",
+        "claim": "The guitar is described as really old.",
+        "source_text": "really old guitar."
+      },
+      {
+        "type": "configuration",
+        "claim": "The guitar has an ugly goldish color and black plastic.",
+        "source_text": "ugly goldish color and black plastic."
+      },
+      {
+        "type": "configuration",
+        "claim": "The guitar is really heavy.",
+        "source_text": "really heavy."
+      },
+      {
+        "type": "identity",
+        "claim": "It says gibbons or gibson or something on the top.",
+        "source_text": "it says gibbons or gibson or something on the top."
+      },
+      {
+        "type": "story",
+        "claim": "It has been in the seller's garage as long as they can remember.",
+        "source_text": "been in my garage as long as i can remember."
+      },
+      {
+        "type": "seller_context",
+        "claim": "The seller states that it needs to go.",
+        "source_text": "needs to go."
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-07",
+    "signals": [
+      {
+        "type": "configuration",
+        "claim": "The guitar is 3/4 size.",
+        "source_text": "3/4 size"
+      },
+      {
+        "type": "identity",
+        "claim": "The guitar is a KAY.",
+        "source_text": "KAY"
+      },
+      {
+        "type": "identity",
+        "claim": "The instrument is a guitar.",
+        "source_text": "guitar."
+      },
+      {
+        "type": "configuration",
+        "claim": "The guitar is acoustic.",
+        "source_text": "acoustic."
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-08",
+    "signals": [
+      {
+        "type": "story",
+        "claim": "It was the seller's dad's guitar.",
+        "source_text": "my dad's guitar."
+      },
+      {
+        "type": "configuration",
+        "claim": "It has four thick strings.",
+        "source_text": "has four thick strings."
+      },
+      {
+        "type": "configuration",
+        "claim": "It is kind of long.",
+        "source_text": "kind of long."
+      },
+      {
+        "type": "identity",
+        "claim": "It says fender and precision.",
+        "source_text": "says fender and it also says precision."
+      },
+      {
+        "type": "associated_equipment",
+        "claim": "An ampeg b-15 amp is available to sell as well.",
+        "source_text": "there is also a ampeg b-15 amp that i can sell as well."
+      },
+      {
+        "type": "market_context",
+        "claim": "The seller asks to make an offer.",
+        "source_text": "make an offer."
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-09",
+    "signals": [
+      {
+        "type": "seller_context",
+        "claim": "The seller has a large collection of instruments.",
+        "source_text": "large collection of instruments."
+      },
+      {
+        "type": "seller_context",
+        "claim": "The seller sells and trades.",
+        "source_text": "sell and trade."
+      },
+      {
+        "type": "seller_context",
+        "claim": "The seller's inventory typically contains late 60s to early 90s single coil guitars.",
+        "source_text": "my inventory typically contains late 60s to early 90s single coil guitars,"
+      },
+      {
+        "type": "seller_context",
+        "claim": "The seller also has soapbar and p90 equipped classics.",
+        "source_text": "i also have soapbar and p90 equipped classics as well."
+      },
+      {
+        "type": "market_context",
+        "claim": "The seller is willing to make deals if long term business is potential.",
+        "source_text": "willing to make deals if long term business is potential"
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-10",
+    "signals": [
+      {
+        "type": "identity",
+        "claim": "The instrument is a Squier Sonic Stratocaster electric guitar.",
+        "source_text": "squier electric guitar sonic stratocaster"
+      },
+      {
+        "type": "identity",
+        "claim": "The year is 2025.",
+        "source_text": "2025."
+      },
+      {
+        "type": "market_context",
+        "claim": "The price is $250.",
+        "source_text": "$250"
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-11",
+    "signals": [
+      {
+        "type": "identity",
+        "claim": "The listing claims it is a 1958 les paul, though the image is of a kid-size stratocaster style guitar.",
+        "source_text": "1958 les paul [image is of a kid-size stratocaster style guitar]"
+      },
+      {
+        "type": "market_context",
+        "claim": "The listed price is $4000.",
+        "source_text": "$4000"
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-12",
+    "signals": [
+      {
+        "type": "identity",
+        "claim": "The guitar is a 1950s Harmony Broadway archtop acoustic guitar, model H954.",
+        "source_text": "1950s Harmony Broadway Archtop Acoustic Guitar"
+      },
+      {
+        "type": "identity",
+        "claim": "The guitar was made in the U.S.A.",
+        "source_text": "Made in U.S.A. !"
+      },
+      {
+        "type": "market_context",
+        "claim": "The price is $695.",
+        "source_text": "- $695"
+      },
+      {
+        "type": "seller_context",
+        "claim": "The item is located in Morongo Valley.",
+        "source_text": "(Morongo Valley)"
+      },
+      {
+        "type": "associated_equipment",
+        "claim": "It comes with the original pickguard.",
+        "source_text": "It comes complete with the original pickguard"
+      },
+      {
+        "type": "associated_equipment",
+        "claim": "It comes with a period correct guitar strap.",
+        "source_text": "and a period correct guitar 'strap'"
+      },
+      {
+        "type": "associated_equipment",
+        "claim": "It comes in its original chipboard case.",
+        "source_text": "in its original chipboard case."
+      },
+      {
+        "type": "configuration",
+        "claim": "It features cream body binding at the bottom edge.",
+        "source_text": "It features cream body binding at the bottom edge"
+      },
+      {
+        "type": "configuration",
+        "claim": "It features checkerboard binding at the top edge.",
+        "source_text": "and appealing checkerboard binding at the top edge."
+      },
+      {
+        "type": "seller_context",
+        "claim": "The seller describes it as a great, affordable addition to any collection of vintage guitars.",
+        "source_text": "Nice guitar and a great, affordable addition to any collection of vintage guitars."
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-13",
+    "signals": [
+      {
+        "type": "identity",
+        "claim": "Classic Singlecut Acoustic Guitar",
+        "source_text": "Classic Singlecut Acoustic Guitar"
+      },
+      {
+        "type": "market_context",
+        "claim": "Price is $150",
+        "source_text": "- $150"
+      },
+      {
+        "type": "market_context",
+        "claim": "Location is Morongo Valley",
+        "source_text": "(Morongo Valley)"
+      },
+      {
+        "type": "condition",
+        "claim": "New",
+        "source_text": "new"
+      },
+      {
+        "type": "associated_equipment",
+        "claim": "Comes in gig bag",
+        "source_text": "in gig bag"
+      },
+      {
+        "type": "configuration",
+        "claim": "Solid spruce top",
+        "source_text": "solid spruce top"
+      },
+      {
+        "type": "configuration",
+        "claim": "Mahogany back and sides",
+        "source_text": "mahogany back and sides"
+      },
+      {
+        "type": "configuration",
+        "claim": "Mahogany neck",
+        "source_text": "mahogany neck"
+      },
+      {
+        "type": "configuration",
+        "claim": "19 fret rosewood fretboard",
+        "source_text": "19 fret rosewood fretboard"
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-14",
+    "signals": [
+      {
+        "type": "identity",
+        "claim": "The guitar is a Fender HotShot Telecaster.",
+        "source_text": "Fender HotShot Telecaster"
+      },
+      {
+        "type": "identity",
+        "claim": "The guitar is part of the NEW Series.",
+        "source_text": "NEW Series Fender HotShot Telecaster"
+      },
+      {
+        "type": "identity",
+        "claim": "The guitar combines Tele and Strat in one.",
+        "source_text": "Tele and Strat in one guitar!"
+      },
+      {
+        "type": "condition",
+        "claim": "The guitar is in AS NEW MINT condition.",
+        "source_text": "AS NEW MINT condition"
+      },
+      {
+        "type": "market_context",
+        "claim": "The price is $1,350.",
+        "source_text": "- $1,350"
+      },
+      {
+        "type": "market_context",
+        "claim": "The location is La Quinta.",
+        "source_text": "(La Quinta)"
+      }
+    ]
+  }
+]

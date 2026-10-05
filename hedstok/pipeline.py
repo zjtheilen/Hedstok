@@ -1,24 +1,34 @@
+import json
+
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-from hedstok.models import ListingExtraction
+from hedstok.models import BatchExtraction
 
 load_dotenv()
 
 client = genai.Client(http_options=types.HttpOptions(timeout=30000))
 
 
-def extract_listing(listing: dict) -> ListingExtraction:
-    prompt = f"""
-Extract the observable claims from this guitar listing.
+def process_listings(input_path: str, output_path: str) -> None:
+    with open(input_path, encoding="utf-8") as file:
+        data = json.load(file)
 
-LISTING ID: {listing["id"]}
+    listings_text = "\n\n".join(
+        f"""LISTING ID: {listing["id"]}
 DESCRIPTION:
-{listing["description"]}
+{listing["description"]}"""
+        for listing in data["listings"]
+    )
+
+    prompt = f"""
+Extract the observable claims from each guitar listing below.
+
+{listings_text}
 
 STRICT RULES:
-- Extract only information explicitly stated in the listing.
+- Extract only information explicitly stated in each listing.
 - Do not use outside knowledge.
 - Do not verify or fact-check any claim.
 - Do not decide whether a claim is true or false.
@@ -28,6 +38,8 @@ STRICT RULES:
 - Every source_text value must be copied exactly from the listing.
 - Keep each claim concise and faithful to the source.
 - Do not strengthen the certainty of a claim.
+- Process every listing.
+- Preserve each listing's ID exactly.
 
 For each signal provide:
 - type: exactly one of:
@@ -59,8 +71,22 @@ Use these semantic categories:
         response_format={
             "type": "text",
             "mime_type": "application/json",
-            "schema": ListingExtraction.model_json_schema(),
+            "schema": BatchExtraction.model_json_schema(),
         },
     )
 
-    return ListingExtraction.model_validate_json(interaction.output_text)
+    result = BatchExtraction.model_validate_json(interaction.output_text)
+
+    with open(output_path, "w", encoding="utf-8") as file:
+        json.dump(
+            [listing.model_dump() for listing in result.listings],
+            file,
+            indent=2,
+        )
+
+
+if __name__ == "__main__":
+    process_listings(
+        "experiment-0/input/listings.json",
+        "extraction2.json",
+    )

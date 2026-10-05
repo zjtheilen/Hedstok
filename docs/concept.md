@@ -158,6 +158,56 @@ Phase 2 will focus on:
   * Preserve the distinction between what a listing claims and what is actually established.
   * The extraction process must not silently convert uncertain or attributed claims into facts.
 
+### Evaluation Findings
+
+#### Source-text grounding
+
+The structural evaluator identified a source-text fidelity failure in listing-11. The extracted contradiction signal combined two non-contiguous portions of the listing while omitting the intervening price:
+
+`1958 les paul $4000 [image is of a kid-size stratocaster style guitar]`
+
+The extraction returned:
+
+`1958 les paul [image is of a kid-size stratocaster style guitar]`
+
+Under the current extraction contract, `source_text` must be copied exactly from the source listing, so this was correctly classified as a grounding failure.
+
+The batch extraction subsequently represented the two pieces of evidence as separate signals with exact source text. This demonstrates that the underlying evidence can be extracted correctly without requiring a combined source span.
+
+The earlier failure also raises a potential future design question: whether a signal should be able to reference multiple source spans when a claim depends on non-contiguous evidence. No schema change is made at this stage.
+
+#### Semantic extraction
+
+Semantic review of the batch extraction showed that fewer signals do not necessarily indicate lower extraction quality. Related evidence was sometimes consolidated into fewer signals while preserving the substantive information required by the evaluation criteria.
+
+The review also showed that the current Experiment 0 expected-signal fixture contains several different kinds of evaluation criteria:
+
+* directly extractable source evidence;
+* interpretations or conclusions derived from source evidence;
+* absence-based observations.
+
+These categories should not necessarily be treated as equivalent extraction requirements.
+
+For example, a listing may provide the evidence needed to identify a potential contradiction or investigation opportunity without the extraction layer itself needing to assert that interpretation.
+
+The current batch extraction captured the substantive evidence for most of the applicable evaluation criteria reviewed.
+
+These findings support continuing to treat the extraction layer as an evidence-preservation step rather than requiring it to perform higher-level interpretation.
+
+No extraction schema change is made at this stage.
+
+#### Batch extraction
+
+The 14-listing batch extraction was compared with independent extraction of each listing.
+
+The batch extraction produced fewer Signals primarily by consolidating related evidence into broader Signals. Review of the two outputs found no meaningful loss of substantive evidence required by the evaluation criteria.
+
+In some cases, the batch extraction produced cleaner source-grounded evidence than the independent extraction. In listing-11, for example, the independent extraction combined non-contiguous source text into a single invalid source reference, while the batch extraction represented the relevant evidence as separate Signals with exact source text.
+
+Within the scope of this experiment, batch extraction therefore appears viable for repeatable multi-listing processing without a demonstrated loss of useful evidence.
+
+This does not establish that batch extraction is universally equivalent to independent extraction. The finding is limited to the current evaluation set and should be revisited if larger or materially different inputs produce different behavior.
+
 ### Out of Scope
 
 Phase 2 does not currently include:
