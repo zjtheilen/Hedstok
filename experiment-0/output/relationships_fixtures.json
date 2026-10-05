@@ -1,0 +1,96 @@
+[
+  {
+    "listing_id": "listing-01",
+    "relationships": []
+  },
+  {
+    "listing_id": "listing-02",
+    "relationships": [
+      {
+        "type": "association",
+        "description": "The listing includes both the currently installed off-brand active pickups and the original pickups that are included separately.",
+        "supporting_signals": [
+          "[configuration] Off-brand active pickups are installed.",
+          "[associated_equipment] Original pickups are included."
+        ]
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-03",
+    "relationships": []
+  },
+  {
+    "listing_id": "listing-05",
+    "relationships": [
+      {
+        "type": "historical_association",
+        "description": "The guitar is connected to session work and specific late 80s metal albums through claims about the seller's dad and his playing.",
+        "supporting_signals": [
+          "[story] The guitar belonged to the seller's dad, who was a session player whose playing and this guitar were featured on late 80s metal albums, including Reign in Blood (1986) and Master of Puppets (1986).",
+          "[condition] The guitar has buckle scuffs from Kirk Hammett."
+        ]
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-06",
+    "relationships": []
+  },
+  {
+    "listing_id": "listing-08",
+    "relationships": [
+      {
+        "type": "association",
+        "description": "The instrument listing features an available amplifier that can be sold alongside the guitar.",
+        "supporting_signals": [
+          "[story] The instrument belongs to the seller's dad.",
+          "[associated_equipment] There is an Ampeg B-15 amp available to sell as well."
+        ]
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-09",
+    "relationships": []
+  },
+  {
+    "listing_id": "listing-11",
+    "relationships": [
+      {
+        "type": "contradiction",
+        "description": "The text description identifies the instrument as a Les Paul while the image shows a Stratocaster-style guitar.",
+        "supporting_signals": [
+          "[identity] The text lists the guitar as a 1958 Les Paul.",
+          "[configuration] The image shows a kid-size Stratocaster-style guitar."
+        ]
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-12",
+    "relationships": [
+      {
+        "type": "association",
+        "description": "The guitar is described along with its associated original chipboard case and period-correct strap.",
+        "supporting_signals": [
+          "[identity] The guitar is a 1950s Harmony Broadway Archtop Acoustic Guitar, model H954, Made in U.S.A.",
+          "[associated_equipment] It includes a period correct guitar strap and original chipboard case."
+        ]
+      }
+    ]
+  },
+  {
+    "listing_id": "listing-14",
+    "relationships": [
+      {
+        "type": "convergence",
+        "description": "The identity of the instrument as a HotShot Telecaster converges with the configuration description characterizing it as combining Tele and Strat features.",
+        "supporting_signals": [
+          "[identity] The guitar is a NEW Series Fender HotShot Telecaster.",
+          "[configuration] The guitar is described as Tele and Strat in one guitar."
+        ]
+      }
+    ]
+  }
+]

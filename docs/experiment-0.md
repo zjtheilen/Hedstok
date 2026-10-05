@@ -169,6 +169,190 @@ AI output should remain traceable to the source material.
 
 Hedstok should not use an LLM as an opaque "interestingness" oracle.
 
+### AI Extraction Finding
+
+Initial testing demonstrated that Gemini can convert unstructured listing text into structured observations containing:
+
+- a signal type;
+
+- a concise claim;
+
+- source text supporting the claim.
+
+The extraction prompt explicitly requires claims to remain source-grounded and prohibits fact-checking, inference, valuation, or other interpretation.
+
+Testing also showed that unconstrained extraction can introduce interpretation beyond the source, such as attempting to fact-check claims or characterize them as unsupported. The extraction boundary was therefore tightened so that verification and interpretation remain outside the AI extraction step.
+
+A full extraction run was then performed against all 14 Experiment 0 listings in a single request. The resulting observations were generally source-grounded and preserved important distinctions such as uncertain identification, provenance claims, seller context, image-derived observations, and potentially conflicting information.
+
+The extraction did not reproduce every signal represented in the separate evaluation dataset, and signal categories were sometimes broad or inconsistent. These results do not currently justify expanding the extraction schema. The extraction layer's purpose is to establish a faithful observation layer; it should not encode the discovery logic itself.
+
+The full run demonstrated that potentially interesting cases can be represented as combinations or relationships between extracted observations. Examples include:
+
+- conflicting text and image descriptions;
+- provenance combined with unusual historical claims;
+- uncertain identification combined with ownership history;
+- seller context combined with instrument characteristics.
+
+This establishes the current architectural boundary:
+
+> **AI extracts. Software reasons. Human evaluates.**
+
+The frozen extraction output was considered sufficient to proceed to deterministic discovery analysis. Evaluation of that output identified both discovery failures and limitations in the organization of extracted observations. These findings motivated a targeted revision of the extraction schema rather than an attempt to make the AI independently determine what is "interesting."
+
+The original extraction baseline remains preserved as an experimental reference point. The revised schema represents the next extraction iteration and should be evaluated against the discovery failures identified during Experiment 0 rather than treated as an assumption that the revised categories are universally correct.
+
+### Semantic Extraction Schema Finding
+
+The initial extraction vocabulary used several narrowly defined categories, including separate categories for brand, ownership history, recording history, electronics, and miscellaneous information.
+
+The evaluation showed that these categories were inconsistent in granularity. Some represented semantic domains, while others represented specific attributes or implementation details. This made it difficult to reason consistently about relationships between observations.
+
+The extraction schema was therefore revised to use a smaller set of semantic evidence categories:
+
+- `identity` — manufacturer, model, instrument type, or other evidence about what the instrument is or may be;
+- `configuration` — physical, electronic, hardware, construction, or unusual configuration characteristics;
+- `story` — human history, ownership, personal significance, previous players, recordings, use, or other narrative associated with the instrument;
+- `associated_equipment` — amplifiers, accessories, or other equipment connected to the listing or instrument;
+- `seller_context` — seller inventory, collection, selling or trading motivation, or business context;
+- `condition` — physical condition, damage, wear, or originality;
+- `market_context` — price, date, trade terms, or other listing or market context.
+
+Uncertainty is treated as a property of an observation rather than as a separate semantic category.
+
+This creates a deliberate distinction between **what an observation is about** and **how that observation relates to other observations**.
+
+For example:
+
+> `identity + configuration`
+
+is a relationship that can be evaluated by the deterministic discovery layer. It is not itself an extraction category.
+
+Similarly, contradiction and convergence are relationships between observations rather than properties that the extraction model must independently classify.
+
+The revised schema intentionally does not introduce subtypes beneath categories such as `story`. For example, ownership history and recording history are both represented as `story` observations rather than creating a premature taxonomy of story types.
+
+This creates a temporary limitation for existing discovery rules that depended on those distinctions. That limitation is intentional. The experiment should not expand the extraction taxonomy solely to preserve previously implemented rules.
+
+The schema should become more specific only when an observed discovery failure demonstrates that the additional distinction is necessary.
+
+The resulting architectural boundary is:
+
+> **AI classifies evidence semantically. Discovery reasons about relationships between evidence.**
+
+This preserves the principle:
+
+> **AI extracts. Software reasons. Human evaluates.**
+
+### Deterministic Discovery Finding
+
+The initial deterministic discovery layer successfully surfaced several distinct relationship types from the frozen extraction baseline:
+
+- ownership history combined with uncertain identification;
+- ownership history combined with recording-history claims;
+- multiple modification or specialized-configuration signals;
+- conflicting instrument identification and image-based observations.
+
+The discovery layer deliberately operates on extracted observations rather than attempting to determine whether individual claims are true.
+
+Initial adversarial testing also identified a false-positive path in the modification rule. The rule initially treated unrelated uses of terms such as "pickup" and "setup" as evidence of modification. The rule was tightened to require stronger modification-oriented language, and the resulting behavior passed six targeted tests covering positive cases and plausible false positives.
+
+This establishes an important boundary for the discovery layer:
+
+> **Discovery rules must identify relationships between observations, not merely the presence of interesting-sounding words.**
+
+The current rules are intentionally narrow and experiment-specific. Generalization will be driven by observed failures rather than by attempting to anticipate a complete discovery taxonomy.
+
+### Discovery Schema Boundary
+
+The revised extraction schema changes the appropriate unit of deterministic discovery from individual signal keywords or narrowly defined signal types toward relationships between semantic evidence categories.
+
+The first relationship implemented under this model is **identity + configuration convergence**.
+
+The rule does not require knowledge of specific manufacturers, models, instrument types, or configuration terminology. It only requires the presence of both identity evidence and configuration evidence. The rule therefore tests whether semantic classification by the extraction layer can enable deterministic relationship analysis without transferring the judgment of "interestingness" to the AI.
+
+This approach also exposes a boundary in the existing discovery rules. Some earlier rules depended on distinctions that are no longer represented as separate extraction categories. For example, the previous provenance rule distinguished ownership history from recording history, while both are now represented as `story`.
+
+Rather than restoring those distinctions as subtypes, such rules should be considered candidates for redesign or deferral. Their future implementation should be driven by an observed need for the distinction, not by a requirement to preserve the original rule structure.
+
+This establishes a broader design principle:
+
+> **Discovery rules should operate on relationships that the evidence schema can express meaningfully. The extraction schema should not grow solely to accommodate a pre-existing rule.**
+
+The identity/configuration convergence rule passed four targeted tests covering:
+
+- positive identity + configuration convergence;
+- identity without configuration;
+- configuration without identity;
+- identity combined with unrelated evidence.
+
+This demonstrates the relationship in isolation without yet establishing that the relationship itself represents a useful acquisition opportunity. Human evaluation remains responsible for that determination.
+
+### Schema Decision
+
+Experiment 0 will treat signal categories as **semantic evidence domains**, not as a taxonomy of every possible fact that may appear in a listing.
+
+The current categories are:
+
+- `identity`
+- `configuration`
+- `story`
+- `associated_equipment`
+- `seller_context`
+- `condition`
+- `market_context`
+
+Discovery rules may combine these categories to identify relationships worth presenting for human evaluation.
+
+The experiment will not introduce additional signal subtypes solely to preserve an existing discovery rule. If a discovery failure demonstrates that a distinction within one category is necessary, that need will be documented as an observed requirement and evaluated before expanding the schema.
+
+This means that some earlier discovery rules may be retired, redesigned, or deferred when their original distinctions cannot be expressed meaningfully by the revised evidence model.
+
+This is intentional.
+
+> **The evidence schema should describe what the system observed. Discovery rules should describe relationships the system can reason about.**
+
+### Discovery Rule Audit
+
+The original deterministic discovery rules were reviewed against the revised semantic evidence schema. The audit distinguishes between discovery concepts that remain useful, rules that require redesign, and rules that should be deferred rather than preserved solely for compatibility with the previous schema.
+
+| Original rule                             | Decision | Rationale                                                                                                                                                                                                                                                                       |
+| ----------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `find_provenance_clusters`                | Defer    | The rule depended on distinguishing ownership history from recording history. Both are now represented as `story`, and the experiment has not demonstrated that story subtypes are necessary.                                                                                   |
+| `find_uncertain_identification`           | Redesign | Uncertain instrument identity remains an observed investigation signal, but ownership history is not inherently required for the relationship. The revised rule should operate on uncertain `identity` evidence.                                                                |
+| `find_modification_cluster`               | Defer    | The original implementation relies on keyword matching across heterogeneous signal types. The revised schema represents these observations as `configuration`, but the experiment has not established a sufficiently general `configuration + configuration` relationship.      |
+| `find_identity_configuration_convergence` | Keep     | This is the first discovery rule implemented directly against the revised semantic schema. It demonstrates a relationship between `identity` and `configuration` evidence without requiring domain-specific vocabulary in the deterministic layer.                              |
+| `find_seller_motivation`                  | Defer    | The evaluation of listing-04 identified an extraction omission rather than a demonstrated discovery failure. Seller motivation is now represented as `seller_context`, but a useful relationship involving seller context has not yet been established.                         |
+| `find_contradictions`                     | Redesign | Contradiction remains a meaningful discovery relationship, but the current implementation is tied to listing-specific terminology and implicit image-source conventions. Contradiction should remain a relationship between evidence rather than become an extraction category. |
+
+The audit establishes that previously implemented discovery rules are experimental hypotheses, not architectural commitments. A rule may be retired, redesigned, or deferred when the revised evidence model no longer expresses its original assumptions meaningfully.
+
+The active discovery layer should therefore remain small and evidence-driven. New rules should be introduced when observed evaluation failures establish a useful relationship that can be expressed by the current evidence model.
+
+> **Do not preserve a discovery rule merely because it already exists. Preserve the discovery concept only when the evidence supports the relationship.**
+
+### Revised-Schema Fixture Evaluation
+
+Because the frozen extraction baseline uses the original signal schema, it cannot be passed directly to the revised discovery rules. A small hand-authored fixture was therefore created using the revised semantic schema.
+
+The fixture is a controlled evaluation artifact, not a replacement for AI extraction. Its purpose is to test discovery behavior against known evidence without requiring another live AI extraction.
+
+The fixture contains three representative cases:
+
+| Listing      | Expected behavior                    | Observed behavior                                                          |
+| ------------ | ------------------------------------ | -------------------------------------------------------------------------- |
+| `listing-08` | Identity + configuration convergence | Identity + configuration convergence discovery produced                    |
+| `listing-06` | Uncertain identity                   | Uncertain-identity discovery produced; convergence discovery also produced |
+| `listing-03` | Intentional non-discovery            | No discovery produced                                                      |
+
+The results matched the intended behavior of the current discovery rules.
+
+The evaluation also exposed an architectural behavior: a listing may produce multiple discoveries when multiple independent rules apply. `listing-06` triggered both uncertain identification and identity + configuration convergence. No deduplication or merging mechanism is introduced at this stage.
+
+The fixture therefore validates the current discovery boundary without implying that the current rules are sufficient for the full experiment.
+
+> **The fixture validates discovery mechanics; it does not substitute for evaluating AI-generated extraction.**
+
 ---
 
 ## 9. Evaluation
@@ -203,7 +387,7 @@ Did Hedstok overlook cases containing meaningful signals?
 
 ### Explanation quality
 
-Does the explanation describe *why* the candidate was surfaced rather than simply restating the listing?
+Does the explanation describe _why_ the candidate was surfaced rather than simply restating the listing?
 
 ### Hallucination
 
@@ -225,7 +409,587 @@ A technically impressive implementation that does not produce useful discoveries
 
 ---
 
-## 11. Non-Goals
+## 11. Sample Listing Evaluations
+
+[Samples](../experiment-0/output/extraction-baseline.json)
+
+1. listing-03
+    - Classification: intentional non-discovery
+    - Reason: Signals describe an ordinary beginner-oriented package with minor condition issues, but do not indicate an acquisition opportunity worth investigating.
+    - Implication: Unusual or negative condition signals should not automatically become discoveries. Discovery requires a meaningful acquisition relationship, not merely something notable about a listing.
+
+2. listing-04
+    - Classification: extraction failure
+    - Reason: The source listing includes a specific seller trade motivation (tube/high-gain amplifiers) that was not preserved in the frozen extraction. The extracted signals identify a Rickenbacker 12-string, its 2006 date, an all-original claim, and new strings, but do not preserve the seller's motivation.
+    - Implication: Potential discoveries can be lost when extraction omits contextual signals that become meaningful only in combination with instrument characteristics and seller intent.
+
+3. listing-07
+    - Classification: domain-context candidate
+    - Reason: The extraction identifies a 3/4-size KAY acoustic, but the potential acquisition significance depends on information not contained in the listing itself, including the historical context of the KAY brand and the relative rarity or utility of the 3/4-size configuration.
+    - Implication: Some potentially interesting opportunities cannot be identified from listing evidence alone and may require external domain knowledge. This should remain distinct from extraction failure and deterministic discovery failure.
+
+4. listing-08
+    - Classification: discovery failure
+    - Reason: The extracted signals contain enough information to identify a potentially interesting instrument relationship: an uncertain Fender/Precision identification is supported by physical characteristics consistent with a bass, while an Ampeg B-15 is also available. The discovery layer does not currently connect these signals.
+    - Implication: Discovery may require relationships between instrument-identification clues, physical characteristics, provenance, and associated equipment. Basses are currently treated as part of Hedstok's guitar acquisition domain.
+
+5. listing-09
+    - Classification: discovery failure
+    - Reason: The extracted signals describe a seller with a collection spanning late-1960s through early-1990s instruments, including multiple pickup configurations. These signals provide enough evidence to identify a potentially interesting collection-level opportunity, but the discovery layer does not currently reason about seller inventory or historical concentration.
+    - Implication: Opportunities may exist at the seller or collection level rather than within a single instrument. Seller inventory characteristics and relationship context can be relevant discovery signals.
+
+6. listing-10
+    - Classification: external-context-dependent candidate
+    - Reason: The listing identifies a recent Squier Sonic Stratocaster at $250. Domain knowledge suggests the asking price may be substantially above the instrument's typical market level, but the listing itself does not provide enough evidence to establish that.
+    - Implication: Price anomalies may be useful acquisition signals, but identifying them requires external market context rather than listing evidence alone.
+
+7. listing-12
+    - Classification: discovery failure
+    - Reason: The extracted signals provide a detailed identification of a 1950s Harmony Broadway H954, including its U.S. manufacture, original pickguard, period-correct strap, original chipboard case, and specific binding details. This combination provides substantial evidence of a historically specific and potentially desirable instrument, but the discovery layer does not currently recognize dense vintage-identification and originality relationships.
+    - Implication: Detailed combinations of model identification, manufacturing history, original or period-appropriate accessories, and construction details may represent acquisition opportunities even when no single extracted signal is sufficient on its own.
+
+8. listing-13
+    - Classification: investigation candidate
+    - Reason: The listing provides specific construction details, including a solid spruce top and mahogany back, sides, and neck, but does not identify a manufacturer. Combined with the $150 asking price, the incomplete manufacturer information creates enough uncertainty to warrant further investigation.
+    - Implication: Missing identity information can itself be useful when a listing contains unusually specific characteristics that may justify verifying the instrument's manufacturer, construction, and market context.
+
+9. listing-14
+    - Classification: investigation candidate
+    - Reason: The listing describes an unusual Telecaster/Stratocaster hybrid configuration and specifically characterizes the instrument as combining elements of both designs. The unusual configuration alone makes the listing worth investigating, while the lack of date information leaves an important identification detail unresolved.
+    - Implication: Unusual instrument configurations can be acquisition signals in their own right. Identification gaps may increase the value of investigating an otherwise well-described instrument.
+
+### Evaluation Finding
+
+The sample audit identified multiple distinct sources of acquisition interest:
+
+- relationships between extracted observations;
+- contradictions or unresolved identification;
+- seller and collection context;
+- unusual instrument configurations;
+- domain knowledge not contained in the listing;
+- external market context;
+- information that warrants investigation without yet establishing a specific discovery rule.
+
+These findings indicate that "interesting" cannot yet be represented as a single deterministic signal or score. The next discovery iteration should address observed failure modes selectively rather than attempting to define a complete taxonomy of acquisition opportunities.
+
+## Experiment 1 — Relationship Discovery Evaluation
+
+Experiment 0 established that Hedstok can separate AI-assisted evidence extraction from deterministic discovery reasoning, and that a semantic evidence schema can express at least some useful relationships between observations.
+
+Experiment 1 will test whether this architecture can produce useful investigation candidates from the same set of messy listings.
+
+The central question is:
+
+> **Can Hedstok surface an investigation candidate because of a relationship between pieces of evidence that a conventional listing search would not naturally express?**
+
+### Objective
+
+Experiment 1 will evaluate the revised semantic extraction schema and a deliberately small set of relationship-oriented discovery hypotheses against the 14 synthetic listings used in Experiment 0.
+
+The experiment is not intended to maximize the number of discoveries.
+
+Instead, it will evaluate whether the system can:
+
+- extract relevant evidence into the revised semantic categories;
+- preserve source-grounded claims and uncertainty;
+- identify meaningful relationships between extracted evidence;
+- avoid producing discoveries from evidence that is merely notable but not useful;
+- explain each discovery through the evidence that caused it; and
+- produce candidates that a human evaluator considers worth investigating.
+
+### Evaluation Criteria
+
+Experiment 1 will evaluate four primary dimensions.
+
+#### Evidence quality
+
+Can the revised extraction represent the important observations identified during the Experiment 0 audit, particularly where the original schema limited discovery?
+
+#### Relationship coverage
+
+Can deterministic discovery identify useful candidates through relationships expressible in the revised evidence schema?
+
+#### Specificity
+
+Does discovery remain selective enough to avoid treating every unusual, damaged, cheap, or information-dense listing as an opportunity?
+
+Listing-03 remains an intentional non-discovery control.
+
+#### Human usefulness
+
+When a discovery is presented together with its supporting evidence, does the human evaluator consider it something worth investigating?
+
+This is the most important outcome of the experiment.
+
+### Initial Relationship Hypotheses
+
+Experiment 1 will begin with a deliberately small number of discovery relationships.
+
+The existing `identity + configuration` relationship provides the initial baseline.
+
+An additional hypothesis may examine relationships between `identity` and `associated_equipment`, motivated by the evidence observed in listing-08.
+
+Contradictory evidence will also be evaluated as a candidate relationship, but will not be implemented merely to reproduce the listing-11 fixture until a general evidence relationship can be defined.
+
+Other relationships will remain hypotheses until the experiment provides evidence that they are useful.
+
+### Controls
+
+Experiment 1 will retain the human-audited listings from Experiment 0 as evaluation cases rather than treating their previous classifications as implementation requirements.
+
+In particular:
+
+- listing-03 provides an intentional non-discovery control;
+- listing-08 provides a case in which multiple evidence domains may form a potentially useful relationship;
+- listing-11 provides a contradiction case;
+- listings-09 and other seller/context cases test whether useful evidence may exist beyond an individual instrument;
+- listings-12 through 14 provide cases involving information density, unusual configuration, and potential investigation value.
+
+The purpose of these cases is to evaluate the behavior of the system, not to encode predetermined outcomes as rules.
+
+### Experimental Boundary
+
+Experiment 1 will not attempt to solve:
+
+- comprehensive market valuation;
+- external instrument knowledge;
+- real-time marketplace ingestion;
+- seller reputation;
+- automated acquisition decisions;
+- collection-level modeling unless the experiment demonstrates that it is necessary;
+- a complete contradiction framework; or
+- a comprehensive taxonomy of discovery relationships.
+
+The experiment will continue to use the existing synthetic listing set.
+
+### Success and Failure
+
+Experiment 1 should be considered informative whether the results are positive or negative.
+
+Evidence that the revised extraction and relationship model produces useful, explainable candidates without excessive rule-specific logic would support continuing the architecture.
+
+Evidence that useful candidates consistently require external knowledge, increasingly specific domain rules, or discovery logic that cannot be expressed cleanly through the semantic evidence model would instead identify a boundary or weakness in the current approach.
+
+> **The goal is not to make the experiment find more opportunities. The goal is to determine whether relationship-oriented evidence can produce useful opportunities without turning discovery into a collection of special cases.**
+
+### Experiment 1 — Initial Discovery Finding
+
+The first execution of the revised extraction and discovery pipeline was evaluated against the 14 synthetic listings using the revised semantic evidence schema.
+
+The revised extraction successfully represented the evidence domains identified during the Experiment 0 audit. The discovery layer then applied the existing `identity + configuration` relationship to the revised extraction.
+
+The relationship produced discoveries for nine listings:
+
+- `listing-01`
+- `listing-02`
+- `listing-05`
+- `listing-06`
+- `listing-08`
+- `listing-11`
+- `listing-12`
+- `listing-13`
+- `listing-14`
+
+Human evaluation found that seven of these were worth investigating, one was probably not worth investigating, and one was not worth investigating.
+
+The human evaluation did not, however, consider `identity + configuration` to be the underlying reason for most discoveries.
+
+| Listing      | Human evaluation                 | Primary evidence driving evaluation                                                                      |
+| ------------ | -------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `listing-01` | Worth investigating              | Potential age combined with multi-generation ownership history                                           |
+| `listing-02` | Worth investigating              | Age, unusual configuration, modifications, and condition                                                 |
+| `listing-05` | Worth investigating              | Musician-associated history and condition attributed to a known musician                                 |
+| `listing-06` | Worth investigating              | Uncertain identity combined with multiple physical clues and long-term storage history                   |
+| `listing-08` | Worth investigating              | Recognizable identity combined with physical clues and associated equipment                              |
+| `listing-11` | Not worth investigating          | Strong contradiction between the textual identity claim and image evidence                               |
+| `listing-12` | Worth investigating              | Age, specific identity, original features, associated equipment, and potentially favorable price context |
+| `listing-13` | Probably not worth investigating | Low price, unidentified/generic identity, and ordinary included equipment                                |
+| `listing-14` | Worth investigating              | Specific identity and unusual configuration                                                              |
+
+This evaluation demonstrates that the current `identity + configuration` discovery rule functions primarily as a **category co-occurrence detector**. It identifies listings containing evidence from both domains, but it does not yet distinguish between different relationships those evidence domains may have.
+
+For example, `listing-08` contains identity, configuration, and associated-equipment evidence that may form a useful acquisition relationship. `listing-11` contains identity and configuration evidence that appear contradictory rather than convergent. `listing-12` contains identity, originality, accessory, and configuration evidence whose combined significance depends partly on external domain knowledge. `listing-13` demonstrates that detailed configuration evidence can coexist with identity evidence without creating a useful investigation candidate.
+
+The result therefore does not justify adding a collection of new rules to reproduce the human evaluations. Instead, it establishes a more specific experimental requirement:
+
+> **Discovery must distinguish meaningful relationships between evidence from simple co-occurrence of evidence categories.**
+
+The revised extraction has demonstrated that the evidence needed to explore these relationships can be represented without requiring the AI to determine interestingness. The next iteration should therefore investigate the structure and semantics of useful evidence relationships before expanding the discovery rule set.
+
+This finding also reinforces the separation established earlier in the experiment:
+
+> **AI extracts evidence. Deterministic logic reasons about relationships. Human judgment determines whether the resulting candidate is worth investigating.**
+
+### Experiment 1 — Relationship Audit
+
+The human audit of the initial discovery candidates was used to determine whether the current discovery model could describe the relationships that made listings worth investigating.
+
+The audit showed that the existing `identity + configuration` rule primarily detected evidence-domain co-occurrence rather than meaningful relationships between evidence. The nine resulting candidates therefore provided a useful test set for identifying relationship patterns without adding additional fixture-specific discovery rules.
+
+#### Working Relationship Definitions
+
+The audit identified the following relationship concepts:
+
+- **Convergence** — multiple distinct pieces of evidence point toward the same underlying possibility or meaning, reducing the range of plausible interpretations.
+- **Association** — evidence establishes a meaningful relationship between the instrument and another entity, such as associated equipment, a person, recording, collection, or seller context.
+- **Historical Association** — evidence connects an instrument to a person, event, work, or historical context beyond ordinary ownership history.
+- **Contradiction** — two or more pieces of evidence make materially incompatible claims about the same aspect of an instrument or listing.
+- **Distinctiveness** — evidence indicates an unusual, uncommon, or otherwise notable characteristic or configuration relative to an appropriate reference context.
+
+These relationships are not mutually exclusive. A listing may contain multiple relationships simultaneously.
+
+The relationship definitions describe the structure of the evidence. They do not determine whether a relationship is significant, valuable, desirable, or sufficient to justify acquisition. Those judgments remain downstream of relationship detection.
+
+#### Relationship Audit Results
+
+The nine initial discovery candidates were evaluated against the working relationship definitions:
+
+| Listing | Observed relationship(s)                          | Finding                                                                                                                                                                              |
+| ------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 01      | Historical association                            | Multi-generational ownership provides meaningful historical context, but the evidence does not clearly represent convergence.                                                        |
+| 02      | No clean relationship                             | The listing contains meaningful modification and upgrade history that may warrant a distinct evidence domain.                                                                        |
+| 05      | Historical association; Association               | The claimed session-player and recording history creates historical association, while the claimed connection to a musician creates an additional association.                       |
+| 06      | Convergence                                       | Multiple distinct clues narrow toward the possibility of an older Gibson/Les Paul-type instrument.                                                                                   |
+| 08      | Convergence; Association                          | Identity and physical clues reinforce an interpretation while associated equipment creates a separate relationship.                                                                  |
+| 11      | Contradiction                                     | Textual and image evidence make materially incompatible identity claims.                                                                                                             |
+| 12      | Association; possible market-context relationship | Original and period-associated equipment contributes evidence, while the significance of the asking price requires external market knowledge.                                        |
+| 13      | No meaningful relationship                        | The instrument and gig bag are associated, but the relationship does not provide a meaningful acquisition signal by itself.                                                          |
+| 14      | Distinctiveness                                   | The claimed Telecaster/Stratocaster combination provides a potentially distinctive configuration, but establishing actual distinctiveness requires an appropriate reference context. |
+
+The audit demonstrates that useful discovery cannot be represented by a single relationship type. Different candidates become interesting for different structural reasons, and multiple relationships may apply to the same listing.
+
+#### Evidence Structure Is Not Significance
+
+A central finding of the relationship audit is:
+
+> **Relationships describe how evidence is connected. They do not determine whether that connection is significant.**
+
+For example, an instrument may have associated equipment such as an included gig bag, but the existence of that association does not necessarily make the listing interesting. Another instrument may be associated with an Ampeg B-15, which a domain expert may consider more significant. The relationship detector should represent the association without independently deciding its value.
+
+Similarly, contradiction should identify evidence that requires reconciliation rather than automatically rejecting a listing. A textual claim that conflicts with image evidence may indicate an error, unusual instrument, mislabeled image, or other explanation that requires human investigation.
+
+This reinforces the architectural boundary:
+
+```text
+evidence extraction
+        ↓
+relationship detection
+        ↓
+investigation candidate and explanation
+        ↓
+human judgment
+```
+
+### Experiment 1 — Interpretation Derivation Finding
+
+The relationship audit identified several fixtures where meaningful relationships appeared to exist between extracted signals. Before implementing additional deterministic relationship rules, an experiment was conducted to determine whether an intermediate interpretation layer could derive useful semantic meaning from multiple signals.
+
+The experiment used four deliberately selected fixtures:
+
+- **Listing 03** — intentional non-discovery control
+- **Listing 06** — uncertain identification / possible convergence
+- **Listing 08** — possible convergence and associated-equipment relationship
+- **Listing 11** — text/image identity contradiction
+
+The existing revised extraction output was treated as frozen input. Each prompt iteration used a single AI request containing all four fixtures.
+
+#### Initial Prompt Finding
+
+The initial interpretation prompt required interpretations to be supported by multiple signals and allowed an empty result when no meaningful interpretation was supported.
+
+The model returned no interpretations for any of the four fixtures.
+
+This demonstrated that the initial definition of semantic interpretation was too restrictive or insufficiently specified to reliably produce the intended form of evidence synthesis.
+
+#### Revised Prompt Finding
+
+The prompt was then expanded to clarify that an interpretation could synthesize multiple signals into a possible meaning, including:
+
+- possible identity or configuration explanations;
+- relationships between pieces of evidence;
+- conflicting claims;
+- associations between an instrument and another entity.
+
+The revised prompt continued to prohibit outside knowledge, unsupported factual assumptions, value judgments, ranking, and acquisition recommendations.
+
+This produced substantially more useful output, but also exposed a second boundary problem. The model sometimes transformed ordinary combinations of evidence into plausible narratives or domain-informed interpretations that were not justified by the supplied signals.
+
+Examples included interpreting a Squier Stratocaster with a 10-watt amplifier as a beginner-oriented package, or describing an older guitar stored in a garage as neglected or subject to an urgent clear-out.
+
+These interpretations were plausible but introduced assumptions beyond the supplied evidence.
+
+#### Constrained Prompt Finding
+
+A further prompt revision explicitly prohibited new factual premises derived from common knowledge, domain knowledge, or typical associations.
+
+This reduced unsupported extrapolation. However, the resulting interpretations frequently remained descriptive rather than providing a distinct semantic object that was clearly useful downstream.
+
+For example, Listing 08 produced an interpretation describing the relationship between the seller's father's instrument and the available Ampeg B-15 amplifier. While evidence-grounded, this largely restated an association already represented by the extracted signals.
+
+Listing 11 produced the clearest useful interpretation:
+
+> The textual identity claim of a 1958 Les Paul conflicts with image evidence showing a kid-size Stratocaster-style guitar.
+
+This interpretation combined two independent evidence sources into a meaningful relationship without deciding which claim was correct.
+
+#### Interpretation Layer Finding
+
+The experiment demonstrates that AI can perform useful semantic synthesis across extracted signals, but it does not yet establish that **Interpretation** should be a distinct persistent layer in the application architecture.
+
+Two boundaries became apparent:
+
+1. An interpretation must add semantic meaning without introducing unsupported factual premises.
+2. Some useful interpretations are effectively descriptions of relationships that can be represented directly as relationship types such as convergence, association, or contradiction.
+
+The experiment therefore raises an architectural question:
+
+> **Should AI derive intermediate interpretations, or should AI propose candidate relationships directly for deterministic validation and classification?**
+
+No architectural change is made at this stage.
+
+The current working architecture remains an experimental hypothesis rather than a finalized implementation decision.
+
+#### Experiment 1 Conclusion
+
+The interpretation experiment was successful in identifying a meaningful boundary, even though it did not establish a final interpretation model.
+
+The strongest result was that AI could synthesize independent pieces of evidence into an explicit relationship description, particularly contradiction, while preserving uncertainty and avoiding a final judgment.
+
+The weaker results showed that unconstrained semantic interpretation tends toward plausible narrative generation rather than strictly useful evidence relationships.
+
+The next experiment should therefore investigate whether AI can propose **candidate relationships between signals** directly, while deterministic logic remains responsible for validating and classifying those relationships.
+
+This preserves the project's architectural principle:
+
+> **AI may propose meaning; deterministic analysis and human judgment determine what that meaning is allowed to become.**
+
+### Experiment 1.2 — Candidate Relationship Derivation
+
+The interpretation derivation experiment demonstrated that AI can synthesize multiple signals into useful descriptions, but also showed that free-form interpretation can introduce unsupported assumptions or simply restate relationships already implicit in the evidence.
+
+The next experiment narrows the task from general interpretation to **candidate relationship derivation**.
+
+#### Objective
+
+Determine whether AI can identify and describe candidate relationships between extracted signals when given:
+
+* a fixed vocabulary of experimental relationship types;
+* frozen, source-grounded signals as input;
+* explicit requirements to reference the supporting signals;
+* no outside knowledge or market context.
+
+The experiment does not attempt to determine whether a relationship is significant, valuable, rare, desirable, or sufficient to recommend acquisition.
+
+#### Relationship Vocabulary
+
+The experiment will use the following experimental relationship types:
+
+* **Convergence** — multiple distinct pieces of evidence point toward the same underlying possibility or meaning.
+* **Association** — evidence establishes a meaningful relationship between the instrument and another entity.
+* **Historical Association** — evidence connects the instrument to a person, event, work, or historical context beyond ordinary ownership.
+* **Contradiction** — two or more pieces of evidence make materially incompatible claims about the same aspect.
+* **Distinctiveness** — evidence indicates an unusual or potentially notable characteristic relative to an appropriate reference context.
+
+These relationship types describe the structure of the evidence. They do not establish significance, value, rarity, desirability, authenticity, or acquisition suitability.
+
+#### Experimental Input
+
+The experiment will use the revised extraction output as frozen input.
+
+The initial fixture set will include:
+
+* **Listing 01** — multi-generational ownership and personal significance
+* **Listing 02** — configuration modifications and retained original pickups
+* **Listing 03** — intentional non-discovery control
+* **Listing 05** — claimed recording history and musician association
+* **Listing 06** — uncertain identification with multiple potentially convergent clues
+* **Listing 08** — identity/configuration clues and associated equipment
+* **Listing 09** — collection and seller-context evidence
+* **Listing 11** — text/image identity contradiction
+* **Listing 12** — original components and associated case/accessories
+* **Listing 14** — claimed unusual instrument configuration
+
+Listings 04, 07, 10, and 13 are excluded from the initial fixture set because meaningful evaluation of some of their possible relationships depends more heavily on external domain or market context.
+
+#### Experimental Constraints
+
+The AI will be instructed to:
+
+* derive candidate relationships only from the supplied signals;
+* use only the defined relationship vocabulary;
+* reference the specific signals supporting each proposed relationship;
+* preserve uncertainty present in the source evidence;
+* distinguish claims from established facts;
+* avoid outside knowledge;
+* avoid verification or fact-checking;
+* avoid introducing new factual premises;
+* avoid value, rarity, authenticity, desirability, or acquisition judgments;
+* avoid treating the existence of multiple signals as sufficient by itself;
+* return no relationship when the supplied evidence does not support one.
+
+For **Distinctiveness**, the experiment will test whether the evidence contains a claim or configuration that may warrant distinctiveness investigation. It will not establish actual rarity or unusualness without an appropriate reference context.
+
+#### Evaluation Criteria
+
+Candidate relationships will be evaluated against the human relationship audit using four criteria:
+
+1. **Evidence grounding** — every relationship is supported by specific extracted signals.
+2. **Relationship classification** — the proposed relationship type corresponds to the structure represented by the supporting evidence.
+3. **Restraint** — the relationship does not introduce unsupported facts, assumptions, or acquisition judgments.
+4. **Control behavior** — the non-discovery control does not produce a relationship merely because multiple signals are present.
+
+The evaluation will distinguish between a relationship being correctly identified and the relationship being considered significant. The latter remains outside the scope of this experiment.
+
+#### Success and Failure
+
+The experiment will be considered informative if AI can consistently propose candidate relationships that are:
+
+* grounded in the supplied evidence;
+* assigned an appropriate relationship type;
+* traceable to specific supporting signals;
+* appropriately uncertain where the evidence is uncertain;
+* and free of unsupported value or acquisition judgments.
+
+Failure modes include:
+
+* invented facts or premises;
+* unsupported domain knowledge;
+* treating plausible explanations as established facts;
+* converting relationships into acquisition judgments;
+* generating relationships solely because multiple signals exist;
+* repeatedly confusing relationship types;
+* or producing descriptions that merely restate individual signals without identifying a meaningful relationship.
+
+#### Architectural Boundary
+
+This experiment does not establish that AI-derived relationships should become a permanent architectural layer.
+
+The experimental flow is:
+
+```text
+frozen extracted signals
+        ↓
+AI candidate relationship proposals
+        ↓
+human audit
+        ↓
+accepted / rejected / revised relationship understanding
+```
+
+Deterministic relationship validation and automatic discovery remain unimplemented until the experiment provides evidence that they are justified.
+
+The purpose of this experiment is therefore to determine whether **relationship structure is a more useful intermediate abstraction than free-form interpretation**, not to commit the application to that architecture in advance.
+
+#### Experiment 1.2 Hypothesis
+
+> **If AI can reliably propose source-grounded candidate relationships from extracted signals without introducing unsupported premises, then relationships may provide a more constrained and useful intermediate representation than free-form interpretations.**
+
+If the hypothesis is not supported, the result will still provide evidence about which aspects of relationship detection should be deterministic, AI-assisted, or deferred.
+
+#### Experiment 1.2 Audit
+
+The first candidate relationship derivation run and its human evaluation are documented separately in `docs/experiment-1-2-audit.md`.
+
+The first Experiment 1.2 audit suggests that the five concepts may not constitute a homogeneous relationship vocabulary. Association, Historical Association, and Contradiction describe relationships between evidence, instruments, or entities; Convergence describes a pattern across multiple signals; and Distinctiveness describes a potentially investigation-worthy characteristic. This distinction corresponds with several observed classification and representation issues and should be evaluated before treating the five concepts as a single permanent relationship model.
+
+#### Experiment 1.3 — Conceptual Classification
+
+**Objective**
+
+Determine whether the concepts identified during the Experiment 1.2 architectural review represent meaningfully different kinds of evidence structure.
+
+The experiment tests four provisional functional categories:
+
+* Evidence Relationship
+* Evidence Pattern
+* Investigation Indicator
+* None / Unsupported
+
+The purpose is to evaluate conceptual boundaries before deciding whether any of these distinctions should be represented in Hedstok's architecture.
+
+**Method**
+
+Use representative examples from the existing frozen Experiment 1.2 evidence and human-audited relationships.
+
+No new AI generation, external market/domain data, implementation, or permanent schema is introduced.
+
+For each representative example, first describe in plain language what the evidence is doing, then classify it using the provisional categories.
+
+Representative examples:
+
+* Listing 05 — relationship between instrument, people, and historical works
+* Listing 06 — multiple clues concerning an unresolved instrument identity
+* Listing 14 — potentially unusual instrument configuration
+* Listing 03 — control with no meaningful structural relationship
+* Listing 08 — multiple structures occurring within the same evidence set
+
+**Hypothesis**
+
+> **If the concepts identified during the Experiment 1.2 architectural review represent meaningfully different kinds of evidence structure, then representative evidence examples should be understandable and consistently distinguishable as relationships, patterns, investigation indicators, or unsupported evidence without requiring additional domain knowledge or implementation assumptions.**
+
+If the hypothesis is not supported, the result will inform whether the concepts should remain combined, be redefined, or be deferred.
+
+**Evaluation Criteria**
+
+* Conceptual distinguishability
+* Evidence grounding
+* Boundary clarity
+* Ability to represent multiple structures within one evidence set
+* Architectural usefulness
+
+**Success**
+
+The concepts are understandable from representative evidence examples, meaningful boundaries can be described, classifications do not require unsupported assumptions, and the distinctions provide useful information for subsequent architectural investigation.
+
+**Failure**
+
+The categories routinely overlap without a meaningful distinction, require arbitrary terminology, depend on outside assumptions, or provide no useful architectural information.
+
+Partial support is allowed.
+
+**Non-Goals**
+
+This experiment does not:
+
+* modify the five Experiment 1.2 relationship definitions;
+* introduce new permanent relationship types;
+* establish a production evidence schema;
+* implement classification or discovery behavior;
+* use AI;
+* use external market or domain data;
+* establish rarity, authenticity, value, desirability, or acquisition suitability;
+* create investigation scores or rankings.
+
+The experiment asks only whether the provisional categories represent genuinely different kinds of evidence structure.
+
+**Experimental Flow**
+
+```text
+Existing frozen Experiment 1.2 evidence
+        ↓
+Representative audited examples
+        ↓
+Human conceptual classification
+        ↓
+Relationship / Pattern / Indicator / None
+        ↓
+Evaluate boundaries + usefulness
+        ↓
+Experiment 1.3 result
+        ↓
+Architectural decision or another targeted experiment
+```
+
+
+#### Experiment 1.3 Audit
+
+The human conceptual classification audit for Experiment 1.3 is documented separately in `docs/experiment-1-3-audit.md`.
+
+The audit provides preliminary support for the distinction between Evidence Relationships, Evidence Patterns, and Investigation Indicators as different functional roles. It also found that multiple categories can coexist within a single evidence set, suggesting these concepts should not necessarily be treated as mutually exclusive listing-level types.
+
+---
+
+## 12. Non-Goals
 
 Experiment 0 will not attempt to build:
 
@@ -246,7 +1010,7 @@ These may be considered only if the experiment demonstrates that the underlying 
 
 ---
 
-## 12. Guiding Principle
+## 13. Guiding Principle
 
 > **The experiment should earn the right to become a product.**
 

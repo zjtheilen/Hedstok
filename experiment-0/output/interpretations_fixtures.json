@@ -1,0 +1,60 @@
+[
+    {
+      "listing_id": "listing-03",
+      "interpretations": [
+        {
+          "description": "The presence of a Squier Stratocaster, an included 10-watt amplifier, and the history of being a Christmas present that stayed in a closet together suggest a package containing a lightly used instrument and practice equipment.",
+          "supporting_signals": [
+            "The instrument is a Squier Stratocaster.",
+            "A 10-watt amplifier is included.",
+            "The guitar was a Christmas present and mostly stayed in a closet."
+          ]
+        }
+      ]
+    },
+    {
+      "listing_id": "listing-06",
+      "interpretations": [
+        {
+          "description": "The combination of the guitar's age, garage storage history, physical characteristics like heavy weight and a goldish color, and the seller's statement that it needs to go suggests an older instrument that has been stored away and is now being cleared out.",
+          "supporting_signals": [
+            "The guitar is really old.",
+            "The guitar has an ugly goldish color and black plastic.",
+            "The guitar is really heavy.",
+            "The guitar has been in the seller's garage as long as they can remember.",
+            "The guitar needs to go."
+          ]
+        },
+        {
+          "description": "Uncertainty regarding the brand name is supported by the visual text on the top of the guitar resembling multiple possible names.",
+          "supporting_signals": [
+            "The top says 'gibbons' or 'gibson' or something similar."
+          ]
+        }
+      ]
+    },
+    {
+      "listing_id": "listing-08",
+      "interpretations": [
+        {
+          "description": "The association between the instrument belonging to the seller's dad and the availability of a specific Ampeg B-15 amplifier to sell alongside it suggests an offering connected to the seller's family.",
+          "supporting_signals": [
+            "The instrument belongs to the seller's dad.",
+            "There is an Ampeg B-15 amp available to sell as well."
+          ]
+        }
+      ]
+    },
+    {
+      "listing_id": "listing-11",
+      "interpretations": [
+        {
+          "description": "There is a direct conflict between the text description stating the instrument is a 1958 Les Paul and the image showing a kid-size Stratocaster-style guitar.",
+          "supporting_signals": [
+            "The text lists the guitar as a 1958 Les Paul.",
+            "The image shows a kid-size Stratocaster-style guitar."
+          ]
+        }
+      ]
+    }
+  ]

@@ -1,0 +1,82 @@
+[
+    {
+      "listing_id": "listing-08",
+      "signals": [
+        {
+          "type": "story",
+          "claim": "The guitar belonged to the seller's dad.",
+          "source_text": "dad's guitar"
+        },
+        {
+          "type": "identity",
+          "claim": "The instrument is identified as a Fender Precision.",
+          "source_text": "says Fender and Precision"
+        },
+        {
+          "type": "configuration",
+          "claim": "The instrument has four thick strings.",
+          "source_text": "four thick strings"
+        },
+        {
+          "type": "configuration",
+          "claim": "The instrument is kind of long.",
+          "source_text": "kind of long"
+        },
+        {
+          "type": "associated_equipment",
+          "claim": "An Ampeg B-15 is also available.",
+          "source_text": "Ampeg B-15 also available"
+        }
+      ]
+    },
+    {
+      "listing_id": "listing-06",
+      "signals": [
+        {
+          "type": "condition",
+          "claim": "The instrument is really old.",
+          "source_text": "really old guitar"
+        },
+        {
+          "type": "identity",
+          "claim": "The seller thinks the manufacturer might be Gibson or something.",
+          "source_text": "gibbons or gibson or something"
+        },
+        {
+          "type": "configuration",
+          "claim": "The instrument has an ugly goldish/black plastic appearance.",
+          "source_text": "ugly goldish/black plastic"
+        },
+        {
+          "type": "configuration",
+          "claim": "The instrument is really heavy.",
+          "source_text": "really heavy"
+        }
+      ]
+    },
+    {
+      "listing_id": "listing-03",
+      "signals": [
+        {
+          "type": "identity",
+          "claim": "The instrument is a Squier Stratocaster.",
+          "source_text": "Squier Stratocaster"
+        },
+        {
+          "type": "associated_equipment",
+          "claim": "A 10W amp is included.",
+          "source_text": "10W amp"
+        },
+        {
+          "type": "story",
+          "claim": "The guitar was received as a Christmas present and mostly stayed in a closet.",
+          "source_text": "Xmas present, mostly closet"
+        },
+        {
+          "type": "condition",
+          "claim": "The guitar has two broken strings.",
+          "source_text": "two broken strings"
+        }
+      ]
+    }
+  ]
