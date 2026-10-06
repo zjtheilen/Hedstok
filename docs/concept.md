@@ -384,17 +384,14 @@ If the experiment does not demonstrate useful discovery, that result is still a 
 
 Phase 3.1 will use the existing artifacts produced during Phase 2:
 
-* `experiment-0/input/listings.json`
+- `experiment-0/input/listings.json`
+    - The original collection of 14 guitar listings and their descriptions.
 
-  * The original collection of 14 guitar listings and their descriptions.
+- `extraction2.json`
+    - The structured Signals produced by the Phase 2 batch extraction.
 
-* `extraction2.json`
-
-  * The structured Signals produced by the Phase 2 batch extraction.
-
-* `experiment-0/evaluation/expected-signals.json`
-
-  * Used as evaluation context rather than as instructions for what the discovery mechanism should find.
+- `experiment-0/evaluation/expected-signals.json`
+    - Used as evaluation context rather than as instructions for what the discovery mechanism should find.
 
 The discovery experiment should operate primarily on the structured evidence while retaining access to the original listings so that discoveries can be traced back to their source text.
 
@@ -410,13 +407,13 @@ A candidate should represent something that appears potentially worth investigat
 
 The experiment should consider possibilities including:
 
-* unusual provenance or personal history;
-* contradictions or inconsistencies;
-* uncertain or potentially incorrect identification;
-* unusual instrument configurations;
-* meaningful combinations of otherwise ordinary Signals;
-* interesting stories or circumstances;
-* evidence that suggests useful follow-up investigation.
+- unusual provenance or personal history;
+- contradictions or inconsistencies;
+- uncertain or potentially incorrect identification;
+- unusual instrument configurations;
+- meaningful combinations of otherwise ordinary Signals;
+- interesting stories or circumstances;
+- evidence that suggests useful follow-up investigation.
 
 These possibilities are not predefined definitions of a discovery. The experiment should remain open to other patterns that emerge from the evidence.
 
@@ -426,11 +423,11 @@ The core task is:
 
 The discovery process should not:
 
-* determine whether seller claims are true;
-* determine monetary value;
-* make a purchasing recommendation;
-* invent missing information;
-* convert uncertainty into certainty.
+- determine whether seller claims are true;
+- determine monetary value;
+- make a purchasing recommendation;
+- invent missing information;
+- convert uncertainty into certainty.
 
 #### Evaluation
 
@@ -468,12 +465,12 @@ A technically plausible or unusual observation is not sufficient for success. Th
 
 Each candidate opportunity should contain, at minimum:
 
-* **listing ID**
-* **discovery description** — what Hedstok noticed;
-* **reason** — why the observation might make the listing worth investigating;
-* **supporting Signals** — the evidence relevant to the discovery;
-* **source grounding** — the original source text supporting that evidence;
-* **uncertainty** — relevant claims or questions that remain unresolved.
+- **listing ID**
+- **discovery description** — what Hedstok noticed;
+- **reason** — why the observation might make the listing worth investigating;
+- **supporting Signals** — the evidence relevant to the discovery;
+- **source grounding** — the original source text supporting that evidence;
+- **uncertainty** — relevant claims or questions that remain unresolved.
 
 Conceptually:
 
@@ -493,11 +490,11 @@ What remains uncertain
 
 The output should not include:
 
-* purchasing recommendations;
-* monetary valuations;
-* confidence or ranking scores;
-* verification results;
-* invented explanations for why an instrument is valuable.
+- purchasing recommendations;
+- monetary valuations;
+- confidence or ranking scores;
+- verification results;
+- invented explanations for why an instrument is valuable.
 
 Phase 3.1 is an experiment to determine whether structured evidence can produce useful discoveries. It is not yet a commitment to a particular discovery algorithm, schema, or implementation architecture.
 
@@ -507,11 +504,11 @@ The first discovery experiment was run against the Phase 2 batch extraction arti
 
 The discovery process surfaced five candidate acquisition opportunities:
 
-* listing-01;
-* listing-05;
-* listing-06;
-* listing-08;
-* listing-11.
+- listing-01;
+- listing-05;
+- listing-06;
+- listing-08;
+- listing-11.
 
 Human review judged all five surfaced candidates worth investigating. This demonstrates that structured Signals can support discovery of acquisition opportunities that a human considers worth further investigation.
 
@@ -521,10 +518,10 @@ Several clear discovery misses were identified. Listings 02, 04, 09, and 14 cont
 
 The misses also revealed several distinct discovery requirements:
 
-* useful opportunities may emerge from combinations of otherwise ordinary Signals;
-* unusual configuration or identification evidence may itself warrant investigation;
-* seller or inventory context may represent an acquisition opportunity independently of an individual instrument;
-* some human discoveries depend on external knowledge that is intentionally unavailable under the current source-grounded discovery rules.
+- useful opportunities may emerge from combinations of otherwise ordinary Signals;
+- unusual configuration or identification evidence may itself warrant investigation;
+- seller or inventory context may represent an acquisition opportunity independently of an individual instrument;
+- some human discoveries depend on external knowledge that is intentionally unavailable under the current source-grounded discovery rules.
 
 Listings 07 and 12 illustrate the latter boundary. Their human-interest judgments included knowledge not established by the supplied Signals, such as knowledge about a brand's status or the market desirability of an instrument. These cases should not currently be treated as failures of source-grounded discovery.
 
@@ -542,13 +539,13 @@ The second discovery experiment used the same structured evidence input, model, 
 
 The revised discovery process surfaced seven candidate acquisition opportunities:
 
-* listing-01;
-* listing-02;
-* listing-05;
-* listing-06;
-* listing-08;
-* listing-09;
-* listing-11.
+- listing-01;
+- listing-02;
+- listing-05;
+- listing-06;
+- listing-08;
+- listing-09;
+- listing-11.
 
 Human review judged all seven surfaced candidates worth investigating. Compared with the first experiment, the revised prompt recovered listings 02 and 09, both of which had previously been identified as clear discovery misses. This indicates that prompt guidance about Signal combinations and seller or inventory context can improve discovery coverage without necessarily introducing false positives among the surfaced candidates.
 
@@ -558,9 +555,75 @@ The second experiment also showed continued interpretation drift beyond the supp
 
 The experiments therefore indicate two distinct discovery challenges:
 
-* useful opportunities can remain undiscovered even when the supporting Signals are present and the prompt explicitly identifies the relevant discovery pattern;
-* discovered opportunities can acquire unsupported significance during interpretation.
+- useful opportunities can remain undiscovered even when the supporting Signals are present and the prompt explicitly identifies the relevant discovery pattern;
+- discovered opportunities can acquire unsupported significance during interpretation.
 
 The first two experiments provide evidence that structured Signals can support useful acquisition discovery, and that prompt guidance can improve discovery coverage. They do not yet establish that free-form AI discovery is sufficiently reliable as a production discovery mechanism.
 
 Further work should determine whether these limitations can be addressed through a more explicit discovery mechanism, deterministic evidence combinations, structured relationships, or another approach before committing to a production discovery architecture.
+
+### Phase 3.1 Third Discovery Experiment Findings
+
+The third discovery experiment analyzed the human evaluation results from the first two discovery experiments to determine whether the human "investigate" decisions could be explained by recurring patterns in the existing Signals.
+
+The analysis did not introduce new extraction calls or new evidence. Instead, the existing structured evidence was reviewed against the 11 listings that the human reviewer considered worth investigating.
+
+Several provisional evidence patterns emerged:
+
+- **Converging Identity Clues** — an uncertain identity is accompanied by multiple additional Signals containing clues that may help narrow or investigate that identity;
+
+- **Dated Configuration/Modification History** — a dated instrument has configuration, modification, retained-original-component, and/or condition evidence that together provide a potentially investigable picture of the instrument's history;
+
+- **Instrument + Transaction Context** — instrument-specific evidence is accompanied by explicit transaction or trade context that may create an acquisition path;
+
+- **Named Provenance** — a Signal describes an identifiable person, recording, performance, ownership history, or other specific provenance associated with the instrument;
+
+- **Seller/Inventory Opportunity** — seller-context evidence indicates a meaningful collection or inventory combined with explicit willingness to sell, trade, make deals, or establish an ongoing acquisition relationship;
+
+- **Cross-Source Contradiction** — Signals from different evidence sources make materially inconsistent claims about the same subject;
+
+- **Explicitly Unusual Configuration** — a Signal directly describes an unusual or nonstandard configuration or combination of characteristics;
+
+- **Dated Instrument + Originality/Period Evidence** — a dated instrument has evidence of original or period-appropriate components or accessories, optionally accompanied by explicit market context such as price.
+
+These patterns are provisional observations from the current evaluation set rather than a proposed production taxonomy.
+
+The patterns also differ in how readily they could be detected deterministically.
+
+Some patterns appear to have relatively direct structural conditions. Named provenance, for example, can currently be treated as a discovery trigger when identifiable provenance is explicitly represented in a Signal. Seller or inventory opportunity can similarly be represented as a combination of collection or inventory evidence and explicit willingness to transact.
+
+Other patterns contain a detectable structural component but require interpretation to determine whether the evidence is meaningful. Converging identity clues require determining whether multiple clues actually converge on a useful investigative possibility. Cross-source contradiction requires determining whether differing claims are semantically incompatible rather than merely different. Instrument and transaction context may require determining whether the instrument evidence is sufficiently relevant for the transaction circumstances to constitute an opportunity. Explicitly unusual configuration can be detected structurally when the source itself describes the configuration as unusual, but recognizing unusualness in less explicit cases may require additional interpretation.
+
+The dated configuration and modification pattern illustrates another limitation. A deterministic detector could identify a dated instrument combined with configuration, modification, retained-original-component, or condition evidence, but this structural combination is broad enough that it may produce false positives. Detecting the pattern and determining whether a particular instance is actually useful for acquisition discovery are therefore separate questions.
+
+The dated instrument and originality/period evidence pattern illustrates the role of external knowledge. The supplied Signals can preserve evidence such as a 1950s instrument, a specific model, original components, period-appropriate accessories, and an explicit price. However, recognizing the resulting opportunity as a potentially rare, desirable, high-quality, or unusually inexpensive instrument depends on knowledge not established by those Signals. However, recognizing the resulting opportunity as a potentially rare, desirable, high-quality, or unusually inexpensive instrument depends on knowledge not established by those Signals. The source-grounded evidence can therefore support the investigation without independently establishing the significance of the opportunity.
+
+Listings 07 and 12 provide examples of this boundary. Listing 07 depended in part on external knowledge about the brand, while listing 12 depended in part on external knowledge about desirability, rarity, quality, and market price. These should not currently be treated as failures of the source-grounded evidence layer. Instead, they demonstrate that some useful acquisition discoveries may require knowledge beyond the listing itself.
+
+The analysis also confirmed that not all human investigation decisions need to be represented by a discovery pattern. Listing 13 remained an ambiguous or weak opportunity, while listings 03 and 10 served as negative examples that did not meaningfully trigger the identified patterns.
+
+The resulting architectural observation is that discovery may be better approached as a combination of evidence-pattern detection and evidence-grounded interpretation rather than as unconstrained AI discovery alone.
+
+Conceptually:
+
+```text
+Signals
+   ↓
+Evidence pattern detection
+   ↓
+Detected evidence structures
+   ↓
+Evidence-grounded interpretation
+   ↓
+Candidate opportunities
+   ↓
+Human evaluation
+```
+
+Under this model, deterministic analysis could identify evidence structures that are reliable enough to detect mechanically, while an interpretation layer could determine what those structures may mean and explain why they might warrant investigation. Free-form AI discovery could remain useful as a secondary exploratory mechanism for identifying patterns that the deterministic layer does not yet recognize.
+
+This separation also provides a way to preserve the existing evidence principle. The detection layer does not need to decide that an instrument is valuable, desirable, rare, or historically significant. It can identify the evidence supporting a possible opportunity and allow later interpretation to determine whether additional knowledge is required.
+
+The third experiment therefore provides preliminary evidence that a hybrid discovery approach may be more appropriate than relying on free-form AI discovery alone. However, the current experiment does not establish a production discovery architecture, a permanent evidence-pattern taxonomy, a deterministic rule engine, an external-knowledge system, or a persistent relationship model.
+
+Further experimentation should determine whether the provisional evidence patterns can be expressed precisely enough for useful deterministic detection, how frequently those detectors produce false positives, and where interpretation or external knowledge is genuinely required.
