@@ -627,3 +627,53 @@ This separation also provides a way to preserve the existing evidence principle.
 The third experiment therefore provides preliminary evidence that a hybrid discovery approach may be more appropriate than relying on free-form AI discovery alone. However, the current experiment does not establish a production discovery architecture, a permanent evidence-pattern taxonomy, a deterministic rule engine, an external-knowledge system, or a persistent relationship model.
 
 Further experimentation should determine whether the provisional evidence patterns can be expressed precisely enough for useful deterministic detection, how frequently those detectors produce false positives, and where interpretation or external knowledge is genuinely required.
+
+### Phase 3.1 Fourth Discovery Experiment Findings
+
+The fourth discovery experiment tested whether provisional evidence patterns identified during the third experiment could be expressed as deterministic detection conditions.
+
+The experiment focused on three patterns:
+
+- **Named Provenance**;
+- **Seller/Inventory Opportunity**;
+- **Dated Configuration/Modification History**.
+
+Rather than implementing detectors, the patterns were tested manually against representative positive, negative, and borderline examples. The purpose was to determine which parts of discovery could be detected from observable evidence structures and which parts required interpretation.
+
+**Named Provenance** showed that deterministic detection is possible only to a limited degree. Story Signals can identify potential provenance evidence, but the human evaluation demonstrated that not all ownership or historical references should trigger a discovery. Ordinary ownership history was generally insufficient, while associations involving identifiable people, activities, performances, recordings, or more meaningful chains of ownership were more likely to warrant investigation. Determining whether a historical association is sufficiently meaningful therefore requires interpretation beyond the structural presence of a story Signal.
+
+**Seller/Inventory Opportunity** showed the strongest case for deterministic detection. The relevant structure consists of evidence of multiple instruments, a meaningful collection or inventory, or ongoing acquisition activity combined with explicit willingness to transact. Transaction activity may include selling, trading, buying, or establishing an ongoing acquisition relationship. A single instrument being offered for sale does not by itself constitute this pattern. The experiment indicates that much of this structure could potentially be detected mechanically, although interpretation may still be useful for borderline cases such as determining what constitutes meaningful inventory.
+
+**Dated Configuration/Modification History** showed that its structural components can also be detected mechanically, but that determining whether a particular instance warrants investigation is more dependent on interpretation. Dated instruments combined with configuration, modification, originality, retained-original-component, or condition evidence produced a range of human judgments from possible to clearly investigable. Originality and modification history were particularly useful when they provided evidence about the instrument's configuration or history. The experiment also showed that the same structural pattern can be more or less likely to warrant investigation depending on the age and combination of the evidence.
+
+These results reinforce the distinction between **evidence-pattern detection** and **discovery interpretation**. A deterministic detector can identify evidence structures without deciding that those structures represent a worthwhile acquisition opportunity.
+
+Conceptually:
+
+```text
+Signals
+   ↓
+Evidence pattern detection
+   ↓
+Detected evidence structures
+   ↓
+Interpretation
+   ↓
+Candidate opportunities
+   ↓
+Human evaluation
+```
+
+The experiment also demonstrated that human judgment is not necessarily a component that must be eliminated from the discovery process. Some discovery patterns contain inherently interpretive questions about whether a combination of evidence is meaningful enough to investigate. The role of deterministic detection may therefore be to provide reliable evidence coverage, while interpretation determines whether detected evidence appears potentially worth investigating.
+
+The three patterns produced different architectural characteristics:
+
+| Pattern                                  | Deterministic detection | Interpretation required |
+| ---------------------------------------- | ----------------------- | ----------------------- |
+| Named Provenance                         | Partial                 | Significant             |
+| Seller/Inventory Opportunity             | Strong                  | Limited                 |
+| Dated Configuration/Modification History | Strong                  | Significant             |
+
+These findings provide preliminary evidence that discovery may benefit from a hybrid approach in which deterministic analysis identifies evidence structures and an interpretation layer evaluates their potential significance.
+
+This remains an experimental finding rather than a production architecture decision. No detectors, permanent evidence-pattern schema, rule engine, or interpretation system were implemented as part of this experiment.
