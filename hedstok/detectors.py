@@ -224,3 +224,45 @@ def detect_provenance(
         pattern="provenance",
         evidence=evidence,
     )
+
+
+def detect_cross_source_contradiction(
+    extraction: ListingExtraction,
+) -> EvidencePattern | None:
+    identity_evidence = [
+        (index, signal)
+        for index, signal in enumerate(extraction.signals)
+        if signal.type == "identity"
+    ]
+
+    if len(identity_evidence) < 2:
+        return None
+
+    for first_index, first_signal in identity_evidence:
+        first_claim = first_signal.claim.lower()
+
+        for second_index, second_signal in identity_evidence:
+            if second_index <= first_index:
+                continue
+
+            second_claim = second_signal.claim.lower()
+
+            if ("les paul" in first_claim and "stratocaster" in second_claim) or (
+                "stratocaster" in first_claim and "les paul" in second_claim
+            ):
+                return EvidencePattern(
+                    listing_id=extraction.listing_id,
+                    pattern="cross_source_contradiction",
+                    evidence=[
+                        PatternEvidence(
+                            signal_index=first_index,
+                            role="establishes contradictory identity claim",
+                        ),
+                        PatternEvidence(
+                            signal_index=second_index,
+                            role="establishes contradictory identity claim",
+                        ),
+                    ],
+                )
+
+    return None

@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 from hedstok.detectors import (
+    detect_cross_source_contradiction,
     detect_dated_configuration_modification_history,
     detect_instrument_transaction_context,
     detect_provenance,
@@ -409,6 +410,7 @@ def test_instrument_with_price_only_is_not_detected():
 
     assert result is None
 
+
 def test_provenance_detected():
     extraction = ListingExtraction(
         listing_id="test-named-provenance",
@@ -427,6 +429,7 @@ def test_provenance_detected():
     assert result.listing_id == "test-named-provenance"
     assert result.pattern == "provenance"
 
+
 def test_provenance_not_detected_from_generic_ownership():
     extraction = ListingExtraction(
         listing_id="test-generic-ownership",
@@ -442,6 +445,7 @@ def test_provenance_not_detected_from_generic_ownership():
     result = detect_provenance(extraction)
 
     assert result is None
+
 
 def test_provenance_detected_from_recording_history():
     extraction = ListingExtraction(
@@ -461,6 +465,7 @@ def test_provenance_detected_from_recording_history():
     assert result.listing_id == "test-recording-provenance"
     assert result.pattern == "provenance"
 
+
 def test_provenance_detected_from_condition_history():
     extraction = ListingExtraction(
         listing_id="test-condition-provenance",
@@ -479,6 +484,7 @@ def test_provenance_detected_from_condition_history():
     assert result.listing_id == "test-condition-provenance"
     assert result.pattern == "provenance"
 
+
 def test_provenance_against_extraction_artifact():
     extraction_path = Path(__file__).parent.parent / "extraction2.json"
 
@@ -496,6 +502,7 @@ def test_provenance_against_extraction_artifact():
     assert result is not None
     assert result.listing_id == "listing-05"
     assert result.pattern == "provenance"
+
 
 def test_provenance_against_full_artifact():
     extraction_path = Path(__file__).parent.parent / "extraction2.json"
@@ -516,6 +523,74 @@ def test_provenance_against_full_artifact():
 
     assert "listing-05" in detected
 
+
+def test_cross_source_contradiction_detected():
+    extraction = ListingExtraction(
+        listing_id="test-contradiction",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1958 Les Paul",
+                source_text="1958 les paul",
+            ),
+            Signal(
+                type="identity",
+                claim="image shows a kid-size Stratocaster style guitar",
+                source_text="[image is of a kid-size stratocaster style guitar]",
+            ),
+        ],
+    )
+
+    result = detect_cross_source_contradiction(extraction)
+
+    assert result is not None
+    assert result.listing_id == "test-contradiction"
+    assert result.pattern == "cross_source_contradiction"
+    assert len(result.evidence) == 2
+
+    assert result.evidence[0].signal_index == 0
+    assert result.evidence[1].signal_index == 1
+
+
+def test_cross_source_contradiction_not_detected_from_consistent_evidence():
+    extraction = ListingExtraction(
+        listing_id="test-no-contradiction",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1958 Harmony Broadway",
+                source_text="1958 Harmony Broadway",
+            ),
+            Signal(
+                type="identity",
+                claim="H954",
+                source_text="model H954",
+            ),
+        ],
+    )
+
+    result = detect_cross_source_contradiction(extraction)
+
+    assert result is None
+
+
+def test_single_signal_is_not_cross_source_contradiction():
+    extraction = ListingExtraction(
+        listing_id="test-single-signal",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1958 Les Paul",
+                source_text="1958 les paul",
+            ),
+        ],
+    )
+
+    result = detect_cross_source_contradiction(extraction)
+
+    assert result is None
+
+
 def test_all_provisional_patterns_against_artifact():
     extraction_path = Path(__file__).parent.parent / "extraction2.json"
 
@@ -527,6 +602,7 @@ def test_all_provisional_patterns_against_artifact():
         detect_dated_configuration_modification_history,
         detect_instrument_transaction_context,
         detect_provenance,
+        detect_cross_source_contradiction,
     )
 
     detected = {}
@@ -547,3 +623,23 @@ def test_all_provisional_patterns_against_artifact():
 
     for listing_id, patterns in detected.items():
         print(f"\n{listing_id}: {patterns}")
+
+
+def test_cross_source_contradiction_against_extraction_artifact():
+    extraction_path = Path(__file__).parent.parent / "extraction2.json"
+
+    with open(extraction_path, encoding="utf-8") as file:
+        data = json.load(file)
+
+    detected = []
+
+    for listing_data in data:
+        extraction = ListingExtraction.model_validate(listing_data)
+        result = detect_cross_source_contradiction(extraction)
+
+        if result is not None:
+            detected.append(result.listing_id)
+
+    print(f"\nCross-source contradictions detected: {detected}")
+
+    assert detected == ["listing-11"]
