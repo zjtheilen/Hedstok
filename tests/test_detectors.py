@@ -1,7 +1,11 @@
 import json
 from pathlib import Path
 
-from hedstok.detectors import detect_seller_inventory_opportunity
+from hedstok.detectors import (
+    detect_dated_configuration_modification_history,
+    detect_instrument_transaction_context,
+    detect_seller_inventory_opportunity,
+)
 from hedstok.models import ListingExtraction, Signal
 
 
@@ -53,6 +57,7 @@ def test_single_instrument_sale_is_not_seller_inventory_opportunity():
 
     assert result is None
 
+
 def test_collection_alone_is_not_seller_inventory_opportunity():
     extraction = ListingExtraction(
         listing_id="listing-negative-02",
@@ -68,6 +73,7 @@ def test_collection_alone_is_not_seller_inventory_opportunity():
     result = detect_seller_inventory_opportunity(extraction)
 
     assert result is None
+
 
 def test_seller_inventory_opportunity_can_use_multiple_signal_types():
     extraction = ListingExtraction(
@@ -90,6 +96,7 @@ def test_seller_inventory_opportunity_can_use_multiple_signal_types():
 
     assert result is not None
 
+
 def test_explicitly_not_transacting_is_not_an_opportunity():
     extraction = ListingExtraction(
         listing_id="listing-negative-03",
@@ -106,6 +113,7 @@ def test_explicitly_not_transacting_is_not_an_opportunity():
 
     assert result is None
 
+
 def test_explicitly_not_trading_is_not_an_opportunity():
     extraction = ListingExtraction(
         listing_id="listing-negative-04",
@@ -121,6 +129,7 @@ def test_explicitly_not_trading_is_not_an_opportunity():
     result = detect_seller_inventory_opportunity(extraction)
 
     assert result is None
+
 
 def test_collection_in_storage_with_offer_is_detected():
     extraction = ListingExtraction(
@@ -146,18 +155,15 @@ def test_collection_in_storage_with_offer_is_detected():
     assert result.pattern == "seller_inventory_opportunity"
     assert len(result.evidence) == 2
 
+
 def test_listing_09_from_extraction_artifact():
-    extraction_path = (
-        Path(__file__).parent.parent / "extraction2.json"
-    )
+    extraction_path = Path(__file__).parent.parent / "extraction2.json"
 
     with open(extraction_path, encoding="utf-8") as file:
         data = json.load(file)
 
     listing_data = next(
-        listing
-        for listing in data
-        if listing["listing_id"] == "listing-09"
+        listing for listing in data if listing["listing_id"] == "listing-09"
     )
 
     extraction = ListingExtraction.model_validate(listing_data)
@@ -175,18 +181,14 @@ def test_listing_09_from_extraction_artifact():
     assert "establishes meaningful collection or inventory" in roles
     assert "establishes willingness to transact" in roles
 
+
 def test_seller_inventory_detector_against_extraction_artifact():
-    extraction_path = (
-        Path(__file__).parent.parent / "extraction2.json"
-    )
+    extraction_path = Path(__file__).parent.parent / "extraction2.json"
 
     with open(extraction_path, encoding="utf-8") as file:
         data = json.load(file)
 
-    extractions = [
-        ListingExtraction.model_validate(listing)
-        for listing in data
-    ]
+    extractions = [ListingExtraction.model_validate(listing) for listing in data]
 
     results = {
         extraction.listing_id: detect_seller_inventory_opportunity(extraction)
@@ -208,3 +210,200 @@ def test_seller_inventory_detector_against_extraction_artifact():
     assert results["listing-12"] is None
     assert results["listing-13"] is None
     assert results["listing-14"] is None
+
+
+def test_dated_configuration_modification_history_listing_02():
+    extraction_path = Path(__file__).parent.parent / "extraction2.json"
+
+    with open(extraction_path, encoding="utf-8") as file:
+        data = json.load(file)
+
+    listing_02 = next(
+        listing for listing in data if listing["listing_id"] == "listing-02"
+    )
+
+    extraction = ListingExtraction.model_validate(listing_02)
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is not None
+    assert result.listing_id == "listing-02"
+    assert result.pattern == "dated_configuration_modification_history"
+    assert len(result.evidence) >= 2
+
+    assert [item.signal_index for item in result.evidence] == [
+        2,
+        3,
+        4,
+        5,
+        6,
+    ]
+
+    assert [item.role for item in result.evidence] == [
+        "establishes dated instrument context",
+        "establishes modification and retained original components",
+        "establishes configuration",
+        "establishes modification",
+        "establishes condition evidence",
+    ]
+
+
+def test_dated_instrument_without_history_evidence_is_not_detected():
+    extraction = ListingExtraction(
+        listing_id="test-no-history",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1995 Fender Stratocaster",
+                source_text="1995 Fender Stratocaster",
+            ),
+            Signal(
+                type="configuration",
+                claim="three single-coil pickups",
+                source_text="three single-coil pickups",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None
+
+
+def test_dated_instrument_with_condition_only_is_not_detected():
+    extraction = ListingExtraction(
+        listing_id="test-condition-only",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1995 Fender Stratocaster",
+                source_text="1995 Fender Stratocaster",
+            ),
+            Signal(
+                type="condition",
+                claim="small scratches on the body",
+                source_text="small scratches on the body",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None
+
+
+def test_dated_instrument_with_originality_only_is_not_detected():
+    extraction = ListingExtraction(
+        listing_id="test-originality-only",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1995 Fender Stratocaster",
+                source_text="1995 Fender Stratocaster",
+            ),
+            Signal(
+                type="condition",
+                claim="original pickups included",
+                source_text="original pickups included",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None
+
+
+def test_instrument_transaction_context_detected():
+    extraction = ListingExtraction(
+        listing_id="test-instrument-transaction",
+        signals=[
+            Signal(
+                type="identity",
+                claim="vintage Gibson Les Paul",
+                source_text="vintage Gibson Les Paul",
+            ),
+            Signal(
+                type="condition",
+                claim="all original",
+                source_text="all original",
+            ),
+            Signal(
+                type="seller_context",
+                claim="open to trades",
+                source_text="open to trades",
+            ),
+        ],
+    )
+
+    result = detect_instrument_transaction_context(extraction)
+
+    assert result is not None
+    assert result.listing_id == "test-instrument-transaction"
+    assert result.pattern == "instrument_transaction_context"
+
+
+def test_transaction_context_without_instrument_evidence_is_not_detected():
+    extraction = ListingExtraction(
+        listing_id="test-transaction-only",
+        signals=[
+            Signal(
+                type="seller_context",
+                claim="open to trades",
+                source_text="open to trades",
+            ),
+            Signal(
+                type="market_context",
+                claim="asking $500",
+                source_text="asking $500",
+            ),
+        ],
+    )
+
+    result = detect_instrument_transaction_context(extraction)
+
+    assert result is None
+
+
+def test_instrument_evidence_without_transaction_context_is_not_detected():
+    extraction = ListingExtraction(
+        listing_id="test-instrument-only",
+        signals=[
+            Signal(
+                type="identity",
+                claim="vintage Gibson Les Paul",
+                source_text="vintage Gibson Les Paul",
+            ),
+            Signal(
+                type="condition",
+                claim="all original",
+                source_text="all original",
+            ),
+        ],
+    )
+
+    result = detect_instrument_transaction_context(extraction)
+
+    assert result is None
+
+
+def test_instrument_with_price_only_is_not_detected():
+    extraction = ListingExtraction(
+        listing_id="test-price-only",
+        signals=[
+            Signal(
+                type="identity",
+                claim="vintage Gibson Les Paul",
+                source_text="vintage Gibson Les Paul",
+            ),
+            Signal(
+                type="market_context",
+                claim="asking $500",
+                source_text="asking $500",
+            ),
+        ],
+    )
+
+    result = detect_instrument_transaction_context(extraction)
+
+    assert result is None
