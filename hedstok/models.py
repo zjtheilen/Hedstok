@@ -17,6 +17,17 @@ class Signal(BaseModel):
     source_text: str
 
 
+class PatternEvidence(BaseModel):
+    signal_index: int
+    role: str
+
+
+class EvidencePattern(BaseModel):
+    listing_id: str
+    pattern: str
+    evidence: list[PatternEvidence]
+
+
 class ListingExtraction(BaseModel):
     listing_id: str
     signals: list[Signal]
@@ -24,3 +35,8 @@ class ListingExtraction(BaseModel):
 
 class BatchExtraction(BaseModel):
     listings: list[ListingExtraction]
+
+
+class PatternAnalysis(BaseModel):
+    listing_id: str
+    patterns: list[EvidencePattern]
