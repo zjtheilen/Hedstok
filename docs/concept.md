@@ -596,7 +596,7 @@ Other patterns contain a detectable structural component but require interpretat
 
 The dated configuration and modification pattern illustrates another limitation. A deterministic detector could identify a dated instrument combined with configuration, modification, retained-original-component, or condition evidence, but this structural combination is broad enough that it may produce false positives. Detecting the pattern and determining whether a particular instance is actually useful for acquisition discovery are therefore separate questions.
 
-The dated instrument and originality/period evidence pattern illustrates the role of external knowledge. The supplied Signals can preserve evidence such as a 1950s instrument, a specific model, original components, period-appropriate accessories, and an explicit price. However, recognizing the resulting opportunity as a potentially rare, desirable, high-quality, or unusually inexpensive instrument depends on knowledge not established by those Signals. However, recognizing the resulting opportunity as a potentially rare, desirable, high-quality, or unusually inexpensive instrument depends on knowledge not established by those Signals. The source-grounded evidence can therefore support the investigation without independently establishing the significance of the opportunity.
+The dated instrument and originality/period evidence pattern illustrates the role of external knowledge. The supplied Signals can preserve evidence such as a 1950s instrument, a specific model, original components, period-appropriate accessories, and an explicit price. However, recognizing the resulting opportunity as a potentially rare, desirable, high-quality, or unusually inexpensive instrument depends on knowledge not established by those Signals. The source-grounded evidence can therefore support the investigation without independently establishing the significance of the opportunity.
 
 Listings 07 and 12 provide examples of this boundary. Listing 07 depended in part on external knowledge about the brand, while listing 12 depended in part on external knowledge about desirability, rarity, quality, and market price. These should not currently be treated as failures of the source-grounded evidence layer. Instead, they demonstrate that some useful acquisition discoveries may require knowledge beyond the listing itself.
 
@@ -682,3 +682,106 @@ The three patterns produced different architectural characteristics:
 These findings provide preliminary evidence that discovery may benefit from a hybrid approach in which deterministic analysis identifies evidence structures and an interpretation layer evaluates their potential significance.
 
 This remains an experimental finding rather than a production architecture decision. The experiment produced small provisional detectors for selected evidence patterns, but these detectors are experimental implementations rather than a permanent evidence-pattern schema or generalized rule engine. The results show that some discovery patterns can be surfaced from observable evidence structures without external knowledge, while other patterns require semantic interpretation. The experiments do not establish that all useful discovery patterns can or should be detected deterministically.
+
+### Phase 3.1 Final Discovery Comparison
+
+The final Phase 3.1 experiment compared the human investigation decisions against the question of whether the underlying discovery was naturally represented by conventional item-oriented search.
+
+This was a qualitative comparison rather than a benchmark of any particular search engine or marketplace. The purpose was to determine whether the useful opportunities identified during the experiment depended on relationships, combinations, contradictions, uncertainty, provenance, seller context, or other evidence structures that would not necessarily be represented directly by ordinary keyword or attribute-based searching.
+
+The comparison used the 11 listings that the human reviewer classified as definite investigation candidates. The results showed several distinct categories.
+
+**Listing 07** provided a clear conventional-search case. The listing described a 3/4-size KAY acoustic guitar, and the reason for considering it interesting depended substantially on external knowledge about the brand and instrument. The available Signals themselves did not contain an unusual relationship, contradiction, or combination that established why the instrument was worth investigating. This represents a case where Hedstok's source-grounded evidence model can preserve useful information, but discovery significance depends on knowledge beyond the source evidence.
+
+Several listings demonstrated stronger evidence for discovery that would not naturally be represented by conventional item-oriented search.
+
+**Listing 02** combined a dated instrument with modification history, retained original components, configuration evidence, and condition evidence. The individual facts could appear in a conventional listing search, but the potentially investigable combination is not naturally represented as a search criterion.
+
+**Listing 05** contained multiple provenance-bearing Signals connecting the instrument to a specific owner, session-player history, recordings, and an attributed physical characteristic. The individual claims may be searchable if a user already knows what connection to search for, but the combined provenance structure is not naturally represented by ordinary item search.
+
+**Listing 06** contained uncertain identity together with multiple additional clues about configuration, history, and transaction context. The uncertainty itself became part of the reason for investigation. Conventional search generally benefits from a known identity, whereas this discovery is based partly on the fact that the identity is unresolved.
+
+**Listing 08** similarly contained uncertain identity with multiple additional clues that may help narrow the identity, including configuration, associated equipment, ownership history, and transaction context. The useful discovery depends on the combination rather than on any single obvious search attribute.
+
+**Listing 09** demonstrated a different kind of discovery. The opportunity was primarily associated with the seller's collection, inventory, and willingness to establish an ongoing acquisition relationship rather than with a unique characteristic of the individual instrument. Conventional item-oriented search may surface the listing, but it does not naturally represent the seller as an acquisition opportunity.
+
+**Listing 11** demonstrated a cross-source contradiction between an identity claim and an image-derived description. The contradiction itself is unlikely to be represented by conventional search because a user would generally need to know that the conflicting evidence exists before being able to search for it.
+
+**Listing 14** contained an explicitly unusual configuration described by the source as "Tele and Strat in one guitar." The instrument could be found through conventional product-oriented search, but the unusual configuration provides an additional discovery characteristic that a user would not necessarily know to search for in advance.
+
+Listings 01, 04, and 12 provided intermediate cases. Each contained potentially useful combinations of evidence, but the significance of those combinations was more dependent on interpretation or external knowledge. Listing 01 combined uncertain identity, multigenerational ownership, and personal significance. Listing 04 combined instrument evidence with explicit trade circumstances. Listing 12 combined age, model identity, originality or period evidence, accessories, and explicit price. These cases demonstrate that evidence-based discovery and conventional search are not mutually exclusive: a listing may be readily searchable while still containing a combination of evidence that becomes useful only after structured analysis.
+
+The comparison therefore did not show that Hedstok will consistently find instruments that conventional search cannot find. It did show something narrower and more defensible: several useful acquisition opportunities depended on **relationships or combinations among pieces of evidence that conventional item-oriented search does not naturally represent**.
+
+This distinction is important. Hedstok's potential value is not necessarily replacing search or retrieving hidden listings. It may instead be in transforming information contained within retrieved listings into structured evidence and surfacing characteristics that a human would otherwise have to notice and synthesize manually.
+
+### Image-Derived Evidence
+
+Listing 11 also establishes an important boundary for the evidence pipeline.
+
+The contradiction identified during the experiment depended on a Signal derived from an associated image. In the current experimental artifact, that image-derived observation already exists as structured evidence, allowing the discovery mechanism to compare it with the textual identity claim.
+
+A real Hedstok workflow cannot assume that a human will manually inspect every associated image and provide those observations to the application. If image-derived evidence is important to discovery, the upstream evidence pipeline will eventually need to support image analysis as another source of Signals.
+
+This does not require a separate image-specific discovery architecture. The experiment suggests a simpler boundary:
+
+```text
+Listing text ──────┐
+                   │
+Listing images ────┼──→ Evidence extraction
+                   │          ↓
+Other sources ─────┘       Signals
+                              ↓
+                    Evidence-based discovery
+```
+
+The discovery layer can operate on the resulting Signals without needing to know whether a Signal originated from text, an image, or another supported source.
+
+Image analysis is therefore identified as a future evidence-generation capability rather than a requirement to complete the current Phase 3 discovery experiment.
+
+### Phase 3 Final Findings
+
+Phase 3 demonstrated that structured, source-grounded evidence can support useful acquisition discovery, while also establishing important limits on what can be determined from listing evidence alone.
+
+The experiments showed that:
+
+1. structured Signals can support candidate acquisition opportunities;
+2. candidate explanations can be grounded in specific Signals and source evidence;
+3. uncertainty can remain explicit rather than being converted into certainty;
+4. some discovery patterns can be detected deterministically;
+5. other patterns require semantic interpretation or external knowledge;
+6. several useful opportunities depend on combinations or relationships among evidence that conventional item-oriented search does not naturally represent.
+
+The experiments also showed that free-form AI discovery alone is not sufficiently reliable to serve as the sole discovery mechanism. A provisional hybrid direction is therefore supported:
+
+```text
+Listings and other sources
+            ↓
+      Evidence extraction
+            ↓
+          Signals
+            ↓
+   Evidence-pattern analysis
+            ↓
+Evidence-grounded interpretation
+            ↓
+   Candidate opportunities
+            ↓
+      Human evaluation
+```
+
+This remains a provisional direction rather than a production architecture. The experiments do not establish a permanent evidence-pattern taxonomy, generalized rule engine, ranking system, persistent relationship model, or image-analysis implementation.
+
+### Phase 3 Completion Assessment
+
+The Phase 3 completion criterion was:
+
+> **Demonstrate whether structured source-grounded evidence can produce candidate acquisition opportunities that a human considers worth investigating, and can explain those opportunities through the underlying evidence.**
+
+**This criterion has been met experimentally.**
+
+The result does not establish that Hedstok will consistently discover opportunities that conventional search cannot find. Instead, it provides evidence for a narrower and more useful proposition:
+
+> **Hedstok can structure and interpret evidence within listings to surface acquisition-relevant characteristics, combinations, and relationships that a human might otherwise have to discover and synthesize manually.**
+
+Phase 3 therefore provides sufficient experimental evidence to continue beyond evidence extraction into evidence-based discovery.
