@@ -4,6 +4,7 @@ from pathlib import Path
 from hedstok.detectors import (
     detect_dated_configuration_modification_history,
     detect_instrument_transaction_context,
+    detect_provenance,
     detect_seller_inventory_opportunity,
 )
 from hedstok.models import ListingExtraction, Signal
@@ -407,3 +408,142 @@ def test_instrument_with_price_only_is_not_detected():
     result = detect_instrument_transaction_context(extraction)
 
     assert result is None
+
+def test_provenance_detected():
+    extraction = ListingExtraction(
+        listing_id="test-named-provenance",
+        signals=[
+            Signal(
+                type="story",
+                claim="Belongs to the seller's dad, who was a session player",
+                source_text="my dad's guitar. he was a session player",
+            ),
+        ],
+    )
+
+    result = detect_provenance(extraction)
+
+    assert result is not None
+    assert result.listing_id == "test-named-provenance"
+    assert result.pattern == "provenance"
+
+def test_provenance_not_detected_from_generic_ownership():
+    extraction = ListingExtraction(
+        listing_id="test-generic-ownership",
+        signals=[
+            Signal(
+                type="story",
+                claim="The guitar belongs to me",
+                source_text="this guitar belongs to me",
+            ),
+        ],
+    )
+
+    result = detect_provenance(extraction)
+
+    assert result is None
+
+def test_provenance_detected_from_recording_history():
+    extraction = ListingExtraction(
+        listing_id="test-recording-provenance",
+        signals=[
+            Signal(
+                type="story",
+                claim="Featured on late 80's metal albums including Reign in Blood (1986) and Master of Puppets (1986)",
+                source_text="featured on late 80's metal albums including Reign in Blood (1986) and Master of Puppets (1986)",
+            ),
+        ],
+    )
+
+    result = detect_provenance(extraction)
+
+    assert result is not None
+    assert result.listing_id == "test-recording-provenance"
+    assert result.pattern == "provenance"
+
+def test_provenance_detected_from_condition_history():
+    extraction = ListingExtraction(
+        listing_id="test-condition-provenance",
+        signals=[
+            Signal(
+                type="condition",
+                claim="Buckle scuffs from Kirk Hammett",
+                source_text="buckle scuffs from Kirk Hammett",
+            ),
+        ],
+    )
+
+    result = detect_provenance(extraction)
+
+    assert result is not None
+    assert result.listing_id == "test-condition-provenance"
+    assert result.pattern == "provenance"
+
+def test_provenance_against_extraction_artifact():
+    extraction_path = Path(__file__).parent.parent / "extraction2.json"
+
+    with open(extraction_path, encoding="utf-8") as file:
+        data = json.load(file)
+
+    listing_05 = next(
+        listing for listing in data if listing["listing_id"] == "listing-05"
+    )
+
+    extraction = ListingExtraction.model_validate(listing_05)
+
+    result = detect_provenance(extraction)
+
+    assert result is not None
+    assert result.listing_id == "listing-05"
+    assert result.pattern == "provenance"
+
+def test_provenance_against_full_artifact():
+    extraction_path = Path(__file__).parent.parent / "extraction2.json"
+
+    with open(extraction_path, encoding="utf-8") as file:
+        data = json.load(file)
+
+    detected = []
+
+    for listing_data in data:
+        extraction = ListingExtraction.model_validate(listing_data)
+        result = detect_provenance(extraction)
+
+        if result is not None:
+            detected.append(result.listing_id)
+
+    print(f"\nProvenance detected: {detected}")
+
+    assert "listing-05" in detected
+
+def test_all_provisional_patterns_against_artifact():
+    extraction_path = Path(__file__).parent.parent / "extraction2.json"
+
+    with open(extraction_path, encoding="utf-8") as file:
+        data = json.load(file)
+
+    detectors = (
+        detect_seller_inventory_opportunity,
+        detect_dated_configuration_modification_history,
+        detect_instrument_transaction_context,
+        detect_provenance,
+    )
+
+    detected = {}
+
+    for listing_data in data:
+        extraction = ListingExtraction.model_validate(listing_data)
+
+        patterns = []
+
+        for detector in detectors:
+            result = detector(extraction)
+
+            if result is not None:
+                patterns.append(result.pattern)
+
+        if patterns:
+            detected[extraction.listing_id] = patterns
+
+    for listing_id, patterns in detected.items():
+        print(f"\n{listing_id}: {patterns}")

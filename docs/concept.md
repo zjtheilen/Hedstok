@@ -576,7 +576,7 @@ Several provisional evidence patterns emerged:
 
 - **Instrument + Transaction Context** — instrument-specific evidence is accompanied by explicit transaction or trade context that may create an acquisition path;
 
-- **Named Provenance** — a Signal describes an identifiable person, recording, performance, ownership history, or other specific provenance associated with the instrument;
+- **Provenance** — evidence that explicitly associates an instrument with a specific person, ownership history, recording, performance, or other identifiable historical context;
 
 - **Seller/Inventory Opportunity** — seller-context evidence indicates a meaningful collection or inventory combined with explicit willingness to sell, trade, make deals, or establish an ongoing acquisition relationship;
 
@@ -640,7 +640,7 @@ The experiment focused on three patterns:
 
 Rather than implementing detectors, the patterns were tested manually against representative positive, negative, and borderline examples. The purpose was to determine which parts of discovery could be detected from observable evidence structures and which parts required interpretation.
 
-**Named Provenance** showed that deterministic detection is possible only to a limited degree. Story Signals can identify potential provenance evidence, but the human evaluation demonstrated that not all ownership or historical references should trigger a discovery. Ordinary ownership history was generally insufficient, while associations involving identifiable people, activities, performances, recordings, or more meaningful chains of ownership were more likely to warrant investigation. Determining whether a historical association is sufficiently meaningful therefore requires interpretation beyond the structural presence of a story Signal.
+**Provenance** showed that deterministic detection is possible to a limited degree. Provenance may be represented across different Signal types rather than being limited to `story` Signals. For example, ownership or recording history may appear as `story` evidence, while physical evidence attributed to a specific person may appear as `condition` evidence. Ordinary ownership history was generally insufficient, while associations involving identifiable people, activities, performances, recordings, or other specific historical context were more likely to warrant investigation. Determining whether a provenance association is sufficiently meaningful therefore requires interpretation beyond the structural presence of an individual Signal.
 
 **Seller/Inventory Opportunity** showed the strongest case for deterministic detection. The relevant structure consists of evidence of multiple instruments, a meaningful collection or inventory, or ongoing acquisition activity combined with explicit willingness to transact. Transaction activity may include selling, trading, buying, or establishing an ongoing acquisition relationship. A single instrument being offered for sale does not by itself constitute this pattern. The experiment indicates that much of this structure could potentially be detected mechanically, although interpretation may still be useful for borderline cases such as determining what constitutes meaningful inventory.
 
@@ -670,7 +670,7 @@ The three patterns produced different architectural characteristics:
 
 | Pattern                                  | Deterministic detection | Interpretation required |
 | ---------------------------------------- | ----------------------- | ----------------------- |
-| Named Provenance                         | Partial                 | Significant             |
+| Provenance                               | Partial                 | Significant             |
 | Seller/Inventory Opportunity             | Strong                  | Limited                 |
 | Dated Configuration/Modification History | Strong                  | Significant             |
 

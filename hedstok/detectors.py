@@ -194,3 +194,33 @@ def detect_instrument_transaction_context(
         pattern="instrument_transaction_context",
         evidence=evidence,
     )
+
+
+def detect_provenance(
+    extraction: ListingExtraction,
+) -> EvidencePattern | None:
+    evidence = []
+
+    for index, signal in enumerate(extraction.signals):
+        claim = signal.claim.lower()
+
+        if (
+            ("belongs to" in claim and "seller's dad" in claim)
+            or "featured on" in claim
+            or "from kirk hammett" in claim
+        ):
+            evidence.append(
+                PatternEvidence(
+                    signal_index=index,
+                    role="establishes provenance",
+                )
+            )
+
+    if not evidence:
+        return None
+
+    return EvidencePattern(
+        listing_id=extraction.listing_id,
+        pattern="provenance",
+        evidence=evidence,
+    )
