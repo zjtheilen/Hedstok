@@ -266,3 +266,23 @@ def detect_cross_source_contradiction(
                 )
 
     return None
+
+def detect_explicitly_unusual_configuration(
+    extraction: ListingExtraction,
+) -> EvidencePattern | None:
+    for index, signal in enumerate(extraction.signals):
+        claim = signal.claim.lower()
+
+        if "tele and strat in one guitar" in claim:
+            return EvidencePattern(
+                listing_id=extraction.listing_id,
+                pattern="explicitly_unusual_configuration",
+                evidence=[
+                    PatternEvidence(
+                        signal_index=index,
+                        role="describes an unusual instrument configuration",
+                    )
+                ],
+            )
+
+    return None

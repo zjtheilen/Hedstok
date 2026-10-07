@@ -4,6 +4,7 @@ from pathlib import Path
 from hedstok.detectors import (
     detect_cross_source_contradiction,
     detect_dated_configuration_modification_history,
+    detect_explicitly_unusual_configuration,
     detect_instrument_transaction_context,
     detect_provenance,
     detect_seller_inventory_opportunity,
@@ -603,6 +604,7 @@ def test_all_provisional_patterns_against_artifact():
         detect_instrument_transaction_context,
         detect_provenance,
         detect_cross_source_contradiction,
+        detect_explicitly_unusual_configuration,
     )
 
     detected = {}
@@ -643,3 +645,80 @@ def test_cross_source_contradiction_against_extraction_artifact():
     print(f"\nCross-source contradictions detected: {detected}")
 
     assert detected == ["listing-11"]
+
+
+def test_explicitly_unusual_configuration_detected():
+    extraction = ListingExtraction(
+        listing_id="test-unusual-configuration",
+        signals=[
+            Signal(
+                type="identity",
+                claim="Tele and Strat in one guitar",
+                source_text="Tele and Strat in one guitar!",
+            ),
+        ],
+    )
+
+    result = detect_explicitly_unusual_configuration(extraction)
+
+    assert result is not None
+    assert result.listing_id == "test-unusual-configuration"
+    assert result.pattern == "explicitly_unusual_configuration"
+    assert len(result.evidence) == 1
+    assert result.evidence[0].signal_index == 0
+
+
+def test_explicitly_unusual_configuration_not_detected_from_ordinary_configuration():
+    extraction = ListingExtraction(
+        listing_id="test-ordinary-configuration",
+        signals=[
+            Signal(
+                type="configuration",
+                claim="Three single-coil pickups",
+                source_text="three single-coil pickups",
+            ),
+        ],
+    )
+
+    result = detect_explicitly_unusual_configuration(extraction)
+
+    assert result is None
+
+
+def test_explicitly_unusual_configuration_not_detected_from_modification():
+    extraction = ListingExtraction(
+        listing_id="test-modification",
+        signals=[
+            Signal(
+                type="configuration",
+                claim="Off-brand active pickups installed",
+                source_text="off-brand active pickups installed",
+            ),
+        ],
+    )
+
+    result = detect_explicitly_unusual_configuration(extraction)
+
+    assert result is None
+
+
+def test_explicitly_unusual_configuration_against_extraction_artifact():
+    extraction_path = Path(__file__).parent.parent / "extraction2.json"
+
+    with open(extraction_path, encoding="utf-8") as file:
+        data = json.load(file)
+
+    detected = []
+
+    for listing_data in data:
+        extraction = ListingExtraction.model_validate(listing_data)
+        result = detect_explicitly_unusual_configuration(extraction)
+
+        if result is not None:
+            detected.append(result.listing_id)
+
+    print(
+        f"\nExplicitly unusual configurations detected: {detected}"
+    )
+
+    assert detected == ["listing-14"]
