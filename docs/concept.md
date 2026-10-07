@@ -785,3 +785,112 @@ The result does not establish that Hedstok will consistently discover opportunit
 > **Hedstok can structure and interpret evidence within listings to surface acquisition-relevant characteristics, combinations, and relationships that a human might otherwise have to discover and synthesize manually.**
 
 Phase 3 therefore provides sufficient experimental evidence to continue beyond evidence extraction into evidence-based discovery.
+
+## Phase 4 — Opportunity Interpretation
+
+### Goal
+
+Phase 4 investigates whether Hedstok can transform structured, source-grounded evidence into explainable candidate acquisition opportunities without overstating what the available evidence establishes.
+
+Phase 3 demonstrated that Signals can support useful discovery patterns, and that some of those patterns can be detected deterministically. It also showed that free-form AI discovery alone can miss useful opportunities and introduce interpretations not established by the evidence.
+
+Phase 4 therefore focuses on the transition between evidence analysis and candidate opportunities.
+
+### Core Question
+
+> **Can Hedstok transform structured evidence and detected evidence patterns into explainable candidate acquisition opportunities while preserving uncertainty and avoiding unsupported claims?**
+
+### Experimental Scope
+
+The experiment will use the existing Phase 3 extraction artifact and evidence-pattern results rather than collecting new listings or making new extraction calls.
+
+The experiment will investigate:
+
+* how Signals and evidence patterns contribute to candidate opportunities;
+* whether multiple Signals or patterns can support a single opportunity;
+* how candidate opportunities should reference their supporting evidence;
+* whether useful opportunities can arise from Signals that do not match an existing evidence pattern;
+* how uncertainty can be preserved in the resulting interpretation;
+* how deterministic analysis and AI-assisted interpretation might contribute different capabilities;
+* whether candidate explanations can remain grounded in the underlying Signals.
+
+A candidate opportunity should represent something that appears potentially worth investigating because of the available evidence. It should not assert that the underlying claims are true, valuable, rare, authentic, or otherwise significant unless that conclusion is independently supported by the available evidence.
+
+### Opportunity and Evidence Boundaries
+
+The experiment will distinguish between evidence, evidence patterns, and candidate opportunities.
+
+```text
+Signals
+   │
+   ├───────────────┐
+   │               │
+   ▼               ▼
+Evidence        Evidence
+patterns        not yet patterned
+   │               │
+   └───────┬───────┘
+           ▼
+   Candidate opportunity
+           │
+           ▼
+   Evidence-grounded
+      explanation
+```
+
+An evidence pattern is an observed structure within the available evidence. A candidate opportunity is an interpretation that the evidence may warrant further investigation.
+
+A pattern does not automatically constitute an opportunity, and an opportunity does not necessarily require a previously defined pattern.
+
+This distinction is intentionally experimental. The Phase 4 work should determine whether these concepts provide a useful boundary or whether a different representation is needed.
+
+### Evaluation
+
+Candidate opportunities will be evaluated by human review using criteria including:
+
+* **Usefulness** — does the candidate identify something reasonably worth investigating?
+* **Evidence grounding** — can the candidate be explained through specific underlying Signals?
+* **Uncertainty preservation** — does the explanation avoid converting uncertain or attributed claims into established facts?
+* **Interpretation discipline** — does the candidate avoid introducing significance not established by the available evidence?
+* **Coverage** — does the approach identify useful opportunities that deterministic evidence-pattern detection alone would miss?
+* **Explanation quality** — does the supporting evidence make it clear why the candidate was surfaced?
+
+False positives are useful experimental results. A candidate that appears interesting but does not withstand human review should help identify where the interpretation process overreaches.
+
+### AI Role
+
+Phase 3 did not support using free-form AI discovery as the sole discovery mechanism. Phase 4 will therefore treat AI-assisted interpretation as an experimental capability rather than an assumed architectural foundation.
+
+AI may be used to propose or explain candidate opportunities, but any resulting interpretation must remain traceable to the available Signals.
+
+The experiment will specifically examine whether AI can provide useful semantic interpretation after evidence has already been structured, without becoming a source of unsupported claims.
+
+### Out of Scope
+
+The following remain outside the Phase 4 experiment:
+
+* marketplace scraping or live APIs;
+* automated purchasing or seller contact;
+* pricing or valuation;
+* ranking or recommendation systems;
+* notifications or monitoring;
+* persistent database architecture;
+* UI implementation;
+* generalized graph or relationship architecture;
+* image-analysis implementation;
+* generalized AI orchestration;
+* production discovery architecture.
+
+### Completion Criterion
+
+Phase 4 will be considered complete when the experiment establishes whether structured evidence and evidence-pattern analysis can be transformed into candidate acquisition opportunities that:
+
+1. are considered useful enough to investigate by human review;
+2. can be explained through specific underlying evidence;
+3. preserve uncertainty and attribution;
+4. avoid unsupported significance or factual claims; and
+5. provide useful coverage beyond what the current deterministic evidence-pattern detectors identify alone.
+
+Completion does not require establishing a permanent opportunity schema, production discovery architecture, ranking model, or AI orchestration framework.
+
+The purpose of Phase 4 is to determine whether **opportunity interpretation** is a coherent and useful layer in the Hedstok pipeline, and what constraints that layer should have if development continues.
