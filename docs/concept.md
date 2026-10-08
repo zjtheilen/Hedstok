@@ -1005,3 +1005,5 @@ This recurring structure is sufficient to describe the experimental cases, but t
 The five cases demonstrated that candidate acquisition opportunities can be constructed from existing source-grounded evidence, described consistently, explained through specific supporting Signals, and kept useful without resolving underlying uncertainty. The experiment also demonstrated that opportunities can arise without a pre-existing evidence pattern and identified a recurring conceptual structure that can describe the cases.
 
 These findings justify further investigation of candidate opportunity representation and interpretation. They do not yet establish a permanent opportunity schema, production architecture, or implementation approach.
+
+**Multiple opportunities within one listing**: Edge case 08 demonstrated that a single listing can contain multiple distinct candidate acquisition opportunities. These may arise from different instruments, historical associations, seller/inventory context, or transaction circumstances. This suggests that candidate opportunities should not be assumed to have a one-to-one relationship with listings.
