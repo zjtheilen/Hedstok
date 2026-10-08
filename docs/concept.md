@@ -1041,3 +1041,113 @@ The five cases demonstrated that candidate acquisition opportunities can be cons
 These findings justify further investigation of candidate opportunity representation and interpretation. They do not yet establish a permanent opportunity schema, production architecture, or implementation approach.
 
 **Multiple opportunities within one listing**: Edge case 08 demonstrated that a single listing can contain multiple distinct candidate acquisition opportunities. These may arise from different instruments, historical associations, seller/inventory context, or transaction circumstances. This suggests that candidate opportunities should not be assumed to have a one-to-one relationship with listings.
+
+## Phase 4.2 — Story and Surface-Worthiness Boundary
+
+### Purpose
+
+Phase 4.2 investigates the boundary between an instrument having an interesting story and an instrument being worth surfacing to a person looking for instruments to potentially acquire.
+
+The experiment is intended to test whether “story” alone is an adequate description of the desired Hedstok behavior, or whether additional characteristics determine whether a story or other evidence should result in:
+
+> **“Hey. Look at this one.”**
+
+The experiment uses manually constructed synthetic cases and human judgment. No new AI extraction calls, external market data, or implementation changes are used.
+
+### Experimental Question
+
+> **What makes an instrument's available evidence worth surfacing to a person looking for instruments to potentially acquire?**
+
+The experiment specifically examines:
+
+- whether a story must be unusual, unresolved, or historically significant to be worth surfacing;
+- whether meaningful personal history can be sufficient;
+- whether uncertainty is useful only when accompanied by additional clues or questions;
+- whether unusual configuration or other non-narrative evidence can justify surfacing;
+- whether a compelling story can still be unsuitable for surfacing when the instrument is explicitly unavailable;
+- whether a story or evidence must be attached to a specific instrument rather than only to a person or collection;
+- whether multiple ordinary pieces of evidence can combine into a meaningful reason to look closer;
+- whether unsupported claims of rarity, fame, value, or significance should influence the decision.
+
+### Experimental Findings
+
+The boundary cases suggest that Hedstok is not simply looking for “good stories.”
+
+An instrument may be worth surfacing because the available evidence creates a meaningful reason to stop and look closer. That reason may take several forms, including:
+
+- meaningful personal or ownership history;
+- a specific historical association or provenance claim;
+- an unresolved identity or historical question;
+- conflicting or unusual evidence;
+- a meaningful relationship between an instrument and a person, event, or circumstance;
+- a combination of individually ordinary Signals that produces a more compelling overall story;
+- unusual characteristics that create a meaningful question or context.
+
+The story does not need to be verified, famous, rare, or objectively important. A documented family history can be worth surfacing even when there is little unresolved uncertainty, while an unsupported claim of fame or rarity should not be treated as established significance.
+
+Similarly, uncertainty by itself is not sufficient. An unknown instrument with no identifying clues does not necessarily provide a useful reason to look closer. Uncertainty becomes more useful when the available evidence provides a meaningful path, question, contradiction, or connection for further investigation.
+
+The experiment also reinforced that unusualness alone is not sufficient. A strange specification, unexplained marking, or other unusual detail may be interesting without creating a reason to surface the instrument.
+
+### Acquisition Context
+
+The experiment clarified an important distinction in Hedstok's intended behavior.
+
+Hedstok is concerned with instruments that a person might potentially acquire, but it is not intended to decide whether an instrument should be purchased.
+
+The desired behavior is closer to:
+
+> **“Hey. Look at this one.”**
+
+rather than:
+
+> **“You should buy this.”**
+
+An interesting story therefore does not automatically justify surfacing an instrument. If the available evidence explicitly indicates that the instrument is not available and will not be sold, the story may remain interesting without being relevant to the acquisition-oriented purpose of Hedstok.
+
+This does not mean Hedstok needs to establish that an instrument is definitely available before surfacing it. Rather, explicit evidence that an instrument is unavailable can provide a meaningful boundary against surfacing an otherwise compelling story.
+
+### Evidence Discipline
+
+The cases further reinforce the distinction between an interesting claim and evidence supporting that claim.
+
+A seller's assertion that an instrument belonged to a famous musician, is rare, or represents an investment opportunity does not establish those characteristics merely because they appear in the listing.
+
+Likewise, a handwritten note, photograph, family account, or other source can provide a reason to investigate without establishing that the underlying historical claim is true.
+
+Hedstok should therefore preserve the distinction between:
+
+> **“This evidence gives us a reason to look closer.”**
+
+and:
+
+> **“This claim has been established as true.”**
+
+### Provisional Interpretation
+
+The Phase 4.2 cases suggest a more useful working concept than simply “interesting story”:
+
+> **Hedstok should identify instruments whose available evidence gives a person a meaningful reason to stop and look closer, in the context of finding instruments to potentially acquire.**
+
+Stories and story potential appear to be major sources of those reasons, but they are not the only possible source. The relevant property is the relationship between the evidence, the specific instrument, and the reason a person might want to pay attention to it.
+
+This remains a provisional interpretation rather than a formal definition or production rule.
+
+The experiment does not establish a scoring model, ranking mechanism, permanent opportunity schema, or automated judgment process. Its purpose is to clarify the conceptual boundary that future experiments can test.
+
+### Completion Assessment
+
+**This criterion has been met experimentally.**
+
+The Phase 4.2 cases demonstrated that:
+
+- compelling stories are not necessarily sufficient by themselves;
+- meaningful personal history can justify surfacing;
+- uncertainty can contribute to a reason for investigation without being sufficient on its own;
+- unusual characteristics do not automatically constitute a reason to surface;
+- unsupported claims of significance should not be treated as evidence of significance;
+- explicit unavailability can distinguish an interesting story from a relevant acquisition-oriented observation;
+- a meaningful story or evidence relationship should generally be connected to a specific instrument;
+- the desired behavior is better described as surfacing a reason for human attention than making an acquisition recommendation.
+
+These findings provide a stronger conceptual boundary for future Phase 4 work while preserving the exploratory nature of the project.
