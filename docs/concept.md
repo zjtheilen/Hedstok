@@ -894,3 +894,92 @@ Phase 4 will be considered complete when the experiment establishes whether stru
 Completion does not require establishing a permanent opportunity schema, production discovery architecture, ranking model, or AI orchestration framework.
 
 The purpose of Phase 4 is to determine whether **opportunity interpretation** is a coherent and useful layer in the Hedstok pipeline, and what constraints that layer should have if development continues.
+
+### Phase 4.1 — Manual Opportunity Construction
+
+#### Purpose
+
+The first Phase 4 experiment will establish what a candidate acquisition opportunity looks like before introducing a formal opportunity model or implementation.
+
+The experiment will use the existing Phase 3 evidence artifacts to manually construct candidate opportunities from structured Signals. The purpose is to determine whether opportunities can be described consistently while remaining useful, explainable, and constrained by the available evidence.
+
+No new extraction calls or external market data will be used.
+
+#### Core Question
+
+> **Can candidate acquisition opportunities be constructed from existing Signals in a way that is useful, explainable, and disciplined by the available evidence?**
+
+#### Inputs
+
+The experiment will use:
+
+* `experiment-0/input/listings.json`;
+* `extraction2.json`;
+* the experimental evidence-pattern detector results established during Phase 3; and
+* the human investigation decisions established during Phase 3.
+
+The experiment will not make new AI extraction or discovery calls.
+
+#### Experimental Cases
+
+The initial experiment will use five deliberately different listings:
+
+| Listing | Purpose                                                             |
+| ------- | ------------------------------------------------------------------- |
+| 05      | Multi-Signal provenance                                             |
+| 11      | Cross-source contradiction                                          |
+| 09      | Seller/inventory opportunity                                        |
+| 06      | Uncertain identity with additional clues                            |
+| 01      | Potential opportunity without an existing evidence-pattern detector |
+
+These cases are intended to test different relationships between evidence patterns and candidate opportunities rather than to represent a statistically complete evaluation.
+
+#### Manual Candidate Structure
+
+Each candidate opportunity will initially be described using:
+
+* **listing** — the source listing associated with the candidate;
+* **what appears worth investigating** — a concise description of the potential opportunity;
+* **why** — the interpretation connecting the available evidence to the potential investigation;
+* **supporting Signals** — the specific Signals supporting the candidate; and
+* **uncertainty** — relevant claims, ambiguities, or limitations that remain unresolved.
+
+This is an experimental description format rather than a proposed production data model.
+
+#### Evaluation Boundaries
+
+Each manually constructed candidate will be evaluated against the following questions:
+
+1. **Investigation usefulness** — does the available evidence provide a reasonable basis for further investigation?
+2. **Evidence grounding** — can the candidate and its explanation be traced to specific Signals?
+3. **Interpretation discipline** — does the candidate avoid introducing significance or factual claims not established by the available evidence?
+4. **Uncertainty preservation** — does the candidate preserve uncertain, attributed, or reported claims rather than presenting them as established facts?
+5. **Pattern dependency** — does the candidate depend on an existing evidence pattern, or can a useful opportunity arise without one?
+6. **Evidence composition** — can multiple Signals or multiple evidence patterns contribute to a single candidate opportunity?
+
+The experiment will distinguish between the presence of evidence and the significance assigned to that evidence. A candidate may justify investigation without establishing that an instrument is authentic, valuable, rare, desirable, historically significant, or otherwise superior.
+
+#### Expected Findings
+
+The experiment will document:
+
+* candidate opportunities that can be constructed directly from existing evidence patterns;
+* candidates requiring combinations of multiple Signals;
+* candidates that do not correspond to an existing evidence pattern;
+* cases where uncertainty itself contributes to the reason for investigation;
+* cases where the available evidence is insufficient to justify a candidate; and
+* recurring constraints or structures that may inform a future opportunity representation.
+
+False positives and rejected candidates are useful experimental results. They may identify boundaries where an apparent opportunity does not withstand evidence-grounded review.
+
+#### Completion Criterion
+
+Phase 4.1 will be considered complete when the five cases have been manually evaluated and the experiment has established:
+
+1. whether candidate opportunities can be described consistently from existing evidence;
+2. whether their explanations can remain grounded in specific Signals;
+3. whether uncertainty can be preserved without weakening the usefulness of the candidate;
+4. whether opportunities can arise without a pre-existing evidence pattern; and
+5. what, if any, common structure appears justified for future implementation.
+
+The experiment will not establish a permanent opportunity schema or require implementation. Its purpose is to determine whether the concept of a candidate acquisition opportunity is sufficiently coherent to justify further development.
