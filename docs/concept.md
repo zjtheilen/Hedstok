@@ -1151,3 +1151,170 @@ The Phase 4.2 cases demonstrated that:
 - the desired behavior is better described as surfacing a reason for human attention than making an acquisition recommendation.
 
 These findings provide a stronger conceptual boundary for future Phase 4 work while preserving the exploratory nature of the project.
+
+## Phase 4.3 — Representing the Reason to Look Closer
+
+### Purpose
+
+Phase 4.2 established that Hedstok is not simply looking for interesting stories, unusual specifications, or objectively desirable instruments. The relevant question is whether the available evidence gives a person a meaningful reason to stop and look closer.
+
+This raises a further architectural question:
+
+> **How, if at all, should this "reason to look closer" be represented and interpreted from the existing Signals?**
+
+This phase explores that question without introducing a permanent production schema.
+
+### Experimental Question
+
+> **Can the reason an instrument is worth bringing to someone's attention be understood as an interpretation of existing evidence rather than as another type of evidence?**
+
+### Observation
+
+The existing evidence pipeline can be understood as:
+
+```text
+Source listing
+     ↓
+   Signals
+     ↓
+Evidence patterns / relationships
+     ↓
+  Interpretation
+"What is interesting here?"
+     ↓
+Acquisition context
+"Is this relevant to what we're looking for?"
+     ↓
+Surface observation
+"Hey. Look at this one."
+```
+
+The important distinction is that the final observation is not itself source evidence.
+
+A Signal represents something the source says. An evidence pattern or relationship represents a structured connection between pieces of evidence. A "reason to look closer" is an interpretation of that evidence in context.
+
+For example, a listing may contain:
+
+- a specific instrument identity;
+- multigenerational ownership;
+- a historical use claim;
+- documentation or other supporting artifacts;
+- an unresolved question about the instrument's history.
+
+None of those Signals individually needs to state that the instrument is worth attention. The reason to look closer can emerge from their combination.
+
+### Manual Interpretation Experiment
+
+A small set of previously evaluated cases was used to separate three different questions:
+
+1. **What evidence is present?**
+2. **What is interesting about that evidence?**
+3. **Does that combination justify "Hey. Look at this one."?**
+
+The experiment showed that people naturally distinguish these layers.
+
+For example, one case was described in terms of generational ownership, a potential recording-studio association, and an unresolved physical detail. The evidence itself remained distinct from the interpretation that those details formed an interesting story worth examining.
+
+Another case contained an interesting story but no personal connection, no meaningful instrument identification, and no clear reason to pursue it. The story was interesting, but the final surface judgment was still "maybe" and then "no."
+
+This reinforces the finding from Phase 4.2 that **interesting evidence and surface-worthy evidence are not identical concepts**.
+
+### Findings
+
+#### 1. The reason to look closer is not another Signal type
+
+The experiment provides no reason to add a new Signal category for "interestingness" or "attention."
+
+Signals should continue to represent source-grounded evidence. The reason to look closer is better understood as an interpretation derived from existing evidence.
+
+This preserves the distinction between:
+
+> **What the listing says**
+
+and:
+
+> **Why that evidence caught Hedstok's attention.**
+
+#### 2. Evidence composition matters
+
+A reason to look closer can emerge from the relationship between multiple Signals rather than from a single exceptional fact.
+
+Generational ownership, dates, personal history, provenance claims, documentation, uncertain identity, and transaction context may each be modest individually while becoming meaningful when considered together.
+
+This does not imply that Hedstok should automatically treat combinations of Signals as opportunities. The combination still requires interpretation.
+
+#### 3. A single Signal can sometimes be sufficient
+
+The experiment also demonstrated the opposite boundary.
+
+A single, sufficiently specific historical claim can provide a reason to look closer. Multiple Signals are therefore not a requirement.
+
+The relevant property is not the number of Signals, but whether the available evidence provides a meaningful reason for attention.
+
+#### 4. Context affects whether an observation is surface-worthy
+
+The same evidence can be interesting without necessarily being appropriate to surface.
+
+An instrument may have a compelling family history while the listing explicitly states that it is not for sale. The story remains interesting, but the acquisition-oriented context changes whether it should produce the desired:
+
+> **"Hey. Look at this one."**
+
+This suggests that the interpretation cannot be derived from evidence alone. It must also account for the context in which Hedstok is being used.
+
+#### 5. Uncertainty can be part of the reason
+
+A reason to look closer does not require a claim to be established as true.
+
+Uncertain provenance, unresolved identity, contradictory evidence, or a historical claim supported by partial documentation may itself create a meaningful question.
+
+However, uncertainty alone is not sufficient. There must be some additional reason that the unresolved question is worth attention.
+
+#### 6. A rigid taxonomy of reasons is not yet justified
+
+Different people may describe the same evidence using different but compatible reasons for paying attention.
+
+One person may emphasize the instrument's family history. Another may emphasize its connection to a local musician. Another may focus on the documentation or unresolved identity.
+
+The experiment does not currently show that these interpretations need to be forced into a fixed vocabulary.
+
+A useful representation should therefore preserve the explanation of **why the evidence caught attention** without prematurely deciding that every reason belongs to a predefined category.
+
+### Provisional Architectural Finding
+
+The current evidence supports treating the "reason to look closer" as a **derived interpretation of existing evidence in context**, rather than as another evidence type.
+
+Conceptually:
+
+```text
+Evidence
+   ↓
+Interpretation
+   ↓
+Reason to look closer
+   ↓
+"Hey. Look at this one."
+```
+
+The interpretation should remain traceable to the Signals and evidence patterns that support it, while preserving uncertainty and relevant limitations.
+
+This is a stronger candidate for future representation than adding additional Signal types. However, the experiment does not yet establish what that representation should be called, what fields it should contain, or whether it should become a persistent production object.
+
+Terms such as "attention reason," "surface observation," "candidate," and "opportunity" should therefore remain provisional rather than being formalized at this stage.
+
+### Completion Assessment
+
+**This criterion has been met experimentally.**
+
+The experiment demonstrated that:
+
+- the reason to look closer can be distinguished from the underlying evidence;
+- the reason can emerge from one Signal or a combination of Signals;
+- evidence composition can create an interpretation not explicitly stated by the source;
+- uncertainty can contribute to an attention-worthy interpretation without being resolved;
+- acquisition context can affect whether an otherwise interesting instrument should be surfaced;
+- different interpretations of the same evidence may be legitimate;
+- a rigid taxonomy of attention reasons is not currently justified.
+
+These findings support further investigation into a minimal representation of evidence-grounded surface observations.
+
+They do **not** yet justify a permanent schema, scoring system, ranking mechanism, recommendation model, or new Signal type.
