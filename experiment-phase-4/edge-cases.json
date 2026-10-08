@@ -1,0 +1,36 @@
+{
+    "listings": [
+        {
+            "id": "edge-01",
+            "description": "2012 Fender Stratocaster. Blue finish, maple neck, three single-coil pickups. I've had it for six years and it plays great."
+        },
+        {
+            "id": "edge-02",
+            "description": "Not sure what this guitar is. Got it from a friend years ago. No model number that I can find. $300."
+        },
+        {
+            "id": "edge-03",
+            "description": "2018 Stratocaster. In 2021 I replaced the pickups and tuners. I still have the original pickups and tuners in the case. The guitar is in good condition."
+        },
+        {
+            "id": "edge-04",
+            "description": "This guitar was used by the seller's father during sessions at Sunset Sound in 1987. No other history is available."
+        },
+        {
+            "id": "edge-05",
+            "description": "Found in an old family storage unit. The guitar belonged to my grandfather, who bought it sometime in the 1960s. It has been stored untouched since the 1980s. The original case is included. I don't know the exact model."
+        },
+        {
+            "id": "edge-06",
+            "description": "This was my dad's guitar. He played it during local shows throughout the 1970s and 1980s. He passed it down to me, and it has been in our family ever since. I'm not selling it, and I never intend to sell it."
+        },
+        {
+            "id": "edge-07",
+            "description": "Rare vintage Gibson. Museum-quality collector's piece. Incredible investment opportunity. $2,500."
+        },
+        {
+            "id": "edge-08",
+            "description": "Selling my dad's old guitar collection. One 1970s bass was used during recording sessions at a local studio. Another guitar has a handwritten note inside saying it belonged to a touring musician. I'm willing to sell individual instruments or the entire collection."
+        }
+    ]
+}
