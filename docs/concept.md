@@ -18,9 +18,11 @@ A useful acquisition tool should therefore do more than retrieve instruments mat
 
 ## 2. Core Question
 
-> **Can software identify instruments with stories or story potential that are worth bringing to a person's attention?**
+> **Can software identify instruments whose available evidence gives a person a meaningful reason to stop and look closer?**
 
 This is the central question of Hedstok.
+
+Stories and story potential are a major source of those reasons, but they are not the only possible source. Provenance, unusual characteristics, distinctive configurations, human circumstances, personal relevance, and combinations of otherwise ordinary evidence may also make an instrument worth noticing.
 
 The project should not assume that the answer is yes. Early development exists to test the premise.
 
@@ -1318,3 +1320,223 @@ The experiment demonstrated that:
 These findings support further investigation into a minimal representation of evidence-grounded surface observations.
 
 They do **not** yet justify a permanent schema, scoring system, ranking mechanism, recommendation model, or new Signal type.
+
+## Phase 4.4 — Surface-Worthiness as Emergent Interpretation
+
+### Purpose
+
+Phase 4.3 established that the "reason to look closer" is better understood as an interpretation of existing evidence rather than as another type of evidence.
+
+Phase 4.4 tests whether that interpretation depends on a particular category of evidence, or whether different evidence configurations can independently or collectively create a reason to surface an instrument.
+
+The experiment uses observations from Dan's existing instrument inventory together with controlled variations of otherwise ordinary instruments.
+
+### Experimental Question
+
+> **Does surface-worthiness emerge from a particular type of evidence, or can different evidence configurations create a meaningful reason to look closer?**
+
+### Dan's Inventory as a Reference Point
+
+Dan's existing inventory provides useful real-world context for understanding the kinds of characteristics, stories, and circumstances that appear to interest him.
+
+Examples include:
+
+- a homemade EVH Frankenstein associated with an artist Dan particularly likes;
+- a Mark Tremonti signature model personally signed by Tremonti during a small exclusive event that Dan attended;
+- an Epiphone Lucille signed by B.B. King and purchased from the local casino where it was signed;
+- a headless eight-string Strandberg purchased from a local artist who needed the money;
+- unusual surf-style guitars with distinctive appearances and configurations;
+- a Gibson SG Bass with an unusual but recognizable body shape;
+- a Mark Hoppus signature bass purchased from a local church;
+- a customized Les Paul featured in _Hot Rod_ magazine and produced as a limited run of 150;
+- visually distinctive rock and metal instruments;
+- familiar instruments such as Strats, Teles, and Les Pauls that may become interesting through their appearance, history, model, or other characteristics.
+
+These examples suggest that Dan's attention is not driven by a single property.
+
+Potential sources of attention include:
+
+- personal or ownership history;
+- provenance or association with a person, organization, place, or event;
+- unusual construction or configuration;
+- distinctive physical appearance;
+- recognizable artist or model associations;
+- unusual acquisition circumstances;
+- personal relevance or connection;
+- limited or unusual production history;
+- combinations of otherwise ordinary evidence.
+
+Story remains an important source of attention, particularly when it provides provenance, human context, or a meaningful reason to investigate. However, the inventory examples demonstrate that a compelling story is not required in every case.
+
+### Controlled Variation Experiment
+
+A familiar instrument was progressively given additional characteristics to test whether surface-worthiness could emerge through accumulated evidence.
+
+The baseline instrument was an ordinary Fender Stratocaster.
+
+The tested variations included:
+
+- ordinary instrument with no additional distinguishing information;
+- unusual custom appearance;
+- unusual appearance combined with a local musician association;
+- unusual appearance, local musician association, and historical use;
+- the same characteristics combined with explicit transaction context;
+- a recognizable or particularly relevant model with otherwise ordinary presentation;
+- an ordinary instrument accompanied by an unspecified personal story;
+- an instrument matching a personal preference.
+
+The results did not produce a single threshold.
+
+An ordinary instrument did not warrant surfacing by default. Adding distinctive appearance produced a possible reason to look closer. Additional human or historical context strengthened that reason. Transaction context could strengthen a borderline observation further.
+
+At the same time, a sufficiently distinctive model or identity could independently justify surfacing without requiring a narrative history.
+
+Personal preference alone was not consistently sufficient.
+
+### Findings
+
+#### 1. Surface-worthiness is not tied to one evidence category
+
+The experiments do not support defining surface-worthiness as:
+
+- a story;
+- provenance;
+- unusual configuration;
+- rarity;
+- a particular model;
+- personal preference;
+- transaction context;
+- or any other single category.
+
+Different categories can independently contribute to attention.
+
+#### 2. A single strong characteristic can be sufficient
+
+Some instruments can provide a strong reason to look closer from a relatively small amount of evidence.
+
+A distinctive model, unusual instrument type, recognizable artist association, or other specific characteristic may be sufficient without requiring several additional Signals.
+
+The number of Signals is therefore not itself a useful measure of surface-worthiness.
+
+#### 3. Multiple modest Signals can combine into a stronger observation
+
+Other instruments become interesting through accumulation.
+
+For example:
+
+```text
+unusual appearance
+        +
+specific person
+        +
+historical use
+        +
+transaction context
+        ↓
+stronger reason to look closer
+```
+
+The individual Signals do not necessarily become independently compelling. Their combination provides a more compelling explanation for why the instrument deserves attention.
+
+#### 4. Story is important but not mandatory
+
+Dan's inventory suggests that story is a major source of interest, especially when it provides:
+
+- provenance;
+- personal history;
+- local connection;
+- unusual acquisition circumstances;
+- association with a musician or organization.
+
+However, unusual physical design, configuration, model identity, or aesthetic characteristics can also produce a legitimate reason to look closer.
+
+This means the project's existing emphasis on **story and story potential** should remain a central touchstone without becoming a complete definition of surface-worthiness.
+
+#### 5. Ordinary instruments should not be automatically excluded
+
+Common instruments such as Strats, Teles, and Les Pauls are not inherently uninteresting.
+
+An otherwise familiar instrument may become surface-worthy because of:
+
+- a distinctive finish or graphic;
+- unusual history;
+- provenance;
+- a particular vintage or model;
+- unusual configuration;
+- personal relevance;
+- or another characteristic that gives it a reason to stand out.
+
+Conversely, familiarity alone does not justify surfacing an instrument.
+
+#### 6. Personal preference is contextual rather than sufficient
+
+Dan's preferences, such as smaller bodies or Teles, can contribute to whether an instrument is interesting to him.
+
+However, a preference match alone does not necessarily create the desired "Hey. Look at this one" observation.
+
+This suggests that personal preference may eventually be useful as context for interpretation rather than as a standalone discovery rule.
+
+#### 7. Surface-worthiness is emergent
+
+The combined experiments provide stronger evidence that surface-worthiness is an **emergent interpretation of available evidence in context**.
+
+Different evidence configurations can produce the same outcome:
+
+> **"Hey. Look at this one."**
+
+There is therefore no current justification for assuming that Hedstok needs a single fixed trigger, threshold, or evidence category.
+
+### Provisional Architectural Finding
+
+The Phase 4 experiments now support the following working interpretation:
+
+> **Hedstok should identify instruments whose available evidence, individually or in combination, gives a person a meaningful reason to stop and look closer.**
+
+Stories and story potential are a major source of those reasons, but they are not the only source.
+
+The relevant property is therefore not whether an instrument belongs to a predefined "interesting" category. It is whether the available evidence can support an understandable explanation for why this particular instrument deserves attention in context.
+
+Conceptually:
+
+```text
+Source
+  ↓
+Signals
+  ↓
+Evidence patterns / relationships
+  ↓
+Evidence-grounded interpretation
+  ↓
+Context
+  ↓
+Surface observation
+  ↓
+"Hey. Look at this one."
+```
+
+This remains an interpretation rather than a recommendation or valuation.
+
+The experiment does not justify a scoring threshold, ranking system, fixed taxonomy of attention triggers, or preference model.
+
+### Completion Assessment
+
+**This criterion has been met experimentally.**
+
+The experiments demonstrated that:
+
+- surface-worthiness is not tied to a single evidence category;
+- a single strong characteristic can justify attention;
+- multiple modest Signals can combine into a stronger reason to look closer;
+- story is an important but non-mandatory source of attention;
+- unusual characteristics can independently create interest;
+- familiar instruments can become surface-worthy through additional evidence;
+- personal preference can contribute without being sufficient by itself;
+- no fixed threshold or single trigger has been justified.
+
+These findings strengthen the Phase 4.3 conclusion that the "reason to look closer" should be treated as an evidence-grounded interpretation rather than another Signal type.
+
+They also provide a more general working definition of surface-worthiness for subsequent experiments:
+
+> **Surface-worthiness is the presence of a meaningful, explainable reason for human attention arising from the available evidence and relevant context.**
+
+This definition remains provisional and should continue to be tested before being treated as a production requirement.

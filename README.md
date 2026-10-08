@@ -39,9 +39,9 @@ The architecture and feature set remain exploratory. Further capabilities will b
 
 ## Core Question
 
-> **Can software identify instruments with stories or story potential that are worth bringing to a person's attention?**
+> **Can software identify instruments whose available evidence gives a person a meaningful reason to stop and look closer?**
 
-The project should not assume that the answer is yes. Early development exists to test the premise.
+Stories and story potential are a major source of those reasons, but they are not the only possible source. The project should not assume that the answer is yes. Early development exists to test the premise.
 
 ## Repository
 
