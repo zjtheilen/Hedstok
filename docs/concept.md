@@ -983,3 +983,25 @@ Phase 4.1 will be considered complete when the five cases have been manually eva
 5. what, if any, common structure appears justified for future implementation.
 
 The experiment will not establish a permanent opportunity schema or require implementation. Its purpose is to determine whether the concept of a candidate acquisition opportunity is sufficiently coherent to justify further development.
+
+### Phase 4.1 Findings
+
+The five experimental cases demonstrated that candidate acquisition opportunities can be described consistently using a common descriptive structure while accommodating substantially different evidence configurations. The structure remained applicable to provenance, contradiction, seller/inventory context, uncertain identity, and opportunities arising directly from combinations of Signals without an existing evidence pattern.
+
+The cases also demonstrated that candidate opportunity explanations can remain grounded in specific Signals across different opportunity types. In each case, the explanation could be traced to the evidence that motivated the investigation, including cases where an existing evidence pattern was present and cases where the opportunity arose directly from a combination of Signals. Evidence-pattern detection is therefore not required to maintain traceability between an opportunity and its supporting evidence.
+
+The experiment demonstrated that uncertainty can be preserved within a candidate opportunity without eliminating its usefulness. Unverified provenance, conflicting identity evidence, unresolved identification, attributed claims, and incomplete seller context could remain explicitly uncertain while still providing a reasonable basis for further investigation. In some cases, particularly conflicting or unresolved identity evidence, the uncertainty itself was part of what made the candidate worth investigating. The experiment provides no evidence that a confidence value is necessary for the basic opportunity concept.
+
+The Listing 01 case demonstrated that a candidate acquisition opportunity can arise from a combination of Signals without a pre-existing evidence-pattern classification. This indicates that evidence patterns can provide useful inputs to opportunity interpretation without being a required intermediate step for every candidate. Evidence patterns remain useful representations of recurring evidence structures, but they do not need to act as a mandatory gate between Signals and opportunities.
+
+Across the five cases, a recurring conceptual structure emerged for candidate acquisition opportunities. A candidate identifies something potentially worth investigating, provides an explanation for why it appears worth investigating, references the supporting evidence, and preserves relevant uncertainty or limitations. Supporting evidence may consist of individual Signals, detected evidence patterns, or combinations of both.
+
+This recurring structure is sufficient to describe the experimental cases, but the experiment does not establish that it should become a permanent production schema. Further experimentation may reveal additional requirements or distinctions.
+
+### Phase 4.1 Completion Assessment
+
+**This criterion has been met experimentally.**
+
+The five cases demonstrated that candidate acquisition opportunities can be constructed from existing source-grounded evidence, described consistently, explained through specific supporting Signals, and kept useful without resolving underlying uncertainty. The experiment also demonstrated that opportunities can arise without a pre-existing evidence pattern and identified a recurring conceptual structure that can describe the cases.
+
+These findings justify further investigation of candidate opportunity representation and interpretation. They do not yet establish a permanent opportunity schema, production architecture, or implementation approach.
