@@ -4,18 +4,26 @@
 ▓        ▓▓      ▓▓▓▓  ▓▓▓▓  ▓▓▓      ▓▓▓▓▓▓  ▓▓▓▓▓  ▓▓▓▓  ▓▓     ▓▓▓▓
 █  ████  ██  ████████  ████  ████████  █████  █████  ████  ██  ███  ██
 █  ████  ██        ██       ████      ██████  ██████      ███  ████  █
-       Find. Filter. Summarize. Cool Guitars with Cool Stories.       
+                       Hey. Look at this one.
 ```
 
 # Hedstok
 
 **Acquisition intelligence for used musical instruments.**
 
-Hedstok explores whether software can discover interesting acquisition opportunities that conventional search would not necessarily surface.
+> **Find. Filter. Summarize. Cool Guitars with Cool Stories.**
+
+Hedstok explores whether software can find instruments that deserve a second look — not necessarily because they are the best, rarest, or most valuable, but because there is **a story worth hearing, a story worth uncovering, or something unusual that makes the instrument worth noticing.**
+
+Hedstok is especially interested in provenance, personal history, unusual circumstances, unresolved identities, contradictions, and other evidence that can turn an ordinary listing into:
+
+> **“Hey. Look at this one.”**
+
+The goal is not to decide what an instrument is worth or whether someone should buy it. Hedstok's job is to surface something interesting and explain why it caught its attention, while preserving the evidence and uncertainty behind that observation.
 
 The project focuses on messy listings, private leads, incomplete information, provenance, uncertainty, and explainable analysis.
 
-> **Evidence before assumptions. Discovery before search.**
+> **Evidence before assumptions. Stories before specifications.**
 
 ## Status
 
@@ -31,7 +39,9 @@ The architecture and feature set remain exploratory. Further capabilities will b
 
 ## Core Question
 
-> Can software discover interesting acquisition opportunities that a conventional search would not necessarily surface?
+> **Can software identify instruments with stories or story potential that are worth bringing to a person's attention?**
+
+The project should not assume that the answer is yes. Early development exists to test the premise.
 
 ## Repository
 

@@ -18,7 +18,7 @@ A useful acquisition tool should therefore do more than retrieve instruments mat
 
 ## 2. Core Question
 
-> **Can software discover interesting acquisition opportunities that a conventional search would not necessarily surface?**
+> **Can software identify instruments with stories or story potential that are worth bringing to a person's attention?**
 
 This is the central question of Hedstok.
 
@@ -29,7 +29,7 @@ The project should not assume that the answer is yes. Early development exists t
 Given a collection of guitar listings or acquisition leads, Hedstok should attempt to:
 
 1. understand the available information;
-2. identify potentially interesting characteristics or relationships;
+2. identify potentially interesting characteristics, stories, story potential, or relationships;
 3. surface candidates worth investigating;
 4. explain why each candidate was surfaced;
 5. preserve the evidence supporting those explanations;
@@ -39,9 +39,43 @@ The desired outcome is not a definitive purchasing recommendation.
 
 It is:
 
-> **"This is worth looking into. Here's why."**
+> **"Hey. Look at this one."**
 
-## 4. Evidence Principle
+## 4. Story as a Core Principle
+
+Hedstok is fundamentally interested in **stories and story potential**.
+
+The project is not intended to identify the objectively “best” instruments, the most valuable instruments, or the instruments with the most desirable specifications. Those characteristics may sometimes contribute to an interesting discovery, but they are not the purpose of the system.
+
+A guitar can be worth surfacing because:
+
+- it has a specific personal or ownership history;
+- it was reportedly used by someone;
+- it has an unusual provenance claim;
+- its history raises an interesting question;
+- its identity is uncertain but the available evidence provides clues;
+- several otherwise ordinary pieces of evidence combine into a compelling story;
+- the circumstances surrounding the instrument suggest that there may be more to uncover.
+
+The story does not need to be established as true before Hedstok can surface it. A reported story, unresolved question, contradiction, or other piece of evidence may itself provide a reason to investigate.
+
+This is an important distinction:
+
+> **Hedstok does not need to know that a guitar has a great story. It needs to recognize when there may be a story worth looking into.**
+
+The intended behavior is therefore not:
+
+> “This is the best guitar.”
+
+It is:
+
+> **“Hey. Look at this one.”**
+
+That observation should invite human attention rather than replace human judgment. Hedstok surfaces the evidence and explains why it caught the system's attention; the human decides whether the story is interesting, whether it is worth investigating further, and what to do next.
+
+“Story” is therefore a central touchstone for evaluating future Hedstok experiments. New capabilities should be considered not only in terms of whether they identify useful instrument characteristics, but whether they help Hedstok notice and surface **stories, story potential, or questions worth investigating**.
+
+## 5. Evidence Principle
 
 Hedstok should not treat extracted or inferred information as unquestioned truth.
 
@@ -49,7 +83,7 @@ Where practical, claims should remain traceable to their source.
 
 Uncertainty should be preserved rather than silently converted into certainty.
 
-## 5. AI Principle
+## 6. AI Principle
 
 AI may be useful for understanding messy, unstructured information.
 
@@ -65,7 +99,7 @@ AI should not be treated as the final authority.
 
 Deterministic analysis, source evidence, uncertainty, and human judgment remain part of the system.
 
-## 6. Initial Experiment
+## 7. Initial Experiment
 
 The first experiment should remain deliberately small.
 
@@ -96,13 +130,13 @@ A later evaluation question may be:
 
 The purpose of the experiment is to learn whether Hedstok can produce useful discoveries, not merely technically plausible output.
 
-## 7. Experiment Success
+## 8. Experiment Success
 
 The experiment should be considered promising if Hedstok surfaces at least one candidate that is interesting specifically because it identified a relationship, anomaly, uncertainty, provenance detail, or combination of information that would not have been obvious from simply searching for a known guitar.
 
 Technical sophistication alone does not constitute success.
 
-## 8. Current Non-Goals
+## 9. Current Non-Goals
 
 The initial experiment will not attempt to build:
 
@@ -119,7 +153,7 @@ The initial experiment will not attempt to build:
 
 These may be considered later if the core concept proves useful.
 
-## 9. Guiding Principle
+## 10. Guiding Principle
 
 > **The experiment should earn the right to become a product.**
 
@@ -806,13 +840,13 @@ The experiment will use the existing Phase 3 extraction artifact and evidence-pa
 
 The experiment will investigate:
 
-* how Signals and evidence patterns contribute to candidate opportunities;
-* whether multiple Signals or patterns can support a single opportunity;
-* how candidate opportunities should reference their supporting evidence;
-* whether useful opportunities can arise from Signals that do not match an existing evidence pattern;
-* how uncertainty can be preserved in the resulting interpretation;
-* how deterministic analysis and AI-assisted interpretation might contribute different capabilities;
-* whether candidate explanations can remain grounded in the underlying Signals.
+- how Signals and evidence patterns contribute to candidate opportunities;
+- whether multiple Signals or patterns can support a single opportunity;
+- how candidate opportunities should reference their supporting evidence;
+- whether useful opportunities can arise from Signals that do not match an existing evidence pattern;
+- how uncertainty can be preserved in the resulting interpretation;
+- how deterministic analysis and AI-assisted interpretation might contribute different capabilities;
+- whether candidate explanations can remain grounded in the underlying Signals.
 
 A candidate opportunity should represent something that appears potentially worth investigating because of the available evidence. It should not assert that the underlying claims are true, valuable, rare, authentic, or otherwise significant unless that conclusion is independently supported by the available evidence.
 
@@ -848,12 +882,12 @@ This distinction is intentionally experimental. The Phase 4 work should determin
 
 Candidate opportunities will be evaluated by human review using criteria including:
 
-* **Usefulness** — does the candidate identify something reasonably worth investigating?
-* **Evidence grounding** — can the candidate be explained through specific underlying Signals?
-* **Uncertainty preservation** — does the explanation avoid converting uncertain or attributed claims into established facts?
-* **Interpretation discipline** — does the candidate avoid introducing significance not established by the available evidence?
-* **Coverage** — does the approach identify useful opportunities that deterministic evidence-pattern detection alone would miss?
-* **Explanation quality** — does the supporting evidence make it clear why the candidate was surfaced?
+- **Usefulness** — does the candidate identify something reasonably worth investigating?
+- **Evidence grounding** — can the candidate be explained through specific underlying Signals?
+- **Uncertainty preservation** — does the explanation avoid converting uncertain or attributed claims into established facts?
+- **Interpretation discipline** — does the candidate avoid introducing significance not established by the available evidence?
+- **Coverage** — does the approach identify useful opportunities that deterministic evidence-pattern detection alone would miss?
+- **Explanation quality** — does the supporting evidence make it clear why the candidate was surfaced?
 
 False positives are useful experimental results. A candidate that appears interesting but does not withstand human review should help identify where the interpretation process overreaches.
 
@@ -869,17 +903,17 @@ The experiment will specifically examine whether AI can provide useful semantic 
 
 The following remain outside the Phase 4 experiment:
 
-* marketplace scraping or live APIs;
-* automated purchasing or seller contact;
-* pricing or valuation;
-* ranking or recommendation systems;
-* notifications or monitoring;
-* persistent database architecture;
-* UI implementation;
-* generalized graph or relationship architecture;
-* image-analysis implementation;
-* generalized AI orchestration;
-* production discovery architecture.
+- marketplace scraping or live APIs;
+- automated purchasing or seller contact;
+- pricing or valuation;
+- ranking or recommendation systems;
+- notifications or monitoring;
+- persistent database architecture;
+- UI implementation;
+- generalized graph or relationship architecture;
+- image-analysis implementation;
+- generalized AI orchestration;
+- production discovery architecture.
 
 ### Completion Criterion
 
@@ -913,10 +947,10 @@ No new extraction calls or external market data will be used.
 
 The experiment will use:
 
-* `experiment-0/input/listings.json`;
-* `extraction2.json`;
-* the experimental evidence-pattern detector results established during Phase 3; and
-* the human investigation decisions established during Phase 3.
+- `experiment-0/input/listings.json`;
+- `extraction2.json`;
+- the experimental evidence-pattern detector results established during Phase 3; and
+- the human investigation decisions established during Phase 3.
 
 The experiment will not make new AI extraction or discovery calls.
 
@@ -938,11 +972,11 @@ These cases are intended to test different relationships between evidence patter
 
 Each candidate opportunity will initially be described using:
 
-* **listing** — the source listing associated with the candidate;
-* **what appears worth investigating** — a concise description of the potential opportunity;
-* **why** — the interpretation connecting the available evidence to the potential investigation;
-* **supporting Signals** — the specific Signals supporting the candidate; and
-* **uncertainty** — relevant claims, ambiguities, or limitations that remain unresolved.
+- **listing** — the source listing associated with the candidate;
+- **what appears worth investigating** — a concise description of the potential opportunity;
+- **why** — the interpretation connecting the available evidence to the potential investigation;
+- **supporting Signals** — the specific Signals supporting the candidate; and
+- **uncertainty** — relevant claims, ambiguities, or limitations that remain unresolved.
 
 This is an experimental description format rather than a proposed production data model.
 
@@ -963,12 +997,12 @@ The experiment will distinguish between the presence of evidence and the signifi
 
 The experiment will document:
 
-* candidate opportunities that can be constructed directly from existing evidence patterns;
-* candidates requiring combinations of multiple Signals;
-* candidates that do not correspond to an existing evidence pattern;
-* cases where uncertainty itself contributes to the reason for investigation;
-* cases where the available evidence is insufficient to justify a candidate; and
-* recurring constraints or structures that may inform a future opportunity representation.
+- candidate opportunities that can be constructed directly from existing evidence patterns;
+- candidates requiring combinations of multiple Signals;
+- candidates that do not correspond to an existing evidence pattern;
+- cases where uncertainty itself contributes to the reason for investigation;
+- cases where the available evidence is insufficient to justify a candidate; and
+- recurring constraints or structures that may inform a future opportunity representation.
 
 False positives and rejected candidates are useful experimental results. They may identify boundaries where an apparent opportunity does not withstand evidence-grounded review.
 
