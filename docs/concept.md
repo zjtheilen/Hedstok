@@ -1540,3 +1540,252 @@ They also provide a more general working definition of surface-worthiness for su
 > **Surface-worthiness is the presence of a meaningful, explainable reason for human attention arising from the available evidence and relevant context.**
 
 This definition remains provisional and should continue to be tested before being treated as a production requirement.
+
+## Phase 4.5 — Interpretation Reproducibility
+
+### Purpose
+
+Phase 4.4 established that surface-worthiness can emerge from different evidence configurations rather than from a single evidence category or fixed trigger.
+
+Phase 4.5 tests whether the same structured evidence can be interpreted consistently into a useful, evidence-grounded reason to look closer.
+
+### Experimental Question
+
+> **Given the same Signals, can Hedstok consistently produce a useful, evidence-grounded reason to look closer?**
+
+The experiment uses eight controlled cases containing only existing Signals. Human interpretation was established independently before evaluating how the evidence could be represented computationally.
+
+The experiment separates:
+
+- the available evidence;
+- the interpretation of that evidence;
+- the uncertainty surrounding the interpretation;
+- the resulting surface judgment.
+
+### Interpretation Representation
+
+The experiments suggest that a useful interpretation can be represented as:
+
+```text
+Signals
+   ↓
+Interpretation
+   ├── observation
+   ├── supporting Signals
+   └── uncertainty
+   ↓
+Surface judgment
+```
+
+The **observation** describes what is notable about the particular instrument.
+
+The **supporting Signals** identify the specific evidence that gives rise to that observation.
+
+The **uncertainty** preserves unresolved questions, limitations, contradictions, or claims that are not established by the available evidence.
+
+The **surface judgment** represents whether the available evidence gives a human a reason to look closer. It is an experimental judgment, not a score, recommendation, or valuation.
+
+### Findings
+
+#### 1. Signal presence is not interpretation
+
+The presence of a Signal category does not by itself establish that an instrument is worth surfacing.
+
+For example, an ordinary Stratocaster can contain identity, configuration, condition, seller, and market Signals without providing a meaningful reason to look closer.
+
+Interpretation therefore requires more than detecting which types of Signals exist.
+
+#### 2. Interpretation depends on relationships and combinations
+
+Useful observations can arise from relationships between Signals rather than from individual Signals considered independently.
+
+Examples include:
+
+- a personal history combined with supporting physical evidence;
+- an unusual configuration that independently distinguishes an instrument;
+- provenance supported by markings or documentation;
+- a timeline containing information that may warrant clarification;
+- strong seller claims combined with an absence of supporting identification or provenance;
+- an unresolved physical clue that creates a potentially interesting question.
+
+This reinforces the Phase 4 finding that existing Signal and relationship concepts provide a useful evidence base for interpretation.
+
+#### 3. Supporting evidence must be selective
+
+An interpretation should identify the Signals that actually support the observation rather than treating every Signal in a listing as supporting evidence.
+
+For example, an asking price may be relevant acquisition context without supporting a claim about an instrument's history.
+
+This distinction improves explainability and preserves the separation between evidence and interpretation.
+
+#### 4. Uncertainty is part of the interpretation
+
+A useful interpretation does not need to resolve every question.
+
+Uncertainty may itself be relevant when the available evidence creates a meaningful question, contradiction, or unresolved clue.
+
+However, the interpretation must preserve the distinction between:
+
+- what the source explicitly claims;
+- what the available evidence supports;
+- what remains unknown;
+- and what the interpreter is suggesting is worth investigating.
+
+The interpreter should not strengthen a source claim into an established fact.
+
+#### 5. Surface judgment remains contextual
+
+The experiments reinforce that an interesting observation does not always produce a surface-worthy candidate.
+
+For example, a strong family history may be interesting while an explicit statement that the instrument is not for sale provides a reason not to surface it for acquisition attention.
+
+Conversely, an instrument may warrant attention from a distinctive configuration without having a particularly compelling personal story.
+
+Surface-worthiness therefore remains a contextual interpretation rather than a property of any individual Signal.
+
+### Provisional Architectural Finding
+
+The Phase 4 experiments support the following working pipeline:
+
+```text
+Source listing
+     ↓
+   Signals
+     ↓
+Evidence patterns / relationships
+     ↓
+Evidence-grounded interpretation
+     ↓
+Context
+     ↓
+Surface observation
+     ↓
+"Hey. Look at this one."
+```
+
+A useful interpretation can be represented experimentally as:
+
+```text
+Interpretation
+├── observation
+├── supporting Signals
+└── uncertainty
+```
+
+with surface judgment remaining separate from the evidence and interpretation.
+
+This representation is useful for experimentation, but it is **not yet established as a permanent production schema**.
+
+The experiment does not justify:
+
+- an interestingness score;
+- a confidence score;
+- a fixed taxonomy of attention triggers;
+- a ranking system;
+- a recommendation system;
+- a valuation model;
+- or a new permanent Signal type.
+
+### AI Role
+
+The Phase 4.5 results provide a narrower and more appropriate experimental role for AI than the free-form discovery approach tested during Phase 3.
+
+Rather than asking AI to discover interesting instruments from unstructured listings, Hedstok can provide AI with already structured, source-grounded Signals and ask it to:
+
+1. identify what is notable about the available evidence;
+2. select the Signals supporting that interpretation;
+3. preserve uncertainty and unresolved questions;
+4. produce a concise explanation of why the evidence may justify a closer look.
+
+This keeps evidence extraction and interpretation conceptually separate.
+
+The AI remains an experimental interpreter of structured evidence rather than the sole source of discovery.
+
+### Completion Assessment
+
+**This criterion has been met experimentally.**
+
+The experiments demonstrated that:
+
+- the same evidence can be represented as an observation with supporting evidence and uncertainty;
+- Signal presence alone is insufficient for useful interpretation;
+- relationships and combinations between Signals are important;
+- supporting evidence should be selected rather than indiscriminately repeated;
+- uncertainty can be meaningful without being resolved;
+- interestingness and surface-worthiness are not identical;
+- surface judgment depends on context;
+- the resulting representation can remain separate from the existing Signal model.
+
+These findings provided sufficient conceptual basis to conduct a small AI interpretation experiment without changing the production Hedstok architecture.
+
+That experiment was subsequently conducted using the same structured Signals and human interpretation targets documented above.
+
+## Phase 4.5 AI Interpretation Experiment
+
+The reproducibility experiment was extended with a small AI interpretation test using the same eight Signals-only cases used for the human interpretation targets.
+
+The AI was asked to produce, for each case:
+
+- an evidence-grounded observation;
+- the Signals supporting that observation;
+- relevant uncertainty;
+- a contextual surface judgment of `yes`, `maybe`, or `no`.
+
+The AI was explicitly constrained to the supplied Signals. It was not asked to verify claims, use outside knowledge, estimate value, assign a score, or make a purchasing recommendation.
+
+### Experimental Result
+
+The initial AI interpretation successfully produced the intended output structure for all eight cases.
+
+It correctly handled several important boundaries:
+
+- ordinary listings were not automatically surfaced;
+- explicit unavailability was respected;
+- unusual instrument configurations could provide a reason to look closer without requiring a story;
+- physical documentation and provenance details could be recognized as meaningful evidence;
+- unexplained physical evidence could contribute to a potentially interesting story.
+
+However, comparison with the human interpretation targets exposed several limitations.
+
+The AI sometimes:
+
+- treated the presence of Signals as sufficient reason for an observation;
+- selected more supporting Signals than were actually necessary;
+- missed meaningful relationships or timelines between Signals;
+- generated uncertainty that was technically relevant but not the uncertainty most important to the interpretation;
+- treated strong seller claims combined with an apparent price discrepancy as an acquisition opportunity rather than recognizing the unsupported claim itself as the interesting evidence;
+- produced conservative `maybe` judgments where the available evidence supported a stronger human `yes`.
+
+### Findings
+
+The experiment provides evidence that an AI model can transform structured Signals into a useful first-pass interpretation, but the interpretation is not yet reliably equivalent to human judgment.
+
+The most important limitation is not basic extraction or formatting. It is **interpretive discipline**: determining which evidence matters, how multiple Signals relate to one another, what uncertainty is meaningful, and why a particular combination gives a person a reason to look closer.
+
+This reinforces the distinction established earlier in Phase 4.5:
+
+> **Signal presence is not interpretation.**
+
+It also suggests a second distinction:
+
+> **An interesting claim is not necessarily an interesting acquisition implication.**
+
+For example, an unsupported claim that an instrument is extremely rare or highly valuable may itself be worth noticing because of the discrepancy between the claim and the available evidence. Hedstok should not convert that discrepancy into an unsupported conclusion about the instrument's value.
+
+### Provisional AI Finding
+
+The initial AI experiment supports using AI as an **interpretive component after evidence has been structured**, rather than as the sole source of discovery.
+
+The AI appears capable of:
+
+- identifying potentially notable evidence;
+- combining multiple Signals into an observation;
+- selecting supporting evidence;
+- expressing uncertainty;
+- producing a concise reason to look closer.
+
+Further work is needed to determine how much of the observed inconsistency can be addressed through prompt design, Signal representation, or additional interpretation structure.
+
+No scoring model, confidence model, ranking system, permanent interpretation schema, valuation system, or recommendation system is justified by this experiment alone.
+
+The current result is therefore **promising but exploratory**. The experiment provides enough evidence to continue investigating AI-assisted interpretation, but not enough evidence to treat the current AI output as a reliable final surface-worthiness judgment.

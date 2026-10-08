@@ -1,0 +1,372 @@
+[
+    {
+        "listing_id": "interp-01",
+        "signals": [
+            {
+                "type": "identity",
+                "claim": "1974 Gibson ES-335",
+                "source_text": "1974 Gibson ES-335."
+            },
+            {
+                "type": "story",
+                "claim": "The guitar belonged to the seller's mother.",
+                "source_text": "Seller says it belonged to his mother."
+            },
+            {
+                "type": "story",
+                "claim": "The seller's mother played guitar in a church band throughout the 1970s.",
+                "source_text": "She played guitar in a church band throughout the 1970s."
+            },
+            {
+                "type": "configuration",
+                "claim": "The original case is included.",
+                "source_text": "The original case is included."
+            },
+            {
+                "type": "story",
+                "claim": "The church's name and the dates 1974–79 are written inside the case.",
+                "source_text": "The church's name is written inside along with the dates “1974–79.”"
+            },
+            {
+                "type": "story",
+                "claim": "The seller inherited the guitar in 1998 and says it has remained in the family since then.",
+                "source_text": "Seller inherited the guitar in 1998 and says he has kept it in the family ever since."
+            },
+            {
+                "type": "market_context",
+                "claim": "The asking price is $1,200.",
+                "source_text": "Asking $1,200."
+            }
+        ]
+    },
+    {
+        "listing_id": "interp-02",
+        "signals": [
+            {
+                "type": "identity",
+                "claim": "2018 Fender Stratocaster",
+                "source_text": "2018 Fender Stratocaster."
+            },
+            {
+                "type": "configuration",
+                "claim": "Sunburst finish and maple neck.",
+                "source_text": "sunburst, maple neck."
+            },
+            {
+                "type": "condition",
+                "claim": "The guitar is in great condition.",
+                "source_text": "Great condition."
+            },
+            {
+                "type": "condition",
+                "claim": "The seller says everything works perfectly.",
+                "source_text": "Everything works perfectly."
+            },
+            {
+                "type": "seller_context",
+                "claim": "The seller is moving.",
+                "source_text": "Selling because I'm moving."
+            },
+            {
+                "type": "market_context",
+                "claim": "The asking price is $700.",
+                "source_text": "$700."
+            }
+        ]
+    },
+    {
+        "listing_id": "interp-03",
+        "signals": [
+            {
+                "type": "identity",
+                "claim": "1978 Fender Telecaster",
+                "source_text": "1978 Fender Telecaster."
+            },
+            {
+                "type": "story",
+                "claim": "The seller's father bought the guitar new.",
+                "source_text": "My dad bought this guitar new."
+            },
+            {
+                "type": "story",
+                "claim": "The seller's father played it at local bars and church events during the late 1970s and 1980s.",
+                "source_text": "He played it at local bars and church events throughout the late 1970s and 1980s."
+            },
+            {
+                "type": "story",
+                "claim": "The seller inherited the guitar in 2012.",
+                "source_text": "I inherited it when he passed away in 2012."
+            },
+            {
+                "type": "story",
+                "claim": "The original case has the father's name written inside.",
+                "source_text": "The original case still has his name written inside."
+            },
+            {
+                "type": "seller_context",
+                "claim": "The seller is keeping the guitar in the family.",
+                "source_text": "I'm keeping it in the family."
+            },
+            {
+                "type": "seller_context",
+                "claim": "The seller is not interested in selling or trading the guitar.",
+                "source_text": "I'm not interested in selling or trading it."
+            }
+        ]
+    },
+    {
+        "listing_id": "interp-04",
+        "signals": [
+            {
+                "type": "identity",
+                "claim": "Custom headless eight-string electric guitar.",
+                "source_text": "Custom headless eight-string electric guitar."
+            },
+            {
+                "type": "configuration",
+                "claim": "Strandberg-style body with extended-range layout.",
+                "source_text": "Strandberg-style body with extended-range layout."
+            },
+            {
+                "type": "configuration",
+                "claim": "Unusual ergonomic construction.",
+                "source_text": "unusual ergonomic construction."
+            },
+            {
+                "type": "configuration",
+                "claim": "Matte black finish.",
+                "source_text": "Matte black finish."
+            },
+            {
+                "type": "condition",
+                "claim": "The seller says it is in good condition.",
+                "source_text": "Seller says it plays well and is in good condition."
+            },
+            {
+                "type": "seller_context",
+                "claim": "The seller bought it from a local musician two years ago.",
+                "source_text": "Bought from a local musician two years ago."
+            },
+            {
+                "type": "seller_context",
+                "claim": "The seller is selling because they no longer play eight-string instruments.",
+                "source_text": "Selling because the seller doesn't play eight-string anymore."
+            },
+            {
+                "type": "market_context",
+                "claim": "The asking price is $1,100.",
+                "source_text": "$1,100."
+            }
+        ]
+    },
+    {
+        "listing_id": "interp-05",
+        "signals": [
+            {
+                "type": "identity",
+                "claim": "2006 Fender Stratocaster",
+                "source_text": "2006 Fender Stratocaster in sunburst."
+            },
+            {
+                "type": "configuration",
+                "claim": "Sunburst finish.",
+                "source_text": "in sunburst."
+            },
+            {
+                "type": "story",
+                "claim": "The seller says the guitar came directly from a small local recording studio.",
+                "source_text": "Seller says it was purchased directly from a small recording studio in town when the studio closed in 2019."
+            },
+            {
+                "type": "story",
+                "claim": "The studio closed in 2019.",
+                "source_text": "when the studio closed in 2019."
+            },
+            {
+                "type": "story",
+                "claim": "The studio's name is written inside the case.",
+                "source_text": "The studio's name is written on the inside of the case."
+            },
+            {
+                "type": "story",
+                "claim": "The original studio inventory tag is included.",
+                "source_text": "the seller has the original studio inventory tag."
+            },
+            {
+                "type": "story",
+                "claim": "The seller does not know who used the guitar or how long it was at the studio.",
+                "source_text": "The seller doesn't know who used the guitar or how long it was there."
+            },
+            {
+                "type": "condition",
+                "claim": "The seller says the guitar is in good condition.",
+                "source_text": "Guitar is in good condition."
+            },
+            {
+                "type": "seller_context",
+                "claim": "The seller is selling because they have too many guitars.",
+                "source_text": "the seller has too many guitars."
+            },
+            {
+                "type": "market_context",
+                "claim": "The asking price is $900.",
+                "source_text": "$900."
+            }
+        ]
+    },
+    {
+        "listing_id": "interp-06",
+        "signals": [
+            {
+                "type": "identity",
+                "claim": "2012 Fender Telecaster",
+                "source_text": "2012 Fender Telecaster."
+            },
+            {
+                "type": "story",
+                "claim": "The guitar belonged to the seller's uncle.",
+                "source_text": "Seller says it belonged to an uncle."
+            },
+            {
+                "type": "story",
+                "claim": "The uncle played locally for about 20 years.",
+                "source_text": "who played locally for about 20 years."
+            },
+            {
+                "type": "configuration",
+                "claim": "A Bigsby-style vibrato was added around 2015.",
+                "source_text": "The uncle added a Bigsby-style vibrato ... sometime around 2015."
+            },
+            {
+                "type": "configuration",
+                "claim": "The bridge pickup was replaced around 2015.",
+                "source_text": "replaced the bridge pickup sometime around 2015."
+            },
+            {
+                "type": "configuration",
+                "claim": "The original bridge pickup is included in the case.",
+                "source_text": "Original bridge pickup is included in the case."
+            },
+            {
+                "type": "story",
+                "claim": "The uncle's handwritten setup notes remain in the case.",
+                "source_text": "the uncle's handwritten setup notes are still in the case."
+            },
+            {
+                "type": "story",
+                "claim": "The seller inherited the guitar three years ago.",
+                "source_text": "Seller inherited the guitar three years ago."
+            },
+            {
+                "type": "condition",
+                "claim": "The guitar has some normal wear but is fully playable.",
+                "source_text": "The guitar has some normal wear but is fully playable."
+            },
+            {
+                "type": "seller_context",
+                "claim": "The seller is downsizing and is willing to sell.",
+                "source_text": "Seller is downsizing and is willing to sell."
+            }
+        ]
+    },
+    {
+        "listing_id": "interp-07",
+        "signals": [
+            {
+                "type": "identity",
+                "claim": "1979 Gibson Les Paul Custom",
+                "source_text": "1979 Gibson Les Paul Custom."
+            },
+            {
+                "type": "story",
+                "claim": "The seller calls the guitar an extremely rare vintage investment piece.",
+                "source_text": "Seller says this is an “extremely rare vintage investment piece”"
+            },
+            {
+                "type": "story",
+                "claim": "The seller calls the guitar museum quality.",
+                "source_text": "and claims it is “museum quality.”"
+            },
+            {
+                "type": "market_context",
+                "claim": "The seller claims the guitar is worth at least $8,000.",
+                "source_text": "They say it is worth at least $8,000"
+            },
+            {
+                "type": "market_context",
+                "claim": "The asking price is $2,500.",
+                "source_text": "but are asking $2,500"
+            },
+            {
+                "type": "seller_context",
+                "claim": "The seller says they need the money quickly.",
+                "source_text": "because they need the money quickly."
+            },
+            {
+                "type": "configuration",
+                "claim": "Black finish with gold hardware.",
+                "source_text": "The guitar is black with gold hardware"
+            },
+            {
+                "type": "condition",
+                "claim": "The seller says the guitar appears to be in good condition.",
+                "source_text": "appears to be in good condition."
+            },
+            {
+                "type": "identity",
+                "claim": "No serial number, provenance, original paperwork, or other history is provided.",
+                "source_text": "No serial number, provenance, original paperwork, or other history is provided in the listing."
+            }
+        ]
+    },
+    {
+        "listing_id": "interp-08",
+        "signals": [
+            {
+                "type": "identity",
+                "claim": "1991 Fender Jazz Bass",
+                "source_text": "1991 Fender Jazz Bass."
+            },
+            {
+                "type": "story",
+                "claim": "The seller says it belonged to a local bassist who played clubs around the area during the 1990s.",
+                "source_text": "Seller says it belonged to a local bassist who played clubs around the area during the 1990s."
+            },
+            {
+                "type": "story",
+                "claim": "The seller bought it from the bassist's estate several years ago.",
+                "source_text": "Seller bought it from the bassist's estate several years ago."
+            },
+            {
+                "type": "configuration",
+                "claim": "The bass has a heavily worn natural finish.",
+                "source_text": "The bass has a heavily worn natural finish"
+            },
+            {
+                "type": "story",
+                "claim": "Several handwritten notes are inside the control cavity.",
+                "source_text": "and several handwritten notes inside the control cavity."
+            },
+            {
+                "type": "story",
+                "claim": "The seller cannot identify who wrote the notes or explain what they refer to.",
+                "source_text": "The seller cannot identify who wrote the notes or explain what they refer to."
+            },
+            {
+                "type": "condition",
+                "claim": "The seller says the bass sounds great.",
+                "source_text": "The seller says the bass sounds great"
+            },
+            {
+                "type": "seller_context",
+                "claim": "The seller is willing to sell.",
+                "source_text": "They are willing to sell."
+            },
+            {
+                "type": "market_context",
+                "claim": "The asking price is $1,400.",
+                "source_text": "is asking $1,400."
+            }
+        ]
+    }
+]
