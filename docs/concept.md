@@ -2143,3 +2143,82 @@ The investigation should distinguish:
 - Whether the observation itself is sound, independently of the quality of its supporting references.
 
 This would test evidence attribution as a distinct problem rather than assuming that better attribution automatically improves interpretation. Define the experiment and success criteria before implementation. Preserve all existing Phase 4.5–4.7 artifacts; no production changes are proposed.
+
+### Phase 4.8 — Explicit Evidence Attribution
+
+**Status: EXPERIMENT DEFINED — NOT YET RUN**
+
+#### Research question
+
+Does requiring the model to reference source Signals by stable IDs improve the traceability and auditability of its evidence selection, while preserving evidence relevance, sufficiency, fidelity, and interpretation quality?
+
+#### Motivation
+
+Phase 4.7 reduced the number of selected supporting Signals from 66 to 36 across eight cases, but the comparative audit identified remaining weaknesses:
+
+- Important contextual Signals were omitted in some cases.
+- Some selected Signals were incidental to the observation.
+- The model sometimes paraphrased, combined, or abbreviated Signal text despite instructions to preserve original wording.
+- Better evidence selection did not consistently produce better interpretations.
+
+The existing `supporting_signals` representation contains Signal text rather than stable references to the original Signals. This makes exact attribution difficult to verify and complicates the distinction between evidence-selection errors and interpretation errors.
+
+Phase 4.8 will investigate explicit evidence attribution as a separate experimental variable.
+
+#### Experimental approach
+
+Create a disposable experiment based on Phase 4.7.
+
+Use the same eight cases, source Signals, model, and general interpretation task. Require the model to reference supplied Signals using their stable IDs rather than reproducing their text as the primary means of attribution.
+
+If the existing input Signals do not already have stable IDs, assign deterministic experiment-only IDs in a separate derived input or mapping. Preserve each Signal's original text and source association, and do not modify the Phase 4.7 input.
+
+The experimental output should distinguish:
+
+- **Observation:** the model's interpretation of the listing.
+- **Supporting evidence:** IDs of Signals that directly support the observation.
+- **Qualifying or contradictory evidence:** IDs of Signals that materially qualify, complicate, or challenge the observation.
+- **Uncertainty:** unresolved questions that affect interpretation.
+
+The response must not invent Signal IDs. Referenced IDs must correspond to Signals supplied in the input. Supporting and qualifying evidence should remain distinguishable rather than treating every relevant Signal as positive support.
+
+The experiment may use a structured response schema and validation to test these requirements. Any schema or prompt changes must remain isolated from production code and existing experimental artifacts.
+
+#### Evaluation criteria
+
+Evaluate the results against the following criteria:
+
+1. **Attribution validity:** Every referenced ID exists in the supplied input, and its original Signal can be retrieved without relying on generated text.
+2. **Direct relevance:** Selected Signals materially support, qualify, or challenge the observation for the role assigned to them.
+3. **Evidence sufficiency:** Important supporting, qualifying, or contradictory context is not omitted.
+4. **Evidence fidelity:** The model's interpretation remains consistent with the source Signals and does not silently strengthen uncertain claims.
+5. **Interpretation quality:** The observation adequately accounts for the evidence, including relevant uncertainty and conflicting context.
+
+Attribution validity can be checked mechanically. The remaining criteria require comparative review against the original inputs and the Phase 4.7 output.
+
+#### Comparison and controls
+
+Compare Phase 4.8 with Phase 4.7 using the same eight cases and the criteria above.
+
+Keep the original Phase 4.7 input, script, output, and comparative audit unchanged. Record the Phase 4.8 script, output, and findings as separate artifacts.
+
+Do not provide human interpretation targets to the model. Use them only during evaluation.
+
+A successful attribution check must not be treated as proof of relevance, completeness, or interpretation quality. Likewise, shorter evidence lists must not be assumed superior.
+
+The small case set and single-run design limit the strength of any conclusions. Observed differences will be treated as exploratory findings rather than proof that stable IDs caused an improvement.
+
+#### Scope constraints
+
+- No production-code or production-schema changes.
+- No new scoring system, confidence metric, threshold, or ranking mechanism.
+- No external market research, fact verification, or valuation.
+- No arbitrary limit on the number of referenced Signals.
+- No changes to the existing Phase 4.5–4.7 artifacts.
+- No assumption that explicit attribution will improve interpretation.
+
+#### Decision after evaluation
+
+Use the results to determine whether explicit attribution makes evidence selection materially easier to audit and whether it reveals meaningful omissions or interpretation errors.
+
+If attribution improves traceability but not interpretation quality, record that distinction rather than expanding the approach into a broader redesign. Any subsequent experiment must be justified by the observed results.
