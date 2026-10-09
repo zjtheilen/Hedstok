@@ -1789,3 +1789,109 @@ Further work is needed to determine how much of the observed inconsistency can b
 No scoring model, confidence model, ranking system, permanent interpretation schema, valuation system, or recommendation system is justified by this experiment alone.
 
 The current result is therefore **promising but exploratory**. The experiment provides enough evidence to continue investigating AI-assisted interpretation, but not enough evidence to treat the current AI output as a reliable final surface-worthiness judgment.
+
+## Phase 4.6 — Interpretation Discipline
+
+### Purpose
+
+Phase 4.5 demonstrated that an AI model can transform structured Signals into an initial interpretation containing an observation, supporting Signals, uncertainty, and a surface judgment.
+
+The initial experiment also exposed specific limitations involving relationships between Signals, relevant uncertainty, and the distinction between noteworthy evidence and unsupported acquisition implications.
+
+Phase 4.6 investigates whether targeted interpretive guidance can address these limitations without changing the underlying Signals, interpretation structure, or production architecture.
+
+### Experimental Question
+
+> **Can targeted guidance about relationships between Signals, relevant uncertainty, and evidence versus acquisition implications improve AI interpretation beyond the existing general instructions?**
+
+### Experimental Design
+
+The experiment will reuse the eight cases in `experiment-phase-4/interpretation-cases.json` and the human interpretation targets in `experiment-phase-4/interpretation-targets.json`.
+
+The existing Phase 4.5 AI output provides the baseline.
+
+A second interpretation run will use:
+
+- the same eight input cases;
+- the same model;
+- the same output structure;
+- the same general interpretive constraints;
+- additional, targeted guidance addressing the observed failure patterns.
+
+The existing baseline script and results will remain unchanged. The second run will produce a separate script and results artifact so the two outputs can be compared directly.
+
+### Targeted Guidance
+
+The additional guidance will investigate three areas.
+
+#### 1. Relationships Between Signals
+
+The interpreter should examine how Signals relate to one another before forming an observation.
+
+Relevant relationships may include:
+
+- timelines that appear unclear or potentially inconsistent;
+- personal history supported by physical evidence;
+- modifications considered alongside retained original components;
+- provenance claims supported by markings or documentation;
+- combinations of details that create a meaningful unresolved question.
+
+The interpreter should identify a meaningful relationship when the supplied evidence supports one, without assuming that every apparent tension is a contradiction.
+
+#### 2. Relevant Uncertainty
+
+The interpreter should identify the unresolved question or limitation most relevant to its observation.
+
+Uncertainty should not be included merely because some information is absent. It should explain what remains unknown about the observation or why a claim cannot be established from the available evidence.
+
+The interpreter must preserve the distinction between an unresolved question and evidence that a claim is false.
+
+#### 3. Evidence Versus Acquisition Implications
+
+The interpreter should distinguish noteworthy evidence from conclusions about an instrument's desirability, value, or acquisition potential.
+
+For example, strong seller claims about rarity or value without supporting identification or provenance may themselves provide a reason to look closer.
+
+The interpreter must not convert those claims or an apparent discrepancy between claimed value and asking price into an unsupported conclusion that the instrument is a bargain or worth more than the asking price.
+
+### Evaluation
+
+The second output will be compared with both the Phase 4.5 baseline and the existing human interpretation targets.
+
+Evaluation will consider:
+
+- **Observation quality:** Does the interpretation identify what is actually notable?
+- **Supporting evidence:** Does it select the Signals that directly support the observation?
+- **Relationships:** Does it recognize meaningful connections, timelines, and tensions between Signals?
+- **Uncertainty:** Does it preserve the most relevant unknowns without inventing contradictions?
+- **Evidence discipline:** Does it avoid turning source claims into established facts or acquisition conclusions?
+- **Surface judgment:** Does its contextual judgment align with the human target without sacrificing the quality of the explanation?
+
+Agreement with the human surface judgment is one evaluation dimension, not the sole measure of success. Matching a label while producing a weak or unsupported explanation does not constitute a successful interpretation.
+
+### Constraints
+
+Phase 4.6 will not:
+
+- change the input Signals or their representation;
+- change the output schema;
+- introduce scores, confidence values, rankings, or fixed attention thresholds;
+- add new evidence categories or permanent interpretation fields;
+- change production Hedstok code;
+- introduce external market data or claim verification;
+- treat human targets as instructions embedded in the AI input.
+
+The comparison will use the existing eight cases in a single grouped request per run, preserving the same model and request structure as the baseline.
+
+### Completion Criteria
+
+Phase 4.6 will be considered complete when:
+
+- the targeted-guidance experiment has been run against the same eight cases;
+- the results have been compared with the Phase 4.5 baseline and human targets;
+- improvements and regressions have been documented across the evaluation dimensions;
+- the findings support a clear decision about whether prompt-level guidance is sufficient to justify further investigation or whether another part of the interpretation process needs examination.
+
+The experiment does not assume that targeted guidance will improve the results. A lack of improvement, or improvement in some areas accompanied by regressions in others, is a valid finding.
+
+No production architecture change is justified by the experiment alone.
