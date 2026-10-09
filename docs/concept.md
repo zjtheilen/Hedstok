@@ -1963,3 +1963,62 @@ However, the experiment did not consistently improve selective Signal attributio
 **Phase 4.6 is complete as an initial experiment.** Its results support retaining the distinction between evidence, interpretation, uncertainty, and acquisition implications as explicit evaluation criteria. They do not justify changing the production architecture, adding permanent schema fields, or treating the new instructions as validated.
 
 Any follow-up experiment should isolate a specific remaining weakness rather than add broad guidance indiscriminately. No further prompt or production changes are made as part of this results record.
+
+### Phase 4.7 — Evidence Selection Discipline
+
+**Status: PLANNED**
+
+#### Research question
+
+Can targeted guidance improve the selection of supporting Signals so that the model identifies the evidence that directly supports its interpretation, omits incidental details, and preserves important evidence without simply repeating the listing?
+
+#### Motivation
+
+Phase 4.6 improved exact agreement with the human surface-judgment targets from 4/8 to 6/8. However, the model continued to include most or all available Signals in several cases, including details that did not directly support the stated observation.
+
+The presence of a Signal does not establish its relevance to an interpretation. Hedstok must make its reasoning inspectable by distinguishing the evidence that supports an observation from details that are merely available.
+
+This experiment isolates evidence selection rather than attempting to improve surface judgments, relational interpretation, and uncertainty handling simultaneously.
+
+#### Experimental design
+
+Use the same eight interpretation cases, model, output schema, and general constraints as Phase 4.6. Introduce targeted guidance focused on selecting supporting Signals.
+
+Preserve the Phase 4.5 and Phase 4.6 scripts and results. Use a separate script and output file for Phase 4.7. Do not include human evaluation targets in the model input.
+
+Do not change the input Signals, production architecture, scoring, surface-judgment categories, or permanent schema.
+
+#### Evaluation criteria
+
+Evaluate supporting evidence separately from surface-judgment agreement.
+
+For each case, assess:
+
+1. **Direct relevance:** Does each selected Signal directly support or qualify the stated observation?
+2. **Omission:** Is any important supplied Signal missing from the supporting evidence?
+3. **Selectivity:** Does the model exclude incidental details that add no meaningful support?
+4. **Evidence sufficiency:** Can a reader understand the basis for the observation from the selected Signals without needing the entire listing repeated?
+5. **Evidence fidelity:** Does the model preserve the supplied evidence without inventing facts, relationships, or stronger claims than the source supports?
+
+A smaller supporting-Signal set is not inherently better. Evidence should be selected for relevance and sufficiency, not to satisfy an arbitrary count or length limit.
+
+Surface-judgment agreement will be recorded as a secondary observation. It is not the primary success criterion for this experiment.
+
+#### Constraints
+
+- Do not change the input Signals or output schema.
+- Do not impose an arbitrary maximum number of supporting Signals.
+- Do not optimize for shorter outputs at the expense of important evidence.
+- Do not introduce scores, rankings, thresholds, or permanent fields.
+- Do not change the production architecture.
+- Do not use external market data or independent verification.
+- Do not include human evaluation targets in the model input.
+- Do not assume that targeted guidance will improve results.
+
+#### Completion criteria
+
+Phase 4.7 is complete when the experiment has been run, the outputs have been evaluated against the criteria above, and the findings and limitations have been documented.
+
+The conclusion should identify where evidence selection improved, where it did not, and whether any observed problems appear to depend on relational interpretation or uncertainty handling.
+
+No production change is justified by this experiment alone.
