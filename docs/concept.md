@@ -2022,3 +2022,47 @@ Phase 4.7 is complete when the experiment has been run, the outputs have been ev
 The conclusion should identify where evidence selection improved, where it did not, and whether any observed problems appear to depend on relational interpretation or uncertainty handling.
 
 No production change is justified by this experiment alone.
+
+## Phase 4.7 — Evidence Selection Discipline
+
+**Status: EXPERIMENT COMPLETE — COMPARATIVE AUDIT PENDING**
+
+### Research question
+
+Can targeted guidance improve selection of supporting Signals so that the model identifies evidence that directly supports an interpretation, excludes incidental details, and preserves important evidence without repeating the listing?
+
+### Experiment
+
+The Phase 4.7 experiment used the same eight cases, model, input, response schema, and general interpretation guidance as Phase 4.6. The prompt added explicit guidance for selecting supporting Signals, including direct relevance, qualifying evidence, exclusion of incidental details, preservation of important evidence, original Signal wording, and no arbitrary limit on Signal count.
+
+The experiment was run once using `gemini-3.5-flash-lite`. It produced eight interpretations in `experiment-phase-4/interpretation-results-phase-4-7.json`.
+
+The first attempt failed with a temporary Gemini `503 UNAVAILABLE` response. A subsequent run succeeded without code or prompt changes.
+
+### Results
+
+Surface-judgment agreement with the human targets was **5/8**, compared with **6/8** in Phase 4.6 and **4/8** in Phase 4.5.
+
+The initial review did not establish a consistent improvement in evidence selection. A direct comparison against Phase 4.6 and the original input Signals remains pending.
+
+- **Direct relevance:** Mixed. Some interpretations selected evidence closely related to their observations, while others included descriptive details that did not materially support the interpretation.
+- **Omission:** Potential weaknesses remain. In particular, the studio-origin Stratocaster interpretation retained relevant documentation but treated the provenance as relatively generic. A complete omission assessment requires comparison against the original Signals.
+- **Selectivity:** Inconsistent. The ordinary Stratocaster interpretation included several descriptive Signals despite concluding that the listing offered no meaningful reason to look closer.
+- **Evidence sufficiency:** Generally adequate. Most interpretations provided enough context to understand their stated observations, although sufficient evidence did not ensure that the observation itself was well founded.
+- **Evidence fidelity:** The instruction to preserve original Signal wording did not reliably prevent paraphrasing or combining Signal text. Traceability remains an unresolved concern.
+
+The custom headless eight-string guitar was a notable interpretation weakness: the model selected Signals describing its unusual configuration but still characterized the listing as ordinary and assigned `no`. This illustrates that evidence selection and interpretation quality are related but distinct problems.
+
+### Findings and limitations
+
+The added guidance did not demonstrate a reliable improvement over Phase 4.6. The experiment suggests that explicit selection instructions alone may not consistently distinguish relevant supporting evidence from incidental description or guarantee faithful reproduction of source Signals.
+
+The lower surface-agreement result does not establish that the prompt change caused the decline. This was a single run of eight cases, and the results are too limited to support broad claims about model behavior.
+
+Phase 4.7 does not justify a production change. The existing input, response schema, and interpretation pipeline remain unchanged.
+
+### Next investigation
+
+Compare Phase 4.6 and Phase 4.7 directly against the five evidence-selection criteria, using the original input Signals and both output files. Determine which differences reflect improved or degraded evidence selection, which reflect interpretation quality, and which remain uncertain.
+
+Use that comparison to decide whether a more explicit evidence-selection method warrants a separate experiment. Do not assume that shorter Signal lists are inherently better, and do not introduce arbitrary Signal-count limits.
