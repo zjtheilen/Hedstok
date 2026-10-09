@@ -2253,3 +2253,50 @@ If attribution improves traceability but not interpretation quality, record that
 **Next step:** Conduct a human audit of the eight interpretations for direct relevance, omission, sufficiency, fidelity, and overall interpretation quality. Compare findings with Phase 4.7 before deciding whether another experiment is warranted.
 
 No production changes were made. Earlier experiment inputs and outputs remain unchanged.
+
+#### Phase 4.8 — Human Audit and Comparative Findings
+
+**Status: HUMAN AUDIT COMPLETE — EXPLORATORY FINDINGS RECORDED**
+
+All eight Phase 4.8 interpretations were manually audited against their source Signals and compared with the corresponding Phase 4.7 outputs.
+
+The audit evaluated attribution validity, direct relevance, omission, evidence sufficiency, evidence fidelity, and overall interpretation quality.
+
+**Mechanical validation**
+
+- All eight outputs passed the existing attribution and structural validation checks.
+- Every referenced evidence ID belonged to the correct listing.
+- No duplicate IDs or overlap between supporting and qualifying/contradictory evidence categories was found.
+- Mechanical validity established traceability, not semantic relevance or interpretation quality.
+
+**Comparative findings**
+
+- **interp-01 — Family provenance:** Phase 4.8 retained family-history context omitted by Phase 4.7. The interpretation slightly overstated how firmly the provenance was established, and its uncertainty introduced a speculative connection between church use and possible modifications.
+- **interp-02 — Ordinary listing:** Phase 4.8 selected every available Signal, including incidental configuration, seller context, and asking price. The negative surface judgment was defensible, but evidence selection was unnecessarily broad.
+- **interp-03 — Unavailable family instrument:** Phase 4.8 separated family provenance from the seller's explicit refusal to sell or trade. This improved the inspectability of the reasoning, although the description of the family history as documented was stronger than the evidence warranted.
+- **interp-04 — Unusual configuration:** Phase 4.8 recognized the custom headless eight-string configuration as a reason to look closer, correcting Phase 4.7's tension between describing unusual construction and labeling the listing ordinary. Some incidental Signals remained selected.
+- **interp-05 — Studio provenance:** Phase 4.8 separated provenance clues from missing usage history and improved evidence selectivity. Its change from `maybe` to `yes` was defensible but not conclusively superior; the studio connection remained seller-reported and unverified.
+- **interp-06 — Modifications and retained parts:** Both phases selected a coherent cluster of modifications, original components, and setup notes. Phase 4.8 did not clearly improve uncertainty quality and introduced concerns not directly established by the selected Signals.
+- **interp-07 — Unsupported rarity and value claims:** Phase 4.8 distinguished missing documentation from the seller's claims, but omitted the seller's condition claim as a relevant qualification. Its description of a significant valuation gap risked implying market significance that had not been established.
+- **interp-08 — Local history and unexplained notes:** Phase 4.8 clearly separated the physical clue from uncertainty about its authorship and meaning. The reported local history still required explicit attribution to the seller.
+
+**Cross-case assessment**
+
+1. **Traceability improved.** Stable experiment-only IDs made it easier to inspect evidence selection and identify omissions without relying on exact text matching.
+2. **Selectivity remained inconsistent.** Phase 4.8 sometimes excluded incidental details, but also selected all available Signals in `interp-02` and retained unnecessary details in other cases.
+3. **Omission remained a concern.** Phase 4.8 restored useful context in some cases but omitted a relevant qualification in `interp-07`.
+4. **Evidence fidelity remained imperfect.** Seller-reported histories and physical clues were occasionally described with more certainty than the source Signals justified.
+5. **Interpretation quality was mixed.** Phase 4.8 handled some evidence relationships more coherently, particularly the distinction between personal significance and availability in `interp-03`, and between unusual configuration and ordinary presentation in `interp-04`.
+6. **Surface-label agreement was 8/8**, compared with 5/8 for Phase 4.7. This is encouraging but does not establish that explicit attribution caused the improvement. The sample contains only eight cases, and this was a single run.
+
+**Conclusion**
+
+Phase 4.8 demonstrates a practical improvement in auditability, not a universal improvement in evidence selection or interpretation. Explicit attribution makes model behavior easier to inspect; it does not, by itself, ensure relevant evidence selection, complete coverage, faithful wording, or sound conclusions.
+
+The findings do not justify a production change. They support retaining explicit evidence attribution as a useful experimental technique while keeping semantic evaluation separate from mechanical validation.
+
+**Scope and limitations**
+
+This audit did not verify external facts, establish instrument authenticity or market value, or test reproducibility across repeated runs. No production schema, scoring, classification, or recommendation behavior was changed.
+
+**Disposition:** Phase 4.8 human audit complete. Findings recorded; production changes deferred.
