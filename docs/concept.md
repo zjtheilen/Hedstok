@@ -1895,3 +1895,71 @@ Phase 4.6 will be considered complete when:
 The experiment does not assume that targeted guidance will improve the results. A lack of improvement, or improvement in some areas accompanied by regressions in others, is a valid finding.
 
 No production architecture change is justified by the experiment alone.
+
+### Phase 4.6 Results — Targeted Interpretation Guidance
+
+**Status: EXPERIMENT RUN; RESULTS DOCUMENTED**
+
+#### Experiment
+
+The Phase 4.5 AI interpretation script was copied to `experiment-phase-4/interpret_with_ai_phase_4_6.py`. The Phase 4.6 script retained the same eight input cases, model, output schema, and general constraints while adding targeted guidance concerning:
+
+- Relationships between Signals and preservation of unresolved ambiguity.
+- Relevant uncertainty versus merely missing information.
+- The distinction between noteworthy evidence and acquisition implications.
+- Selection of supporting Signals that directly support the observation.
+
+The Phase 4.5 script and results were preserved. Phase 4.6 wrote its results to `experiment-phase-4/interpretation-results-phase-4-6.json`. The human evaluation targets were not included in the AI input.
+
+#### Surface-judgment comparison
+
+| Case      | Human target | Phase 4.5 | Phase 4.6 | Result                    |
+| --------- | ------------ | --------- | --------- | ------------------------- |
+| interp-01 | yes          | maybe     | yes       | Improved agreement        |
+| interp-02 | no           | no        | no        | Agreement retained        |
+| interp-03 | no           | no        | no        | Agreement retained        |
+| interp-04 | yes          | maybe     | maybe     | Conservative miss remains |
+| interp-05 | yes          | maybe     | yes       | Improved agreement        |
+| interp-06 | yes          | yes       | yes       | Agreement retained        |
+| interp-07 | maybe        | yes       | maybe     | Improved agreement        |
+| interp-08 | yes          | yes       | yes       | Agreement retained        |
+
+Exact agreement with the human surface-judgment targets increased from **4/8 in Phase 4.5 to 6/8 in Phase 4.6**.
+
+This is a descriptive result from one run over eight cases, not evidence of general reliability or a statistically established improvement.
+
+#### Observations
+
+**1. Targeted guidance improved several surface judgments.**
+
+- `interp-01`: The family-history evidence now supports a `yes` judgment rather than a conservative `maybe`.
+- `interp-05`: The studio name and inventory tag are treated as meaningful provenance evidence even though the identity of any particular player remains unknown.
+- `interp-07`: Unsupported claims of rarity and value, combined with a substantial gap between claimed value and asking price, result in `maybe` rather than an unsupported positive conclusion.
+
+The third case is particularly relevant to the experiment's distinction between noteworthy evidence and acquisition implications. A discrepancy may warrant scrutiny without establishing a bargain, actual value, or acquisition opportunity.
+
+**2. Signal selection remains overinclusive.**
+
+The model frequently includes most or all available Signals, including ordinary specifications, asking prices, and seller motivations that do not directly support the stated observation. The additional instruction to select only directly supporting Signals did not consistently produce selective evidence representation.
+
+**3. Relational interpretation remains incomplete.**
+
+In `interp-04`, the unusual custom headless eight-string configuration is recognized, but the surface judgment remains `maybe` despite the human target being `yes`. This suggests that the guidance did not consistently prevent uncertainty from suppressing an otherwise meaningful reason to look closer.
+
+In `interp-06`, the observation identifies modifications and retained original parts but does not fully express the relationship between the modification timeline, the uncle's ownership, and the handwritten setup notes. The output also does not establish who performed the modifications.
+
+**4. Uncertainty is not always relevant to the interpretation.**
+
+In `interp-03`, uncertainty about whether the instrument is available for acquisition adds little because the seller explicitly states that they are keeping it. In `interp-08`, the unknown meaning of the handwritten control-cavity notes is identified, but the observation does not fully articulate why the combination of the notes and the bass's reported history is noteworthy.
+
+These examples show that naming uncertainty is not the same as interpreting its relevance.
+
+#### Conclusion
+
+Phase 4.6 provides preliminary evidence that targeted interpretation guidance can improve surface judgments in some cases. Exact agreement increased from 4/8 to 6/8, with three judgments moving into agreement with the human targets and no previously correct surface judgments becoming incorrect.
+
+However, the experiment did not consistently improve selective Signal attribution, relational interpretation, or the relevance of uncertainty. A correct surface label alone does not establish that the reasoning supporting it is sufficiently disciplined.
+
+**Phase 4.6 is complete as an initial experiment.** Its results support retaining the distinction between evidence, interpretation, uncertainty, and acquisition implications as explicit evaluation criteria. They do not justify changing the production architecture, adding permanent schema fields, or treating the new instructions as validated.
+
+Any follow-up experiment should isolate a specific remaining weakness rather than add broad guidance indiscriminately. No further prompt or production changes are made as part of this results record.
