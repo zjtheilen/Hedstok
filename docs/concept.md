@@ -2222,3 +2222,34 @@ The small case set and single-run design limit the strength of any conclusions. 
 Use the results to determine whether explicit attribution makes evidence selection materially easier to audit and whether it reveals meaningful omissions or interpretation errors.
 
 If attribution improves traceability but not interpretation quality, record that distinction rather than expanding the approach into a broader redesign. Any subsequent experiment must be justified by the observed results.
+
+#### Phase 4.8 — Run Record
+
+**Status:** RUN COMPLETED — HUMAN AUDIT PENDING
+
+**Model:** `gemini-3.5-flash-lite`
+
+**Input:** `experiment-phase-4/interpretation-cases-phase-4-8.json`
+
+**Output:** `experiment-phase-4/interpretation-results-phase-4-8.json`
+
+**Cases:** 8 listings
+
+**Source Signals:** 66, assigned deterministic experiment-only IDs.
+
+**Execution:** The model returned eight interpretations. Mechanical validation confirmed that every input listing had exactly one result, all cited IDs belonged to the corresponding listing, no evidence category contained duplicate IDs, and no Signal ID appeared in both evidence categories.
+
+**Surface-label agreement:** 8/8 against the existing human targets.
+
+**Evidence references:** 44 supporting evidence IDs and 4 qualifying or contradictory evidence IDs, for 48 total references.
+
+**Observed limitations:**
+
+- Mechanical attribution validity establishes that cited IDs exist and belong to the correct listing; it does not establish that the selected evidence is relevant or sufficient.
+- The model selected all six Signals as supporting evidence for `interp-02`, despite assigning the listing a `no` surface judgment. This warrants review during the human audit.
+- Surface-label agreement is based on one run across eight cases and does not establish reproducibility or causal improvement.
+- The higher number of evidence references than in Phase 4.7 is not, by itself, evidence of better or worse selection quality. Phase 4.8 separates supporting evidence from qualifying or contradictory evidence.
+
+**Next step:** Conduct a human audit of the eight interpretations for direct relevance, omission, sufficiency, fidelity, and overall interpretation quality. Compare findings with Phase 4.7 before deciding whether another experiment is warranted.
+
+No production changes were made. Earlier experiment inputs and outputs remain unchanged.
