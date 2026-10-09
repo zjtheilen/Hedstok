@@ -2066,3 +2066,80 @@ Phase 4.7 does not justify a production change. The existing input, response sch
 Compare Phase 4.6 and Phase 4.7 directly against the five evidence-selection criteria, using the original input Signals and both output files. Determine which differences reflect improved or degraded evidence selection, which reflect interpretation quality, and which remain uncertain.
 
 Use that comparison to decide whether a more explicit evidence-selection method warrants a separate experiment. Do not assume that shorter Signal lists are inherently better, and do not introduce arbitrary Signal-count limits.
+
+### Phase 4.7 Comparative Audit
+
+**Status: EXPERIMENT COMPLETE — COMPARATIVE AUDIT COMPLETE**
+
+#### Research question
+
+Did targeted guidance improve the model's selection of supporting Signals compared with Phase 4.6, without sacrificing evidence sufficiency, fidelity, or the quality of its overall interpretation?
+
+#### Comparison summary
+
+Phase 4.6 selected 66 supporting Signals across the eight cases. Phase 4.7 selected 36, a reduction of approximately 45%.
+
+This demonstrates increased selectivity in output, but the reduction alone does not establish better evidence selection. The comparative review considered direct relevance, omission, selectivity, evidence sufficiency, and evidence fidelity.
+
+| Case                               | Comparative finding                                                                                                                                                                                                             |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 01 — Family provenance             | Phase 4.7 reduced the selection but omitted the mother's ownership and church-band history, losing central provenance context.                                                                                                  |
+| 02 — Ordinary listing              | The selection was shorter, but still included incidental finish, neck, condition, and functionality details that did not directly support the observation.                                                                      |
+| 03 — Inherited guitar not for sale | The selection retained the identity, family ownership, inheritance, and refusal to sell. Some historical context was omitted, but the core conclusion remained supported.                                                       |
+| 04 — Unusual eight-string guitar   | Relevant configuration details were retained, yet the model still characterized the listing as ordinary and assigned a negative surface judgment. Selection alone did not correct the interpretation.                           |
+| 05 — Recording-studio history      | The selection retained the studio connection, case inscription, inventory tag, and uncertainty about prior use. The judgment shifted from “yes” to “maybe”; this was more conservative, but not demonstrably more accurate.     |
+| 06 — Modified Telecaster           | The modifications, retained original pickup, and handwritten setup notes formed a coherent evidence set. This was one of the stronger examples of selective support.                                                            |
+| 07 — Rarity and value claims       | The selection retained the seller's claims, claimed value versus asking price, and absence of documentation. The judgment shifted from “maybe” to “yes”; the significance of this change remains uncertain.                     |
+| 08 — Bass with unexplained notes   | The selection retained the identity, local playing history, worn finish, notes, and uncertainty about their authorship. Omitting the estate purchase, willingness to sell, and price was reasonable for the stated observation. |
+
+#### Findings by evaluation criterion
+
+**Direct relevance — Partial improvement.** Cases 03, 06, and 08 showed more focused selections. Case 02 still included incidental details. Case 04 demonstrated that selecting relevant Signals does not guarantee a sound interpretation of them.
+
+**Omission — Unresolved weakness.** Case 01 lost central provenance context. Case 03 also omitted historical details, though these were less critical to its conclusion. A shorter selection can discard evidence that gives an observation its meaning.
+
+**Selectivity — Improvement in several cases.** Cases 06 and 08 were particularly coherent. The overall reduction in selected Signals is encouraging, but selectivity must be evaluated alongside relevance and completeness.
+
+**Evidence sufficiency — Generally maintained, with exceptions.** Most selections retained plausible support for their observations. Case 01 was materially incomplete, while Case 04 showed that a selection can contain relevant evidence without the resulting observation adequately accounting for it.
+
+**Evidence fidelity — Unresolved.** The prompt instructed the model to preserve original Signal wording, but the output still paraphrased, combined, or abbreviated Signals. This weakens traceability between an interpretation and its source evidence.
+
+#### Interpretation
+
+Phase 4.7 produced more selective output, but the experiment did not establish an overall improvement in evidence selection quality.
+
+A central limitation is that the model performs two related but distinct tasks in one response:
+
+1. Interpret the listing's Signals and form an observation.
+2. Select Signals that support that observation.
+
+When the initial interpretation is weak, the selected evidence may still appear internally consistent while omitting context that would challenge or qualify the interpretation. Case 04 is the clearest example.
+
+The current `supporting_signals` representation also stores Signal text as strings rather than stable references to source Signals. This allows paraphrasing and combining, making exact attribution harder to verify.
+
+The surface-label agreement results were:
+
+- Phase 4.5: 4/8
+- Phase 4.6: 6/8
+- Phase 4.7: 5/8
+
+These results are descriptive, not proof that one prompt is superior. Each phase was evaluated on only eight cases, and a single run cannot establish that prompt changes caused the observed differences.
+
+#### Conclusion
+
+Phase 4.7 supports a limited finding: explicit evidence-selection guidance can reduce the number of selected Signals and produce more coherent selections in some cases, but it does not reliably prevent omissions, incidental details, or weak interpretations.
+
+No production architecture change, scoring rule, threshold, or permanent data-model change is justified by this experiment alone.
+
+#### Potential next investigation: Explicit evidence attribution
+
+A separate, disposable experiment could test whether asking the model to reference supplied Signals by stable IDs improves traceability and makes omissions easier to audit.
+
+The investigation should distinguish:
+
+- Whether every selected reference points to an existing source Signal.
+- Whether each selected Signal directly supports or materially qualifies the observation.
+- Whether important supporting or contradictory context is omitted.
+- Whether the observation itself is sound, independently of the quality of its supporting references.
+
+This would test evidence attribution as a distinct problem rather than assuming that better attribution automatically improves interpretation. Define the experiment and success criteria before implementation. Preserve all existing Phase 4.5–4.7 artifacts; no production changes are proposed.
