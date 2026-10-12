@@ -1,0 +1,115 @@
+[
+    {
+        "listing_id": "interp-01",
+        "observation": "The guitar has a documented family and church history that may make it worth a closer look.",
+        "supporting_signals": [
+            "1974 Gibson ES-335",
+            "The guitar belonged to the seller's mother.",
+            "The seller's mother played guitar in a church band throughout the 1970s.",
+            "The church's name and the dates 1974–79 are written inside the case.",
+            "The seller inherited the guitar in 1998 and says it has remained in the family since then."
+        ],
+        "uncertainty": [
+            "The listing does not establish that this specific guitar was the instrument used in the church band.",
+            "The significance or desirability of the specific year, make, and model is not established by the listing."
+        ],
+        "surface": "yes"
+    },
+    {
+        "listing_id": "interp-02",
+        "observation": "The listing does not provide a distinctive reason to look closer.",
+        "supporting_signals": [],
+        "uncertainty": [],
+        "surface": "no"
+    },
+    {
+        "listing_id": "interp-03",
+        "observation": "The guitar has a strong family and local performance history, but the seller explicitly says it is not available for sale or trade.",
+        "supporting_signals": [
+            "The seller's father played it at local bars and church events during the late 1970s and 1980s.",
+            "The seller inherited the guitar in 2012.",
+            "The seller is keeping the guitar in the family.",
+            "The seller is not interested in selling or trading the guitar."
+        ],
+        "uncertainty": [
+            "The listing does not establish the specific extent of the guitar's use at those performances."
+        ],
+        "surface": "no"
+    },
+    {
+        "listing_id": "interp-04",
+        "observation": "The unusual headless eight-string configuration gives the instrument a clear reason to look closer.",
+        "supporting_signals": [
+            "Custom headless eight-string electric guitar.",
+            "Strandberg-style body with extended-range layout.",
+            "Unusual ergonomic construction."
+        ],
+        "uncertainty": [
+            "The listing describes the body as Strandberg-style rather than establishing that it is a Strandberg."
+        ],
+        "surface": "yes"
+    },
+    {
+        "listing_id": "interp-05",
+        "observation": "The guitar appears to have a documented connection to a local recording studio.",
+        "supporting_signals": [
+            "The seller says the guitar came directly from a small local recording studio.",
+            "The studio's name is written inside the case.",
+            "The original studio inventory tag is included.",
+            "The studio closed in 2019."
+        ],
+        "uncertainty": [
+            "The seller does not know who used the guitar or how long it was at the studio."
+        ],
+        "surface": "yes"
+    },
+    {
+        "listing_id": "interp-06",
+        "observation": "The guitar has a personal modification and ownership history with a timeline that may be worth clarifying.",
+        "supporting_signals": [
+            "2012 Fender Telecaster",
+            "The guitar belonged to the seller's uncle.",
+            "The uncle played locally for about 20 years.",
+            "A Bigsby-style vibrato was added around 2015.",
+            "The bridge pickup was replaced around 2015.",
+            "The original bridge pickup is included in the case.",
+            "The uncle's handwritten setup notes remain in the case.",
+            "The seller inherited the guitar three years ago.",
+            "The seller is downsizing and is willing to sell."
+        ],
+        "uncertainty": [
+            "The relationship between the guitar's 2012 identity and the uncle's roughly 20-year playing history is not fully clear from the listing."
+        ],
+        "surface": "yes"
+    },
+    {
+        "listing_id": "interp-07",
+        "observation": "The seller makes strong claims about rarity and value without providing the identifying or provenance information that would support those claims.",
+        "supporting_signals": [
+            "1979 Gibson Les Paul Custom",
+            "The seller calls the guitar an extremely rare vintage investment piece.",
+            "The seller calls the guitar museum quality.",
+            "The seller claims the guitar is worth at least $8,000.",
+            "No serial number, provenance, original paperwork, or other history is provided."
+        ],
+        "uncertainty": [
+            "The listing does not provide enough evidence to establish the seller's claims about rarity, value, or museum quality."
+        ],
+        "surface": "maybe"
+    },
+    {
+        "listing_id": "interp-08",
+        "observation": "The guitar has a local musician history and unexplained handwritten notes that create a potentially interesting story to investigate.",
+        "supporting_signals": [
+            "The seller says it belonged to a local bassist who played clubs around the area during the 1990s.",
+            "The seller bought it from the bassist's estate several years ago.",
+            "Several handwritten notes are inside the control cavity.",
+            "The seller cannot identify who wrote the notes or explain what they refer to.",
+            "The seller is willing to sell."
+        ],
+        "uncertainty": [
+            "The identity and meaning of the handwritten notes are unknown."
+        ],
+        "surface": "yes"
+    }
+]

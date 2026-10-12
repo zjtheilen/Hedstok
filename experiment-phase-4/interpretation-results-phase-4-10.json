@@ -1,0 +1,117 @@
+[
+  {
+    "listing_id": "interp-01",
+    "observation": "A 1974 Gibson ES-335 is offered with its original case, which features the name of the church where the seller's mother played during the 1970s.",
+    "supporting_evidence_ids": [
+      "interp-01-S01",
+      "interp-01-S04",
+      "interp-01-S05"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [],
+    "uncertainty": [
+      "The exact timeline and continuity of ownership between the mother and the seller from 1979 to 1998."
+    ],
+    "surface": "yes"
+  },
+  {
+    "listing_id": "interp-02",
+    "observation": "A 2018 Fender Stratocaster in sunburst with a maple neck is offered in great working condition due to the seller's relocation.",
+    "supporting_evidence_ids": [
+      "interp-02-S01",
+      "interp-02-S02",
+      "interp-02-S03",
+      "interp-02-S04"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [],
+    "uncertainty": [],
+    "surface": "no"
+  },
+  {
+    "listing_id": "interp-03",
+    "observation": "A 1978 Fender Telecaster inherited from the seller's father, who originally bought it new and played it locally, remains in the family.",
+    "supporting_evidence_ids": [
+      "interp-03-S01",
+      "interp-03-S02",
+      "interp-03-S04",
+      "interp-03-S05"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [],
+    "uncertainty": [],
+    "surface": "no"
+  },
+  {
+    "listing_id": "interp-04",
+    "observation": "A custom headless eight-string electric guitar with a Strandberg-style body and ergonomic layout is offered by a seller who no longer plays the format.",
+    "supporting_evidence_ids": [
+      "interp-04-S01",
+      "interp-04-S02",
+      "interp-04-S03"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [],
+    "uncertainty": [
+      "The identity of the original builder of the custom instrument."
+    ],
+    "surface": "maybe"
+  },
+  {
+    "listing_id": "interp-05",
+    "observation": "A 2006 Fender Stratocaster includes a studio inventory tag and a case with a closed local recording studio's name written inside.",
+    "supporting_evidence_ids": [
+      "interp-05-S01",
+      "interp-05-S05",
+      "interp-05-S06"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [],
+    "uncertainty": [
+      "The specific studio users and the duration of the guitar's residence at the studio are unknown."
+    ],
+    "surface": "yes"
+  },
+  {
+    "listing_id": "interp-06",
+    "observation": "A 2012 Fender Telecaster features modifications made by the seller's uncle around 2015, including a Bigsby-style vibrato and a replaced bridge pickup, with the original pickup and handwritten setup notes included.",
+    "supporting_evidence_ids": [
+      "interp-06-S01",
+      "interp-06-S04",
+      "interp-06-S05",
+      "interp-06-S06",
+      "interp-06-S07"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [],
+    "uncertainty": [],
+    "surface": "yes"
+  },
+  {
+    "listing_id": "interp-07",
+    "observation": "A 1979 Gibson Les Paul Custom is accompanied by unsupported seller claims of extreme rarity, investment value, and museum quality.",
+    "supporting_evidence_ids": [
+      "interp-07-S01",
+      "interp-07-S02",
+      "interp-07-S03",
+      "interp-07-S04"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [
+      "interp-07-S09"
+    ],
+    "uncertainty": [
+      "The lack of a serial number, provenance, or original paperwork to substantiate the seller's valuation claims."
+    ],
+    "surface": "maybe"
+  },
+  {
+    "listing_id": "interp-08",
+    "observation": "A 1991 Fender Jazz Bass with a heavily worn natural finish features unidentified handwritten notes inside the control cavity.",
+    "supporting_evidence_ids": [
+      "interp-08-S01",
+      "interp-08-S04",
+      "interp-08-S05"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [
+      "interp-08-S06"
+    ],
+    "uncertainty": [
+      "The origin and meaning of the handwritten notes inside the control cavity remain unexplained."
+    ],
+    "surface": "yes"
+  }
+]

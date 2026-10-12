@@ -1,0 +1,116 @@
+[
+  {
+    "listing_id": "interp-01",
+    "observation": "The listing features a 1974 Gibson ES-335 with family provenance connected to a church band, complete with an original case bearing handwritten dates.",
+    "supporting_signals": [
+      "1974 Gibson ES-335.",
+      "The original case is included.",
+      "The church's name is written inside along with the dates —1974–79.—",
+      "Seller inherited the guitar in 1998 and says he has kept it in the family ever since."
+    ],
+    "uncertainty": [
+      "The exact physical and originality condition of the instrument itself is not detailed beyond its general identity and case history."
+    ],
+    "surface": "yes"
+  },
+  {
+    "listing_id": "interp-02",
+    "observation": "A straightforward listing for a modern 2018 Fender Stratocaster in standard configuration with no notable anomalies or distinctive history.",
+    "supporting_signals": [
+      "2018 Fender Stratocaster.",
+      "sunburst, maple neck.",
+      "Great condition.",
+      "Everything works perfectly."
+    ],
+    "uncertainty": [],
+    "surface": "no"
+  },
+  {
+    "listing_id": "interp-03",
+    "observation": "The listing describes a family-owned 1978 Fender Telecaster with personal provenance, but the seller explicitly states they are not interested in selling or trading.",
+    "supporting_signals": [
+      "1978 Fender Telecaster.",
+      "My dad bought this guitar new.",
+      "I inherited it when he passed away in 2012.",
+      "I'm not interested in selling or trading it."
+    ],
+    "uncertainty": [
+      "It is unclear why a listing exists if the seller has no intention to sell or trade the instrument."
+    ],
+    "surface": "no"
+  },
+  {
+    "listing_id": "interp-04",
+    "observation": "An ordinary used market listing for a custom ergonomic eight-string guitar with no particular historical or provenance claims.",
+    "supporting_signals": [
+      "Custom headless eight-string electric guitar.",
+      "Strandberg-style body with extended-range layout.",
+      "unusual ergonomic construction."
+    ],
+    "uncertainty": [
+      "The exact builder or brand of the custom construction is not specified."
+    ],
+    "surface": "no"
+  },
+  {
+    "listing_id": "interp-05",
+    "observation": "A 2006 Fender Stratocaster with documentation connecting it to a closed local recording studio, though specific usage history remains unknown.",
+    "supporting_signals": [
+      "2006 Fender Stratocaster in sunburst.",
+      "Seller says it was purchased directly from a small recording studio in town when the studio closed in 2019.",
+      "The studio's name is written on the inside of the case.",
+      "the seller has the original studio inventory tag.",
+      "The seller doesn't know who used the guitar or how long it was there."
+    ],
+    "uncertainty": [
+      "The lack of information regarding player history or length of studio use leaves the provenance somewhat generic."
+    ],
+    "surface": "maybe"
+  },
+  {
+    "listing_id": "interp-06",
+    "observation": "A 2012 Fender Telecaster featuring documented modifications made by the original owner alongside retained original parts and setup notes.",
+    "supporting_signals": [
+      "2012 Fender Telecaster.",
+      "The uncle added a Bigsby-style vibrato ... sometime around 2015.",
+      "replaced the bridge pickup sometime around 2015.",
+      "Original bridge pickup is included in the case.",
+      "the uncle's handwritten setup notes are still in the case."
+    ],
+    "uncertainty": [
+      "The identity of the replacement pickup is not specified."
+    ],
+    "surface": "yes"
+  },
+  {
+    "listing_id": "interp-07",
+    "observation": "The listing makes extreme claims regarding the value and rarity of a 1979 Gibson Les Paul Custom while providing no serial number, documentation, or verifiable history.",
+    "supporting_signals": [
+      "1979 Gibson Les Paul Custom.",
+      "Seller says this is an —extremely rare vintage investment piece—",
+      "and claims it is —museum quality.—",
+      "They say it is worth at least $8,000",
+      "but are asking $2,500",
+      "No serial number, provenance, original paperwork, or other history is provided in the listing."
+    ],
+    "uncertainty": [
+      "The absence of a serial number, provenance, or verification makes the seller's claims entirely unsupported."
+    ],
+    "surface": "yes"
+  },
+  {
+    "listing_id": "interp-08",
+    "observation": "A 1991 Fender Jazz Bass with local club history and unexplained handwritten notes hidden inside the control cavity.",
+    "supporting_signals": [
+      "1991 Fender Jazz Bass.",
+      "Seller says it belonged to a local bassist who played clubs around the area during the 1990s.",
+      "The bass has a heavily worn natural finish",
+      "and several handwritten notes inside the control cavity.",
+      "The seller cannot identify who wrote the notes or explain what they refer to."
+    ],
+    "uncertainty": [
+      "The meaning and authorship of the handwritten notes inside the control cavity are completely unknown."
+    ],
+    "surface": "yes"
+  }
+]
