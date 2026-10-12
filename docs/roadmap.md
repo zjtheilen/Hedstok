@@ -50,7 +50,7 @@ The results should not be treated as proof that discovery is complete, consisten
 
 ### Phase 4 — Evidence Interpretation
 
-**Status: Exploratory investigation completed through Phase 4.9; design questions remain open**
+**Status: Exploratory investigation completed through Phase 4.10; design questions remain open**
 
 Investigated whether structured evidence can support explainable interpretations of why a listing deserves closer attention.
 
@@ -69,6 +69,8 @@ The detailed record is preserved in `docs/phase-4-interpretation.md`.
 The experiments suggest that interpretation is possible, but quality remains uneven. Stable evidence references improve auditability, yet do not guarantee that the selected evidence is relevant, complete, or faithfully represented.
 
 The Phase 4.9 source-fidelity audit found that interpretations can remain traceable to evidence while still overstating claims or omitting meaningful story details. Concise shorthand can be appropriate; the concern is material distortion rather than the absence of exhaustive qualification. The audit remains qualitative and does not establish production rules.
+
+The Phase 4.10 fidelity-focused experiment found a mixed result. Revised instructions improved attribution of unsupported seller claims in some cases, but meaningful context was still omitted in others. The experiment consisted of one batch run across eight cases and does not establish repeatability or general reliability. No production prompt or interpretation-schema changes were justified.
 
 No permanent scoring model, confidence model, fixed reason taxonomy, or automated recommendation system has been justified by these experiments.
 
@@ -148,13 +150,13 @@ Until those conditions are met, preserve the current behavior and treat new appr
 
 ## Status Summary
 
-| Area                                   | Status                         | Position                                             |
-| -------------------------------------- | ------------------------------ | ---------------------------------------------------- |
-| Initial experiment                     | Completed                      | Exploratory foundation established                   |
-| Evidence extraction                    | Explored                       | Preserve source-grounded claims                      |
-| AI-assisted discovery                  | Investigated                   | Findings retained separately                         |
-| Evidence interpretation                | Investigated through Phase 4.8 | Useful but imperfect                                 |
-| Stable evidence references             | Experimentally evaluated       | Improves traceability; quality gains remain unproven |
-| Production interpretation architecture | Open                           | No permanent design justified yet                    |
-| Scoring and confidence models          | Deferred                       | Not justified by current evidence                    |
-| Automated purchase recommendations     | Out of scope                   | Not Hedstok's purpose                                |
+| Area                                   | Status                          | Position                                             |
+| -------------------------------------- | ------------------------------- | ---------------------------------------------------- |
+| Initial experiment                     | Completed                       | Exploratory foundation established                   |
+| Evidence extraction                    | Explored                        | Preserve source-grounded claims                      |
+| AI-assisted discovery                  | Investigated                    | Findings retained separately                         |
+| Evidence interpretation                | Investigated through Phase 4.10 | Useful but imperfect; fidelity remains uneven        |
+| Stable evidence references             | Experimentally evaluated        | Improves traceability; quality gains remain unproven |
+| Production interpretation architecture | Open                            | No permanent design justified yet                    |
+| Scoring and confidence models          | Deferred                        | Not justified by current evidence                    |
+| Automated purchase recommendations     | Out of scope                    | Not Hedstok's purpose                                |
