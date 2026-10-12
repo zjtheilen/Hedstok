@@ -985,6 +985,64 @@ The audit does not justify a production change by itself. It clarifies what futu
 
 ---
 
+## Phase 4.10 — Fidelity-Focused Interpretation Experiment
+
+**Status:** Evaluation in progress
+
+### Purpose
+
+Evaluate whether a narrowly revised interpretation instruction improves source attribution, certainty, inference discipline, and preservation of meaningful context compared with the Phase 4.8 baseline.
+
+### Method
+
+- Reused the eight Phase 4.8 interpretation cases.
+- Ran the copied Phase 4.10 runner with the revised faithful-compression instructions.
+- Compared Phase 4.10 outputs with the corresponding Phase 4.8 outputs.
+- Made no changes to the underlying Signals or interpretation output schema.
+- No additional model calls were made for this evaluation.
+
+This is a qualitative comparison of one batch run. It does not establish repeatability or general model reliability.
+
+### Evaluation criteria
+
+1. **Attribution fidelity:** Does the interpretation preserve who made a claim and whether it is seller-reported?
+2. **Certainty fidelity:** Does it preserve uncertainty without presenting unverified claims as established facts?
+3. **Inference discipline:** Does it avoid adding relationships, history, or conclusions unsupported by the supplied Signals?
+4. **Meaning preservation:** Does it retain the context that materially explains why the listing may deserve attention?
+
+### Case-by-case audit
+
+| Case        | Attribution fidelity                                                                                                                                      | Certainty fidelity                                                                                                                                     | Inference discipline                                                                                                                                         | Meaning preservation                                                                                                                                                   | Overall                                   |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `interp-01` | Phase 4.10 avoids calling the case inscription documented provenance, but omits the seller's reported inheritance in 1998 and continued family ownership. | Both versions present substantial family history; Phase 4.10 does not clearly distinguish the seller's account from independently established history. | Neither version establishes a verified chain of ownership.                                                                                                   | Phase 4.10 preserves the church connection and case inscription but loses meaningful ownership history.                                                                | Mixed                                     |
+| `interp-02` | Both versions preserve the seller's reason for selling.                                                                                                   | Phase 4.10 retains the reported condition claims without materially overstating them.                                                                  | No significant new inference is apparent.                                                                                                                    | Both versions capture the ordinary nature of the listing; Phase 4.10 preserves the finish and neck details.                                                            | Neutral                                   |
+| `interp-03` | Phase 4.10 preserves the family relationship but drops the explicit refusal to sell or trade.                                                             | Neither version materially overstates the family history.                                                                                              | Phase 4.10 does not invent a new historical claim, but its statement that the guitar remains in the family is less precise than the explicit seller context. | Omitting the refusal to sell removes the most consequential acquisition-related fact.                                                                                  | Regression                                |
+| `interp-04` | Both versions omit attribution details that are not necessary to describe the configuration.                                                              | Phase 4.10 preserves the seller's good-condition claim as a reported statement, but does not include it in the observation.                            | The description remains consistent with the supplied configuration Signals.                                                                                  | Phase 4.10 adds the seller's reason for selling but omits the condition claim and asking price. Its change from `yes` to `maybe` is not justified by the output alone. | Mixed                                     |
+| `interp-05` | Phase 4.10 avoids the stronger label "studio provenance" and describes the physical clues directly.                                                       | Both versions acknowledge that the users and duration of studio use are unknown.                                                                       | Phase 4.10 avoids treating the inventory tag and inscription as proof of the guitar's complete history.                                                      | It omits the seller's reported direct purchase from the studio when it closed in 2019, weakening the acquisition story.                                                | Mixed                                     |
+| `interp-06` | Both versions attribute the modifications to the uncle, as explicitly stated in the input Signals.                                                        | Phase 4.10 omits the baseline's uncertainty about wear and installation quality.                                                                       | The attribution is supported; however, dropping uncertainty may imply more is known about the modifications' condition than the Signals establish.           | Phase 4.10 preserves the modification details, original pickup, and setup notes, and adds the approximate date.                                                        | Mixed                                     |
+| `interp-07` | Phase 4.10 explicitly frames rarity, investment value, and museum quality as seller claims.                                                               | This is a clear improvement: unsupported promotional claims are not presented as established properties.                                               | Phase 4.10 avoids asserting that a genuine market-value gap exists, although it omits the actual claimed value and asking price.                             | It preserves the unsupported-claims issue and missing documentation, but drops the $8,000-versus-$2,500 contrast and the seller's stated urgency.                      | Improvement in attribution; mixed overall |
+| `interp-08` | Both versions avoid assigning the notes to a known author.                                                                                                | Both preserve uncertainty about the notes' origin and meaning.                                                                                         | Phase 4.10 does not turn the notes into evidence of verified history.                                                                                        | Both preserve the bass's identity, heavy wear, and unexplained notes; Phase 4.10 is more direct.                                                                       | Neutral to positive                       |
+
+### Findings
+
+1. **Attribution improved most clearly in `interp-07`.** The revised wording treats rarity, investment value, and museum quality as seller claims rather than verified facts. It also avoids asserting a genuine market-value gap based solely on the seller's valuation and asking price.
+
+2. **Meaning preservation remains inconsistent.** `interp-03` omits the explicit refusal to sell or trade. `interp-05` omits the seller's account of buying the guitar directly from the studio when it closed. `interp-01` drops the reported inheritance date and continued family ownership. These omissions matter even though the resulting interpretations remain concise.
+
+3. **Certainty and attribution are separate concerns.** `interp-01` avoids the stronger phrase "documented provenance," but still summarizes a seller-reported family history without clearly identifying it as reported. Conversely, `interp-06` retains a supported attribution to the uncle but drops uncertainty about the condition of the wear and installation work.
+
+4. **Uncertainty should not automatically suppress surface relevance.** `interp-04` describes an unusual extended-range instrument, yet changes the surface assessment from `yes` to `maybe`. The output does not explain why uncertainty about the maker should outweigh the distinctive configuration. The result warrants review against the existing surface criteria, not an automatic change to those criteria.
+
+5. **The experiment does not establish a general improvement.** It consists of one batch run over eight cases, and the outputs show both improvements and regressions. There is no repeated-run evidence to establish consistency.
+
+### Conclusion
+
+Phase 4.10 provides a promising but mixed exploratory result. The revised instruction appears helpful for preventing unsupported seller claims from being presented as established facts, particularly in `interp-07`. It does not consistently preserve all context relevant to interpretation or acquisition decisions.
+
+No production prompt, scoring, surface-classification, or schema changes are justified by this experiment alone. Future work should distinguish source attribution from completeness of meaning and should evaluate surface judgments against the existing criteria. Any further prompt experiment should test a clearly isolated change and retain the same input cases for comparison.
+
+---
+
 ## Overall Phase 4 Findings
 
 Across Phases 4.3–4.9, several conclusions emerged.
