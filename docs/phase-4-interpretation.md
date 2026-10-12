@@ -1112,6 +1112,14 @@ Judge omissions by whether they materially affect a person's interpretation of t
 
 A single interpretation may exhibit multiple failure types. Record meaningful improvements and regressions separately rather than collapsing the result into one score.
 
+**Materiality and paraphrase**
+
+Evaluate omissions against the observation's stated reason for attention and the source context needed to understand it. Do not require every potentially relevant Signal to appear. Treat an omission or paraphrase as a failure when it materially changes the reader's understanding, removes a necessary qualification, or introduces an unsupported implication—not merely because a different wording or additional detail was possible.
+
+**Independent evaluation dimensions**
+
+Assess selection, representation, and evidence-reference/role alignment independently. Within evidence-reference/role alignment, distinguish reference accuracy from role accuracy. Evaluate surface classification separately; agreement with a label does not establish that the observation is faithful, and a faithful observation does not by itself establish that the label is justified.
+
 **Eight-case comparison**
 
 | Case        | Phase 4.11 comparison with Phase 4.10                                                                                                                                                                                                               |
