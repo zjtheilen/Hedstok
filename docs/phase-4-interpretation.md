@@ -1078,7 +1078,7 @@ The added instruction did not produce consistently better preservation of decisi
 - `interp-04`: Retained the unusual guitar configuration but omitted the seller's reason for selling.
 - `interp-05`: Retained the studio tag and case inscription but omitted the reported direct acquisition when the studio closed in 2019.
 - `interp-06`: Retained modifications and included components but lost attribution to the seller's uncle and the approximate date of the modifications.
-- `interp-07`: Described the discrepancy between the asking price and the seller's valuation claims but omitted the concrete $2,500 asking price and $8,000 valuation.
+- `interp-07`: Restored the asking-price context but omitted the concrete $2,500 asking price, the seller's claimed $8,000 valuation, and the reported urgency to sell. Its framing risked implying a market-value gap from an unsupported seller valuation; it also introduced speculative possibilities about hidden modifications or condition issues.
 
 Evidence-ID coverage did not necessarily mean that the corresponding observation preserved the evidence's specific meaning.
 
@@ -1096,8 +1096,15 @@ Distinguish two failure types before designing another prompt intervention:
 
 1. **Selection failure:** Relevant evidence or context is omitted from the observation.
 2. **Representation failure:** Evidence is selected or cited, but its specific meaning, attribution, or uncertainty is lost.
+3. **Evidence-reference/role mismatch:** Evidence IDs are missing or do not support the specific observation they accompany, or evidence is assigned a supporting versus qualifying role that does not match its actual relationship to the observation.
 
-This distinction should guide the next investigation rather than adding another general instruction to preserve more context.
+The case-level audit found examples of all three failure types, sometimes within the same interpretation. It also identified improvements: Phase 4.11 restored the explicit refusal to sell in `interp-03` and the estate-acquisition context in `interp-08`. However, important context remained vulnerable to omission or distortion, including ownership chronology (`interp-01`), reported condition (`interp-02`), seller motivation (`interp-04`), acquisition history (`interp-05`), modification attribution and chronology (`interp-06`), and the distinction between a seller's valuation claim and established value (`interp-07`).
+
+Evidence-reference/role mismatches appeared in both phases. For example, some observations included details without citing the Signal that directly supported them, while other interpretations assigned evidence to the qualifying role even when it reinforced context rather than qualifying or contradicting the main observation.
+
+**Next step:** Define a small set of explicit evaluation criteria for selection, representation, and evidence-reference/role alignment before designing another prompt intervention. Do not promote the Phase 4.11 instruction or begin another experiment until those criteria are established.
+
+These distinctions should guide the next investigation rather than adding another general instruction to preserve more context.
 
 ---
 
