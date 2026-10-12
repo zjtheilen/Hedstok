@@ -816,9 +816,178 @@ No production change was justified solely by this experiment.
 
 ---
 
+## Phase 4.9 — Source Fidelity Audit
+
+### Research question
+
+Do AI-generated interpretations preserve the source's attribution, certainty, and meaning, or can an interpretation remain traceable to specific Signals while still overstating claims or omitting details that matter?
+
+Phase 4.8 improved the ability to identify the evidence selected by the model. Phase 4.9 examines a separate question: whether the resulting interpretation represents that evidence faithfully.
+
+Stable IDs make an interpretation easier to audit, but they do not guarantee that the interpretation preserves what the source actually says.
+
+### Experimental approach
+
+The audit reviewed the existing eight Phase 4.8 cases and outputs. It did not make new model calls or change the prompt, schema, or production implementation.
+
+Each interpretation was examined against four criteria:
+
+1. **Attribution fidelity** — does the interpretation preserve who made a claim or where the information came from?
+2. **Certainty fidelity** — does it preserve the difference between a reported claim, an observed clue, an inference, and an established fact?
+3. **Inference discipline** — does it avoid introducing claims or implications that the available evidence does not support?
+4. **Meaning preservation** — does it retain the details necessary to understand why the evidence may matter, rather than compressing away important context?
+
+The audit distinguishes substantive fidelity problems from stylistic preferences. Concise wording is not inherently a problem; it becomes a problem when compression changes the claim's status, removes a meaningful qualification, or loses context necessary to understand the interpretation.
+
+### Case-level findings
+
+#### interp-01 — Family provenance
+
+The listing concerned a 1974 Gibson ES-335. The seller reported that their mother owned it and played in a church band. The case inscription contained the years 1974–79, and the seller reported inheriting the instrument in 1998.
+
+The interpretation described the provenance as documented and speculated about modifications during church use.
+
+**Attribution and certainty:** “Church band provenance documented” overstated what the evidence established. The reported family history and case inscription provided clues, but the inscription did not establish that this specific guitar was used by the church band. The claim about modifications during church use was unsupported.
+
+**Meaning preservation:** The family ownership and church-band history were central to why the listing was interesting. Those details should not be removed merely to make the evidence selection shorter.
+
+**Assessment:** The positive surface judgment remained defensible. The story was worth looking at without treating every part of it as verified history.
+
+#### interp-02 — Ordinary Stratocaster
+
+The listing described an ordinary 2018 Stratocaster. The seller reported good condition, working functionality, and a move as the reason for selling.
+
+The interpretation described the listing as standard and lacking anomalies.
+
+**Attribution and certainty:** The label “standard” was a reasonable concise description of the supplied case, but “lacking anomalies” risks treating the absence of identified anomalies as evidence that no potentially interesting detail exists.
+
+**Meaning preservation:** The case did not provide a strong reason to surface. However, a negative judgment should not be justified by implying that the model exhaustively ruled out every possible point of interest.
+
+**Assessment:** The negative judgment was defensible. The wording should not imply that missing evidence is equivalent to proof of absence.
+
+#### interp-03 — Inherited Telecaster
+
+The seller described a 1978 Telecaster that belonged to their father, who played at local bars and church events in the late 1970s and 1980s. A name appeared in the case, and the seller reported inheriting the instrument in 2012. The seller explicitly stated that they were not selling or trading it.
+
+The interpretation described the history as documented and treated the instrument's unavailability as qualifying context.
+
+**Attribution and certainty:** “Documented family history” slightly overstated the status of the reported history and the case inscription. The seller's account and the inscription were clues, not independent confirmation of the full history.
+
+**Meaning preservation:** The personal story remained meaningful even though the instrument was not available for acquisition. The refusal to sell was explicit and should not be represented as merely uncertain availability.
+
+**Assessment:** The negative surface judgment was defensible for the acquisition-oriented purpose. The case also demonstrates that a story can be worth preserving even when it does not lead to an acquisition opportunity. Whether Hedstok should surface such stories for a different reason remains an unresolved product-scope question.
+
+#### interp-04 — Custom headless eight-string
+
+The listing described a custom headless eight-string with a Strandberg-style layout. The seller reported buying it from a local musician two years earlier.
+
+The interpretation recognized the unusual configuration and assigned a positive surface judgment.
+
+**Attribution and certainty:** “Strandberg-style” describes a resemblance or layout; it does not establish that Strandberg manufactured the instrument. The interpretation did not need to claim a manufacturer to explain why the configuration was distinctive.
+
+**Meaning preservation:** The local-musician context was omitted. That detail could contribute to the listing's story, even if it did not establish provenance or instrument quality.
+
+**Assessment:** The positive judgment was defensible based on the configuration alone. The omission illustrates that evidence selection can be concise and traceable while still losing meaningful context.
+
+#### interp-05 — Studio-history Stratocaster
+
+The seller reported buying a 2006 Stratocaster from a local studio that was closing. The studio's name appeared inside the case, and an original inventory tag was present. The seller did not know which musicians had used the guitar or how long it had been at the studio.
+
+The interpretation treated the studio-related clues as a reason to investigate.
+
+**Attribution and certainty:** “Studio provenance” can function as shorthand for the reported studio connection, but it risks implying established provenance if not qualified. The clues support a lead for investigation, not proof of which musicians used the instrument or how long it was there.
+
+**Meaning preservation:** The studio name and inventory tag are specific, potentially useful clues. The uncertainty about musicians and duration is also relevant because it limits what can be concluded.
+
+**Assessment:** A positive judgment was defensible as a reason to investigate the clues. The interpretation should preserve the distinction between evidence of a studio connection and verified instrument history.
+
+#### interp-06 — Modified Telecaster
+
+The listing concerned a 2012 Telecaster that belonged to the seller's uncle, who reportedly played locally for about twenty years. The Bigsby-style vibrato and bridge pickup had been changed around 2015. The original pickup was included, handwritten setup notes were present, and the seller reported inheriting the instrument three years earlier and selling it now.
+
+The interpretation focused on the modifications, retained original component, and setup notes.
+
+**Attribution and certainty:** “Documented musician modifications” overstated the attribution. The source described modifications and a family connection to a local musician, but did not establish that the uncle made the modifications.
+
+**Meaning preservation:** The uncle's local playing history was omitted. That history may be an important part of the listing's story and should not automatically be discarded in favor of technical details.
+
+**Assessment:** The positive judgment was defensible. A faithful interpretation should distinguish what changed on the instrument from who performed the work and preserve the relevant ownership and playing history.
+
+#### interp-07 — Les Paul rarity and value claims
+
+The seller described a 1979 Gibson Les Paul Custom as extremely rare, museum quality, and worth $8,000. The asking price was $2,500, with urgent need given as the reason for selling. The listing did not provide a serial number, provenance, or paperwork.
+
+The interpretation described a significant valuation gap and retained some uncertainty.
+
+**Attribution and certainty:** The phrase “significant valuation gap” implied that a meaningful market-value difference had been established. The supplied information contained seller claims and an asking price, not independent evidence of market value.
+
+**Inference discipline:** The price difference and seller's stated circumstances do not establish that the instrument is authentic, rare, underpriced, or a bargain. They also do not establish fraud or bad intent.
+
+**Meaning preservation:** The claimed rarity and value, urgent sale context, and missing documentation are all relevant, but their relevance comes from the questions they raise. None should be silently upgraded into a verified conclusion.
+
+**Assessment:** A “maybe” judgment was defensible as a reason for investigation. The interpretation should preserve the claims as claims and make the missing evidence explicit without drawing a conclusion about value, authenticity, or seller intent.
+
+#### interp-08 — Jazz Bass with local history
+
+The seller reported that a 1991 Jazz Bass belonged to a local bassist who played clubs in the 1990s. The instrument was purchased from an estate and showed heavy wear. Handwritten notes were found in the cavity, but their author and meaning were unknown.
+
+The interpretation described the local club history and treated the unexplained notes as a source of uncertainty.
+
+**Attribution and certainty:** “Local club history” compressed the seller's account into a concise phrase, but the account should remain attributed to the seller. The notes could be interesting, but their presence did not establish who wrote them or what they meant.
+
+**Meaning preservation:** The wear, local-history claim, and unexplained notes form a potentially meaningful combination. The word “mysterious” is mildly stylized, but the more important concern is whether the interpretation preserves the uncertainty around the notes.
+
+**Assessment:** The positive judgment was defensible. The interpretation should retain attribution for the history and avoid implying that the notes reveal anything specific.
+
+### Cross-case findings
+
+**Traceability does not guarantee fidelity.**
+
+Stable IDs make it easier to identify which Signals were selected. They do not prevent the interpretation from overstating what those Signals establish.
+
+**Attribution can be lost during compression.**
+
+Phrases such as “documented family history,” “studio provenance,” and “local club history” may be convenient summaries, but they can imply a stronger evidentiary status than the original source supports.
+
+**Meaningful details can be lost through over-selectivity.**
+
+The local-musician context in interp-04 and the uncle's playing history in interp-06 were not necessary to support the most immediate technical observations, but they contributed to the listings' stories. Evidence selection should not optimize for the fewest references at the expense of meaning.
+
+**Uncertainty can be a reason to investigate, not just a warning.**
+
+The studio clues, inscriptions, seller claims, and unexplained notes can justify attention precisely because they create questions. The correct response is to preserve those questions rather than resolve them without evidence.
+
+**A faithful interpretation need not be verbose.**
+
+The goal is not to repeat every Signal. It is to compress the evidence without changing its attribution, certainty, or relevant meaning.
+
+**Stylistic concerns should remain distinct from substantive failures.**
+
+A phrase may be slightly dramatic or less elegant than preferred without materially changing the evidence. The more serious failures are unsupported claims of verification, lost source attribution, and conclusions that go beyond what the evidence supports.
+
+### Limitations
+
+This was a manual audit of eight existing cases and one set of Phase 4.8 outputs.
+
+It did not measure inter-reviewer agreement, repeated-run consistency, or general reliability across different models or datasets. The findings identify concrete fidelity risks in the reviewed outputs but do not establish how frequently those risks occur in broader use.
+
+### Conclusion
+
+Phase 4.9 found that stable evidence references improve auditability without ensuring faithful interpretation.
+
+The model could identify its selected Signals and still overstate provenance, blur the distinction between a reported claim and an established fact, or omit details that helped explain why a listing was interesting.
+
+The central principle is:
+
+> **Preserve the story without upgrading it into established fact; preserve uncertainty without treating it only as a negative; and compress the evidence without discarding the details that give it meaning.**
+
+The audit does not justify a production change by itself. It clarifies what future interpretation experiments need to evaluate: not only whether evidence can be traced, but whether the resulting explanation remains faithful to its source.
+
+---
+
 ## Overall Phase 4 Findings
 
-Across Phases 4.3–4.8, several conclusions emerged.
+Across Phases 4.3–4.9, several conclusions emerged.
 
 ### 1. Interpretation is distinct from extraction
 
@@ -855,7 +1024,17 @@ Stable Signal references provide a clearer way to trace an interpretation to its
 
 Seller-reported claims should remain attributed to the seller. Unknown provenance should not become established provenance, and distinctive characteristics should not silently establish rarity, authenticity, manufacturer, or value.
 
-### 7. The experiments do not justify a permanent scoring architecture
+### 7. Traceability does not guarantee faithful interpretation
+
+The Phase 4.9 audit demonstrated that an interpretation can reference the correct Signals while still overstating their certainty, losing source attribution, or omitting context that gives the evidence meaning.
+
+Evaluation must therefore consider both the traceability of selected evidence and the fidelity of the explanation derived from it.
+
+### 8. Faithful interpretation requires meaningful compression
+
+The goal is not to repeat every Signal or minimize the number selected. A useful interpretation should preserve the evidence necessary to understand the reason for attention, including relevant qualifications, relationships, and source-reported context.
+
+### 9. The experiments do not justify a permanent scoring architecture
 
 The work does not establish a numerical surface-worthiness threshold, confidence model, ranking system, permanent reason taxonomy, or automated purchase recommendation.
 
@@ -884,6 +1063,7 @@ Potential directions include:
 - Evaluating supporting-evidence relevance, sufficiency, and omission separately.
 - Establishing explicit checks for unsupported paraphrasing and claims of verification.
 - Testing whether interpretations distinguish a reason to investigate from a verified story or acquisition opportunity.
+- Evaluating whether meaningful source context survives concise interpretation.
 - Expanding the evaluation set before making broader claims about reliability.
 
 These are possible investigations, not commitments to implement all of them.
