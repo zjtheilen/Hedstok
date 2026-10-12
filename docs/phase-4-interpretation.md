@@ -1239,3 +1239,42 @@ These are possible investigations, not commitments to implement all of them.
 > **Evidence should support interpretation, interpretation should explain attention, and neither should claim more than the source establishes.**
 
 Phase 4 provides a basis for continued investigation, not proof that interpretation quality has been solved.
+
+## Phase 4 Closure Assessment
+
+**Status:** Exploratory investigation closed. Production interpretation design remains open.
+
+### Basis for closure
+
+Phase 4 established a workable conceptual boundary between source-grounded Signals, evidence relationships, interpretation, and the presentation of a reason for human attention. The experiments demonstrated that evidence-grounded interpretations can be constructed across different kinds of cases, while also identifying recurring limitations in evidence selection, representation, uncertainty preservation, and evidence-reference alignment.
+
+The Phase 4.10 and Phase 4.11 prompt experiments produced mixed results. Phase 4.11 reduced observation length by 13.7% but did not consistently preserve consequential context. Neither experiment established a repeatable improvement sufficient to justify promoting its prompt changes into production.
+
+The eight-case audit and its evaluation rubric provide a clearer basis for examining interpretation quality. The audit remains qualitative, retrospective, and limited to the existing cases and outputs. The rubric has not been independently validated, and the findings do not establish general model reliability.
+
+### Exit decision
+
+Phase 4 is considered complete as an exploratory investigation, not as a claim that interpretation quality has been solved.
+
+The current evidence does not justify:
+
+- Promoting the Phase 4.10 or Phase 4.11 prompt changes into production.
+- Establishing a permanent scoring, confidence, ranking, or reason-classification system.
+- Treating evidence references or surface-label agreement as sufficient proof of interpretation quality.
+- Automating purchase recommendations or conclusions about authenticity, value, or provenance.
+
+No additional prompt experiment is required for phase closure. Further investigation should be undertaken only when a specific unresolved question has a clear evaluation method and could inform a concrete design decision.
+
+### Retained limitations and follow-up conditions
+
+Interpretation may still omit consequential context, distort attribution or uncertainty, imply relationships that the source does not establish, or associate evidence with an observation inappropriately. The current work does not determine how frequently these failures occur or whether a particular intervention would reliably reduce them.
+
+If interpretation work resumes, evaluation should distinguish selection, representation, evidence-reference accuracy, evidence-role accuracy, and surface classification. Comparisons should record meaningful improvements and regressions separately and should not infer general reliability from a small number of cases or a single model run.
+
+These limitations remain open design and evaluation questions. They do not prevent closure of the exploratory phase.
+
+### Handoff
+
+Preserve the experimental outputs, audit findings, and evaluation rubric as the record of Phase 4. Carry the unresolved questions forward to future design work only when they become relevant to a concrete implementation decision.
+
+**Closing principle:** Phase 4 established a basis for evidence-grounded interpretation and clarified important failure modes. It did not establish a production-ready interpretation system.

@@ -50,7 +50,7 @@ The results should not be treated as proof that discovery is complete, consisten
 
 ### Phase 4 — Evidence Interpretation
 
-**Status: Exploratory investigation completed through Phase 4.11; design questions remain open**
+**Status: Exploratory investigation closed; production design questions remain open**
 
 Investigated whether structured evidence can support explainable interpretations of why a listing deserves closer attention.
 
