@@ -1043,6 +1043,64 @@ No production prompt, scoring, surface-classification, or schema changes are jus
 
 ---
 
+### Phase 4.11 — Decision-Relevant Context Under Compression
+
+**Status:** Completed — mixed/inconclusive
+**Purpose:** Determine whether an additional prompt instruction could preserve decision-relevant context without making interpretations longer or less selective.
+
+**Intervention**
+
+Phase 4.11 added a _Decision-relevant context under compression_ instruction to the Phase 4.10 prompt. It directed the model to prioritize consequential context, compress supporting details rather than dropping the point they establish, select only the details needed to preserve meaning, and maintain attribution and uncertainty.
+
+The experiment reused the same eight cases, model, input, and output schema. Phase 4.10 served as the control; Phase 4.11 was the treatment.
+
+**Results**
+
+| Measure                           | Phase 4.10 | Phase 4.11 |
+| --------------------------------- | ---------: | ---------: |
+| Interpretations evaluated         |          8 |          8 |
+| Total observation words           |        183 |        158 |
+| Total length change               |          — |     −13.7% |
+| Median per-case percentage change |          — |      −9.8% |
+| Surface classification changes    |          — |          0 |
+
+The added instruction did not produce consistently better preservation of decision-relevant meaning.
+
+**Observed improvements**
+
+- `interp-03`: Explicitly preserved the seller's refusal to sell, correcting a meaningful omission in Phase 4.10.
+- `interp-08`: Added estate provenance while retaining the instrument's heavy wear and unexplained handwritten notes.
+
+**Observed limitations and regressions**
+
+- `interp-01`: Retained family and church context but omitted the reported 1998 inheritance.
+- `interp-02`: Preserved the asking price but introduced the unnecessary characterization “standard” and dropped the reported working condition.
+- `interp-04`: Retained the unusual guitar configuration but omitted the seller's reason for selling.
+- `interp-05`: Retained the studio tag and case inscription but omitted the reported direct acquisition when the studio closed in 2019.
+- `interp-06`: Retained modifications and included components but lost attribution to the seller's uncle and the approximate date of the modifications.
+- `interp-07`: Described the discrepancy between the asking price and the seller's valuation claims but omitted the concrete $2,500 asking price and $8,000 valuation.
+
+Evidence-ID coverage did not necessarily mean that the corresponding observation preserved the evidence's specific meaning.
+
+**Conclusion**
+
+The treatment reduced overall observation length by 13.7%, with a median per-case change of approximately −9.8%. It therefore met the experiment's length constraint. However, shorter output did not reliably preserve all decision-relevant context, and the experiment produced both localized improvements and meaningful omissions.
+
+No surface classifications changed across the eight cases.
+
+Phase 4.11 does not justify promoting the new instruction into the production prompt. The result is **mixed/inconclusive**, not evidence that the approach is ineffective in every case. This was a single eight-case comparison and does not establish repeatability or general model reliability.
+
+**Next investigative direction**
+
+Distinguish two failure types before designing another prompt intervention:
+
+1. **Selection failure:** Relevant evidence or context is omitted from the observation.
+2. **Representation failure:** Evidence is selected or cited, but its specific meaning, attribution, or uncertainty is lost.
+
+This distinction should guide the next investigation rather than adding another general instruction to preserve more context.
+
+---
+
 ## Overall Phase 4 Findings
 
 Across Phases 4.3–4.9, several conclusions emerged.

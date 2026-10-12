@@ -1,0 +1,130 @@
+[
+  {
+    "listing_id": "interp-01",
+    "observation": "A 1974 Gibson ES-335 with family history and case documentation linking it to a 1970s church band.",
+    "supporting_evidence_ids": [
+      "interp-01-S01",
+      "interp-01-S03",
+      "interp-01-S05"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [
+      "interp-01-S02",
+      "interp-01-S06"
+    ],
+    "uncertainty": [
+      "Whether the instrument has undergone any modifications since 1974."
+    ],
+    "surface": "yes"
+  },
+  {
+    "listing_id": "interp-02",
+    "observation": "A standard 2018 Fender Stratocaster in sunburst with a maple neck, offered for $700 due to a relocation.",
+    "supporting_evidence_ids": [
+      "interp-02-S01",
+      "interp-02-S02",
+      "interp-02-S05",
+      "interp-02-S06"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [],
+    "uncertainty": [],
+    "surface": "no"
+  },
+  {
+    "listing_id": "interp-03",
+    "observation": "A 1978 Fender Telecaster retained by the original owner's family with clear personal history, but it is explicitly not for sale.",
+    "supporting_evidence_ids": [
+      "interp-03-S01",
+      "interp-03-S02",
+      "interp-03-S05",
+      "interp-03-S07"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [
+      "interp-03-S06"
+    ],
+    "uncertainty": [],
+    "surface": "no"
+  },
+  {
+    "listing_id": "interp-04",
+    "observation": "A custom Strandberg-style headless eight-string guitar with ergonomic construction and a matte black finish.",
+    "supporting_evidence_ids": [
+      "interp-04-S01",
+      "interp-04-S02",
+      "interp-04-S03"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [],
+    "uncertainty": [
+      "The exact builder or origin of the custom instrument beyond its style."
+    ],
+    "surface": "maybe"
+  },
+  {
+    "listing_id": "interp-05",
+    "observation": "A 2006 Fender Stratocaster accompanied by a studio name inside the case and an original inventory tag from a closed local recording studio.",
+    "supporting_evidence_ids": [
+      "interp-05-S01",
+      "interp-05-S05",
+      "interp-05-S06"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [
+      "interp-05-S03",
+      "interp-05-S07"
+    ],
+    "uncertainty": [
+      "Who used the guitar or how long it resided at the studio."
+    ],
+    "surface": "yes"
+  },
+  {
+    "listing_id": "interp-06",
+    "observation": "A 2012 Fender Telecaster modified with a Bigsby-style vibrato and replacement bridge pickup, retaining the original pickup and setup notes.",
+    "supporting_evidence_ids": [
+      "interp-06-S01",
+      "interp-06-S04",
+      "interp-06-S05",
+      "interp-06-S06",
+      "interp-06-S07"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [
+      "interp-06-S02",
+      "interp-06-S08"
+    ],
+    "uncertainty": [],
+    "surface": "yes"
+  },
+  {
+    "listing_id": "interp-07",
+    "observation": "A 1979 Gibson Les Paul Custom with a low asking price relative to the seller's aggressive valuation claims, but lacking any serial number, paperwork, or verifiable provenance.",
+    "supporting_evidence_ids": [
+      "interp-07-S01",
+      "interp-07-S04",
+      "interp-07-S05",
+      "interp-07-S09"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [
+      "interp-07-S02",
+      "interp-07-S03"
+    ],
+    "uncertainty": [
+      "Whether the instrument is authentic or has hidden modifications or condition issues."
+    ],
+    "surface": "maybe"
+  },
+  {
+    "listing_id": "interp-08",
+    "observation": "A 1991 Fender Jazz Bass with estate provenance, heavy wear, and unexplained handwritten notes inside the control cavity.",
+    "supporting_evidence_ids": [
+      "interp-08-S01",
+      "interp-08-S03",
+      "interp-08-S04",
+      "interp-08-S05"
+    ],
+    "qualifying_or_contradictory_evidence_ids": [
+      "interp-08-S06"
+    ],
+    "uncertainty": [
+      "The meaning and authorship of the notes found inside the control cavity."
+    ],
+    "surface": "yes"
+  }
+]
