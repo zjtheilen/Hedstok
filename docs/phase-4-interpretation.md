@@ -1076,7 +1076,7 @@ The added instruction did not produce consistently better preservation of decisi
 - `interp-01`: Retained family and church context but omitted the reported 1998 inheritance.
 - `interp-02`: Preserved the asking price but introduced the unnecessary characterization “standard” and dropped the reported working condition.
 - `interp-04`: Retained the unusual guitar configuration but omitted the seller's reason for selling.
-- `interp-05`: Retained the studio tag and case inscription but omitted the reported direct acquisition when the studio closed in 2019.
+- `interp-05`: Still incomplete. Omits the seller-reported account that the guitar was purchased directly from the studio when it closed in 2019. Evidence-role assignment does not consistently reflect the relationship between the Signals and the observation.
 - `interp-06`: Retained modifications and included components but lost attribution to the seller's uncle and the approximate date of the modifications.
 - `interp-07`: Restored the asking-price context but omitted the concrete $2,500 asking price, the seller's claimed $8,000 valuation, and the reported urgency to sell. Its framing risked implying a market-value gap from an unsupported seller valuation; it also introduced speculative possibilities about hidden modifications or condition issues.
 
@@ -1090,21 +1090,56 @@ No surface classifications changed across the eight cases.
 
 Phase 4.11 does not justify promoting the new instruction into the production prompt. The result is **mixed/inconclusive**, not evidence that the approach is ineffective in every case. This was a single eight-case comparison and does not establish repeatability or general model reliability.
 
-**Next investigative direction**
+**Evaluation Rubric — Eight-Case Audit**
 
-Distinguish two failure types before designing another prompt intervention:
+**Status:** Initial criteria applied to the existing Phase 4.10 and Phase 4.11 outputs. No new model calls or prompt changes.
 
-1. **Selection failure:** Relevant evidence or context is omitted from the observation.
-2. **Representation failure:** Evidence is selected or cited, but its specific meaning, attribution, or uncertainty is lost.
-3. **Evidence-reference/role mismatch:** Evidence IDs are missing or do not support the specific observation they accompany, or evidence is assigned a supporting versus qualifying role that does not match its actual relationship to the observation.
+**Purpose**
 
-The case-level audit found examples of all three failure types, sometimes within the same interpretation. It also identified improvements: Phase 4.11 restored the explicit refusal to sell in `interp-03` and the estate-acquisition context in `interp-08`. However, important context remained vulnerable to omission or distortion, including ownership chronology (`interp-01`), reported condition (`interp-02`), seller motivation (`interp-04`), acquisition history (`interp-05`), modification attribution and chronology (`interp-06`), and the distinction between a seller's valuation claim and established value (`interp-07`).
+Establish a consistent way to evaluate whether an interpretation preserves source-grounded meaning, rather than judging quality by brevity, evidence-ID coverage, or surface classification alone.
 
-Evidence-reference/role mismatches appeared in both phases. For example, some observations included details without citing the Signal that directly supported them, while other interpretations assigned evidence to the qualifying role even when it reinforced context rather than qualifying or contradicting the main observation.
+**Governing rule**
 
-**Next step:** Define a small set of explicit evaluation criteria for selection, representation, and evidence-reference/role alignment before designing another prompt intervention. Do not promote the Phase 4.11 instruction or begin another experiment until those criteria are established.
+Judge omissions by whether they materially affect a person's interpretation of the listing. Preserve source-grounded meaning; do not judge authenticity, value, or purchase merit. Not every Signal needs to appear in the observation.
 
-These distinctions should guide the next investigation rather than adding another general instruction to preserve more context.
+**Evaluation criteria**
+
+1. **Selection failure:** Consequential evidence or context is omitted. An omission is not automatically a failure; it must materially affect the reader's understanding of the listing, its history, the seller's claims or circumstances, or a relevant constraint.
+
+2. **Representation failure:** Selected evidence is paraphrased in a way that loses or distorts its meaning, attribution, chronology, uncertainty, or constraints, or introduces an implication that the source does not establish. This includes treating seller-reported information as verified fact and implying conclusions about authenticity or value that the evidence does not support.
+
+3. **Evidence-reference/role mismatch:** Evidence IDs are missing or do not support the specific observation they accompany, or evidence is assigned a supporting versus qualifying/contradictory role that does not match its actual relationship to the observation. Assess evidence references independently from prose fidelity.
+
+A single interpretation may exhibit multiple failure types. Record meaningful improvements and regressions separately rather than collapsing the result into one score.
+
+**Eight-case comparison**
+
+| Case        | Phase 4.11 comparison with Phase 4.10                                                                                                                                                                                                               |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `interp-01` | Mixed. Family and church context remains, but the inheritance timeline is omitted. The wording risks implying a stronger connection between the instrument and the church band than the Signals establish.                                          |
+| `interp-02` | Mixed. Adds price and seller motivation but drops reported condition and working status, and introduces the unsupported descriptor “standard.”                                                                                                      |
+| `interp-03` | Improved on a consequential constraint. Restores the explicit refusal to sell or trade, but omits the inheritance date and the father's playing history.                                                                                            |
+| `interp-04` | Weaker on seller context. Drops the reason for selling and adds the finish description instead.                                                                                                                                                     |
+| `interp-05` | Still incomplete. Omits the seller-reported account that the guitar was purchased directly from the studio when it closed in 2019. Evidence-role assignment does not consistently reflect the relationship between the Signals and the observation. |
+| `interp-06` | Weaker on historical fidelity. Loses attribution of the modifications to the uncle and their approximate date; ownership Signals are incorrectly assigned a qualifying/contradictory role.                                                          |
+| `interp-07` | Mixed. Makes the asking-price context more prominent but risks implying a genuine value gap from an unsupported seller valuation and introduces speculative possibilities about hidden modifications or condition issues.                           |
+| `interp-08` | Improved contextual coverage. Restores the reported estate acquisition, but “estate provenance” risks overstating the strength of the seller's account.                                                                                             |
+
+Both phases also contain evidence-reference mismatches, including observations with uncited supporting details. The table summarizes the principal differences; it is not an exhaustive inventory of every individual reference error.
+
+**Audit findings**
+
+- **Consequentiality requires judgment.** The explicit not-for-sale constraint in `interp-03` materially affects interpretation. By contrast, omitting a descriptive detail such as finish color is not inherently a failure.
+- **Faithful wording is not sufficient by itself.** An observation may accurately repeat individual facts while implying a relationship those facts do not establish, as seen in `interp-01` and `interp-07`.
+- **Traceability is not fidelity.** Evidence IDs can be present while the observation loses attribution or chronology, or while evidence is assigned an inappropriate role.
+- **Compression involves tradeoffs.** Phase 4.11 corrected a consequential omission in `interp-03` and restored context in `interp-08`, but introduced or retained meaningful omissions and representation problems elsewhere.
+- **The audit is exploratory.** These judgments were developed using the same eight cases and outputs already examined. They have not been independently or blindly validated and do not establish general model reliability.
+
+**Next step**
+
+Review these criteria for consistency and ambiguity before deciding whether another experiment is warranted. Any future comparison should assess selection, representation, and evidence-reference/role alignment separately, recording improvements and regressions at the case level.
+
+Do not promote the Phase 4.11 instruction or run another experiment solely on the strength of this audit. No production prompt, scoring, surface-classification, or schema changes are justified by these findings alone.
 
 ---
 
