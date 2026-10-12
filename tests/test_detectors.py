@@ -717,8 +717,28 @@ def test_explicitly_unusual_configuration_against_extraction_artifact():
         if result is not None:
             detected.append(result.listing_id)
 
-    print(
-        f"\nExplicitly unusual configurations detected: {detected}"
-    )
+    print(f"\nExplicitly unusual configurations detected: {detected}")
 
     assert detected == ["listing-14"]
+
+
+def test_dated_modification_detector_does_not_treat_arbitrary_numbers_as_dates():
+    extraction = ListingExtraction(
+        listing_id="test-arbitrary-number",
+        signals=[
+            Signal(
+                type="identity",
+                claim="Fender model 2001",
+                source_text="Fender model 2001",
+            ),
+            Signal(
+                type="configuration",
+                claim="locking nut installed",
+                source_text="locking nut installed",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None

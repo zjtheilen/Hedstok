@@ -152,13 +152,13 @@ Until those conditions are met, preserve the current behavior and treat new appr
 
 ## Status Summary
 
-| Area                                   | Status                          | Position                                                  |
-| -------------------------------------- | ------------------------------- | --------------------------------------------------------- |
-| Initial experiment                     | Completed                       | Exploratory foundation established                        |
-| Evidence extraction                    | Explored                        | Preserve source-grounded claims                           |
-| AI-assisted discovery                  | Investigated                    | Findings retained separately                              |
-| Evidence interpretation                | Investigated through Phase 4.11 | Useful but imperfect; context preservation remains uneven |
-| Stable evidence references             | Experimentally evaluated        | Improves traceability; quality gains remain unproven      |
-| Production interpretation architecture | Open                            | No permanent design justified yet                         |
-| Scoring and confidence models          | Deferred                        | Not justified by current evidence                         |
-| Automated purchase recommendations     | Out of scope                    | Not Hedstok's purpose                                     |
+| Area                                   | Status                   | Position                                                  |
+| -------------------------------------- | ------------------------ | --------------------------------------------------------- |
+| Initial experiment                     | Completed                | Exploratory foundation established                        |
+| Evidence extraction                    | Explored                 | Preserve source-grounded claims                           |
+| AI-assisted discovery                  | Investigated             | Findings retained separately                              |
+| Evidence interpretation                | Exploratory phase closed | Useful but imperfect; context preservation remains uneven |
+| Stable evidence references             | Experimentally evaluated | Improves traceability; quality gains remain unproven      |
+| Production interpretation architecture | Open                     | No permanent design justified yet                         |
+| Scoring and confidence models          | Deferred                 | Not justified by current evidence                         |
+| Automated purchase recommendations     | Out of scope             | Not Hedstok's purpose                                     |

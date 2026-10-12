@@ -1,3 +1,5 @@
+import re
+
 from hedstok.models import EvidencePattern, ListingExtraction, PatternEvidence
 
 
@@ -84,11 +86,6 @@ def detect_dated_configuration_modification_history(
     core_evidence = []
     history_evidence = []
 
-    date_terms = (
-        "19",
-        "20",
-    )
-
     core_terms = (
         "modified",
         "modification",
@@ -107,7 +104,14 @@ def detect_dated_configuration_modification_history(
     for index, signal in enumerate(extraction.signals):
         claim = signal.claim.lower()
 
-        if any(term in claim for term in date_terms):
+        if re.search(r"\b(?:19|20)\d{2}\b", claim) and (
+            signal.type != "identity"
+            or "year model" in claim
+            or any(
+                term in claim
+                for term in ("modified", "modification", "installed", "retrofitted")
+            )
+        ):
             dated_evidence.append((index, signal))
 
         if "original" in claim and "installed" in claim:
@@ -266,6 +270,7 @@ def detect_cross_source_contradiction(
                 )
 
     return None
+
 
 def detect_explicitly_unusual_configuration(
     extraction: ListingExtraction,
