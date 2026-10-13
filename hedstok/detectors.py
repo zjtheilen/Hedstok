@@ -103,14 +103,28 @@ def detect_dated_configuration_modification_history(
     for index, signal in enumerate(extraction.signals):
         claim = signal.claim.lower()
 
-        if re.search(r"\b(?:19|20)\d{2}\b", claim) and (
-            signal.type != "identity"
-            or "year model" in claim
-            or any(
-                term in claim
-                for term in ("modified", "modification", "installed", "retrofitted")
+        # if re.search(r"\b(?:19|20)\d{2}\b", claim) and (
+        #     signal.type != "identity"
+        #     or "year model" in claim
+        #     or any(
+        #         term in claim
+        #         for term in ("modified", "modification", "installed", "retrofitted")
+        #     )
+        # ):
+        #     dated_evidence.append((index, signal))
+
+        has_year_model_context = "year model" in claim
+
+        has_instrument_identity_context = signal.type == "identity" and bool(
+            re.search(
+                r"\b(?:19|20)\d{2}\b\s+"
+                r"(?:fender|gibson|ibanez|jackson|yamaha|"
+                r"stratocaster|les paul|telecaster|sg)\b",
+                claim,
             )
-        ):
+        )
+
+        if has_year_model_context or has_instrument_identity_context:
             dated_evidence.append((index, signal))
 
         if "original" in claim and "installed" in claim:

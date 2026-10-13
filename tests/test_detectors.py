@@ -867,3 +867,30 @@ def test_bare_year_does_not_establish_dated_instrument_context():
     result = detect_dated_configuration_modification_history(extraction)
 
     assert result is None
+
+
+def test_market_context_year_does_not_establish_dated_instrument_context():
+    extraction = ListingExtraction(
+        listing_id="test-market-context-year",
+        signals=[
+            Signal(
+                type="identity",
+                claim="The manufacturer is fender.",
+                source_text="fender.",
+            ),
+            Signal(
+                type="market_context",
+                claim="A year 1992 is mentioned in the listing.",
+                source_text="1992.",
+            ),
+            Signal(
+                type="configuration",
+                claim="A locking nut is installed.",
+                source_text="locking nut installed.",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None
