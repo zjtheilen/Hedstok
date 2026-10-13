@@ -64,6 +64,16 @@ These layers must be evaluated separately. A detector failure must not automatic
 
 **Status:** The detector initially accepted heavy-gauge strings as core modification evidence. After removing `"heavy gauge"` from `core_terms`, the negative boundary test passes, while the existing listing-02 positive test continues to pass. Focused and full test suites both pass (35 tests). The detector's other configuration-related terms have not yet been comprehensively audited.
 
+**Follow-up — Dated instrument context boundary**
+
+The detector previously accepted a year in any non-identity signal as dated instrument context. This allowed a market-context claim stating that a year was mentioned in the listing to support a dated configuration/modification pattern, even when the year did not establish the instrument's date.
+
+The detector was narrowed to require explicit year-model context or a year directly associated with a recognized instrument identity. Regression coverage now verifies that a year mentioned only in market context does not establish dated instrument context. An arbitrary-number boundary test also verifies that a claim such as "Fender model 2001" is not sufficient.
+
+Validation: **47 tests passed.** The historical `extraction2.json` positive test remains intact.
+
+**Conclusion:** The identified false-positive path is covered by regression tests. This does not establish general detector accuracy or validate the underlying listing claims.
+
 ### SF-03 — Ambiguity and seller-claim attribution
 
 **Source:** `listing-05`
