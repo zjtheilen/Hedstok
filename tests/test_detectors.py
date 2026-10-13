@@ -551,6 +551,60 @@ def test_cross_source_contradiction_detected():
     assert result.evidence[1].signal_index == 1
 
 
+def test_same_source_identity_conflict_is_not_cross_source_contradiction():
+    # Both claims are attributed to the same source passage.
+    source_text = "1958 Les Paul; Stratocaster-style guitar"
+
+    extraction = ListingExtraction(
+        listing_id="test-same-source-conflict",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1958 Les Paul",
+                source_text=source_text,
+            ),
+            Signal(
+                type="identity",
+                claim="Stratocaster-style guitar",
+                source_text=source_text,
+            ),
+            Signal(
+                type="identity",
+                claim="Original case included",
+                source_text="Includes the original case",
+            ),
+        ],
+    )
+
+    result = detect_cross_source_contradiction(extraction)
+
+    assert result is None
+
+
+def test_text_and_image_identity_conflict_is_detected():
+    extraction = ListingExtraction(
+        listing_id="test-text-image-conflict",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1958 Les Paul",
+                source_text="1958 Les Paul",
+            ),
+            Signal(
+                type="identity",
+                claim="Stratocaster-style guitar",
+                source_text="[image shows a Stratocaster-style guitar]",
+            ),
+        ],
+    )
+
+    result = detect_cross_source_contradiction(extraction)
+
+    assert result is not None
+    assert result.pattern == "cross_source_contradiction"
+    assert [item.signal_index for item in result.evidence] == [0, 1]
+
+
 def test_cross_source_contradiction_not_detected_from_consistent_evidence():
     extraction = ListingExtraction(
         listing_id="test-no-contradiction",

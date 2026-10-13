@@ -80,7 +80,7 @@ These layers must be evaluated separately. A detector failure must not automatic
 - Seller-provided claims remain distinguishable from independently established facts.
 - Attribution is preserved consistently where a claim's origin matters to interpretation.
 
-**Status:** Potential extraction or representation issue; schema implications not yet determined.
+**Status:** A concrete extraction-fidelity concern is confirmed. The source says “this particular guitar (and his playing)” was featured on the albums, while the extracted claim says the guitar was featured. The extraction narrows the original statement's ambiguity. The “buckle scuffs from Kirk Hammett” claim retains the asserted attribution in its wording, but attribution is not represented separately. Whether separate attribution metadata is necessary remains an open design question.
 
 ### SF-04 — Uncertain identity preservation
 
@@ -111,11 +111,13 @@ These layers must be evaluated separately. A detector failure must not automatic
 
 **Verify:**
 
-- Text-derived and image-derived evidence retain their provenance.
+- Text-derived and image-derived evidence remain distinguishable in the extracted signals.
 - Conflicting identity claims remain distinguishable.
 - Downstream interpretation does not treat contradictory claims as mutually reinforcing evidence for a single identity.
 
-**Status:** Contradiction preserved in extraction; downstream handling not yet audited.
+**Mitigation implemented:** `detect_cross_source_contradiction()` now skips pairs of identity signals whose `source_text` values match after trimming surrounding whitespace. An adversarial same-source test confirms that identical source text does not trigger a contradiction; the text/image control test confirms that the existing listing-11-style contradiction is still detected.
+
+**Status: Partially mitigated; provenance remains unresolved.** This is a provisional heuristic, not source-provenance tracking. Different excerpts may originate from the same source, and identical excerpts do not formally establish common provenance. The detector still identifies a specific Les Paul/Stratocaster wording pair rather than establishing that the underlying claims are genuinely contradictory. No schema redesign or broader detector changes were made.
 
 ### SF-06 — Promotional wording versus technical claims
 
@@ -145,6 +147,34 @@ The current sample raises four recurring questions:
 4. **Category semantics:** Are signal types sufficiently consistent for the assumptions made by downstream detectors?
 
 These are investigation questions, not confirmed schema defects.
+
+## Confirmed cross-case findings
+
+### CF-01 — Image evidence context loss (listing-03)
+
+The source describes a bad camera angle and fuzzy image quality alongside the observation that two strings are broken. The extracted signal's `source_text` retains only the broken-strings statement.
+
+**Classification:** Source traceability and context preservation discrepancy. The observation is retained, but the image-quality caveat is lost.
+
+### CF-02 — Claim/source-text mismatch (listing-12)
+
+The first identity claim includes model `H954`, but its associated `source_text` contains only the instrument description. The model number appears elsewhere in the original listing, but not in the cited source span for that claim.
+
+**Classification:** Signal traceability discrepancy. The claim is supported by the overall listing, but its associated source text does not independently support the full claim.
+
+### CF-03 — Transaction-context category mismatch
+
+The instrument-transaction detector requires at least one `seller_context` signal alongside instrument evidence. It does not recognize `market_context` signals as transaction evidence. Consequently, explicit sale/trade wording in listing-04 and “make an offer” in listing-08 do not satisfy its transaction-context condition. Conversely, generic seller-context wording in listing-06 and promotional wording in listing-12 can satisfy that condition without an explicit transaction offer.
+
+**Classification:** Confirmed mismatch between detector assumptions and signal categories. Whether this is a detector defect depends on the intended definition of `instrument_transaction_context`.
+
+### CF-04 — Configuration claim categorized as identity (listing-14)
+
+“Tele and Strat in one guitar” is extracted as an `identity` signal. The unusual-configuration detector still recognizes it because it matches claim text without checking the signal type.
+
+**Classification:** Signal-semantics inconsistency. The detector's behavior is consistent with its current string-matching rule, but the signal category does not match the claim's apparent meaning.
+
+These findings document observed discrepancies. They do not, by themselves, authorize schema redesign or broader detector changes.
 
 ## Known limitation: year normalization
 

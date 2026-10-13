@@ -250,6 +250,12 @@ def detect_cross_source_contradiction(
 
             second_claim = second_signal.claim.lower()
 
+            same_source_text = (
+                first_signal.source_text.strip() == second_signal.source_text.strip()
+            )
+            if same_source_text:
+                continue
+
             if ("les paul" in first_claim and "stratocaster" in second_claim) or (
                 "stratocaster" in first_claim and "les paul" in second_claim
             ):
