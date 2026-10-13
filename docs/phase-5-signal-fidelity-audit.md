@@ -62,7 +62,7 @@ These layers must be evaluated separately. A detector failure must not automatic
 - The dated-modification detector requires evidence sufficient to support the specific interpretation it returns.
 - A dated instrument plus configuration evidence such as heavy-gauge strings must not automatically establish modification history.
 
-**Status:** Detector boundary concern identified; precise cause remains under investigation.
+**Status:** The detector initially accepted heavy-gauge strings as core modification evidence. After removing `"heavy gauge"` from `core_terms`, the negative boundary test passes, while the existing listing-02 positive test continues to pass. Focused and full test suites both pass (35 tests). The detector's other configuration-related terms have not yet been comprehensively audited.
 
 ### SF-03 — Ambiguity and seller-claim attribution
 

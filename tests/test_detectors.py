@@ -237,7 +237,6 @@ def test_dated_configuration_modification_history_listing_02():
     assert [item.signal_index for item in result.evidence] == [
         2,
         3,
-        4,
         5,
         6,
     ]
@@ -245,7 +244,6 @@ def test_dated_configuration_modification_history_listing_02():
     assert [item.role for item in result.evidence] == [
         "establishes dated instrument context",
         "establishes modification and retained original components",
-        "establishes configuration",
         "establishes modification",
         "establishes condition evidence",
     ]
@@ -773,23 +771,23 @@ def test_dated_modification_history_detected_from_minimal_evidence():
     ]
 
 
-# def test_dated_instrument_with_configuration_only_is_not_detected():
-#     extraction = ListingExtraction(
-#         listing_id="test-configuration-only",
-#         signals=[
-#             Signal(
-#                 type="identity",
-#                 claim="1995 year model",
-#                 source_text="1995 year model",
-#             ),
-#             Signal(
-#                 type="configuration",
-#                 claim="heavy gauge strings",
-#                 source_text="heavy gauge strings",
-#             ),
-#         ],
-#     )
+def test_dated_instrument_with_configuration_only_is_not_detected():
+    extraction = ListingExtraction(
+        listing_id="test-configuration-only",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1995 year model",
+                source_text="1995 year model",
+            ),
+            Signal(
+                type="configuration",
+                claim="heavy gauge strings",
+                source_text="heavy gauge strings",
+            ),
+        ],
+    )
 
-#     result = detect_dated_configuration_modification_history(extraction)
+    result = detect_dated_configuration_modification_history(extraction)
 
-#     assert result is None
+    assert result is None

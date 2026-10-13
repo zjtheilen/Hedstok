@@ -91,7 +91,6 @@ def detect_dated_configuration_modification_history(
         "modification",
         "installed",
         "locking nut",
-        "heavy gauge",
     )
 
     supporting_terms = (
