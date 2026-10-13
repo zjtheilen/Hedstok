@@ -742,3 +742,54 @@ def test_dated_modification_detector_does_not_treat_arbitrary_numbers_as_dates()
     result = detect_dated_configuration_modification_history(extraction)
 
     assert result is None
+
+
+def test_dated_modification_history_detected_from_minimal_evidence():
+    extraction = ListingExtraction(
+        listing_id="test-dated-modification",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1992 year model",
+                source_text="1992 year model",
+            ),
+            Signal(
+                type="configuration",
+                claim="locking nut installed",
+                source_text="locking nut installed",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is not None
+    assert result.listing_id == "test-dated-modification"
+    assert result.pattern == "dated_configuration_modification_history"
+    assert [item.signal_index for item in result.evidence] == [0, 1]
+    assert [item.role for item in result.evidence] == [
+        "establishes dated instrument context",
+        "establishes modification",
+    ]
+
+
+# def test_dated_instrument_with_configuration_only_is_not_detected():
+#     extraction = ListingExtraction(
+#         listing_id="test-configuration-only",
+#         signals=[
+#             Signal(
+#                 type="identity",
+#                 claim="1995 year model",
+#                 source_text="1995 year model",
+#             ),
+#             Signal(
+#                 type="configuration",
+#                 claim="heavy gauge strings",
+#                 source_text="heavy gauge strings",
+#             ),
+#         ],
+#     )
+
+#     result = detect_dated_configuration_modification_history(extraction)
+
+#     assert result is None
