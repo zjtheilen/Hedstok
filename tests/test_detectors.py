@@ -845,3 +845,25 @@ def test_dated_instrument_with_configuration_only_is_not_detected():
     result = detect_dated_configuration_modification_history(extraction)
 
     assert result is None
+
+
+def test_bare_year_does_not_establish_dated_instrument_context():
+    extraction = ListingExtraction(
+        listing_id="test-bare-year",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1992",
+                source_text="1992.",
+            ),
+            Signal(
+                type="configuration",
+                claim="Locking nut installed",
+                source_text="locking nut installed.",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None
