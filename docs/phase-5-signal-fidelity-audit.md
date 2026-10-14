@@ -80,17 +80,13 @@ Validation: **47 tests passed.** The historical `extraction2.json` positive test
 
 **Source evidence:** The seller claims that the guitar and the father's playing were featured on several late-1980s metal albums. The listing also attributes buckle scuffs to Kirk Hammett.
 
-**Observed extraction:** The album claim is phrased as the guitar being featured on the albums, which may narrow the original ambiguity. The buckle-scuff claim preserves the asserted origin in its wording but does not separately represent attribution.
+**Observed extraction:** The earlier extraction phrased the album association as the guitar being featured on the albums, narrowing the original statement's ambiguity. The revised extraction preserves both the guitar and the father's playing in the album claim. The buckle-scuff claim preserves the asserted origin in its wording but does not separately represent attribution.
 
-**Assessment:** Potential loss of ambiguity and unclear consistency in attribution handling.
+**Assessment:** The observed loss of ambiguity in the earlier extraction is corrected in the revised artifact. The revised extraction preserves the seller's claim; it does not independently establish that the claimed recording history or Kirk Hammett association is true. Whether seller attribution should be represented explicitly and consistently remains an unresolved design question.
 
-**Verify:**
+**Verification boundary:** This comparison evaluates extraction fidelity against the supplied source text. It does not validate the seller's claims or establish general attribution handling across other listings.
 
-- Ambiguous source statements are not converted into more definite claims.
-- Seller-provided claims remain distinguishable from independently established facts.
-- Attribution is preserved consistently where a claim's origin matters to interpretation.
-
-**Status:** A concrete extraction-fidelity concern is confirmed. The source says “this particular guitar (and his playing)” was featured on the albums, while the extracted claim says the guitar was featured. The extraction narrows the original statement's ambiguity. The “buckle scuffs from Kirk Hammett” claim retains the asserted attribution in its wording, but attribution is not represented separately. Whether separate attribution metadata is necessary remains an open design question.
+**Status:** Earlier album-claim ambiguity concern resolved in the revised extraction. Explicit seller-claim attribution remains a design question; no schema or prompt change is justified by this listing alone.
 
 ### SF-04 — Uncertain identity preservation
 
