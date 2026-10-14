@@ -123,6 +123,8 @@ Validation: **47 tests passed.** The historical `extraction2.json` positive test
 
 **Mitigation implemented:** `detect_cross_source_contradiction()` now skips pairs of identity signals whose `source_text` values match after trimming surrounding whitespace. An adversarial same-source test confirms that identical source text does not trigger a contradiction; the text/image control test confirms that the existing listing-11-style contradiction is still detected.
 
+**Validation:** Focused contradiction tests passed: **5 passed** (`pytest .\tests\test_detectors.py -k "cross_source_contradiction or same_source_identity_conflict"`).
+
 **Status: Partially mitigated; provenance remains unresolved.** This is a provisional heuristic, not source-provenance tracking. Different excerpts may originate from the same source, and identical excerpts do not formally establish common provenance. The detector still identifies a specific Les Paul/Stratocaster wording pair rather than establishing that the underlying claims are genuinely contradictory. No schema redesign or broader detector changes were made.
 
 ### SF-06 — Promotional wording versus technical claims
