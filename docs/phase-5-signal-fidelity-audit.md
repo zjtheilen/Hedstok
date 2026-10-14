@@ -98,16 +98,16 @@ Validation: **47 tests passed.** The historical `extraction2.json` positive test
 
 **Source evidence:** The seller describes a guitar as very old and says the name on it looks like “gibbons or gibson or something.”
 
-**Observed extraction:** The signal preserves the uncertain wording in the identity claim.
+**Observed extraction:**
 
-**Assessment:** The extraction appears appropriately cautious.
+- Identity: `"The top says 'gibbons' or 'gibson' or something similar."`
+- Condition: `"The guitar is really old."`
 
-**Verify:**
+**Assessment:** The extraction preserves uncertainty around the possible brand and retains the general age description without inventing a specific age or manufacture date.
 
-- Downstream logic does not treat the uncertain brand reference as a confirmed manufacturer.
-- General descriptive language such as “really old” is not silently converted into a specific age or date.
+**Downstream checks:** `detect_dated_configuration_modification_history`, `detect_cross_source_contradiction`, and `detect_provenance` returned no detections for this listing. These targeted checks did not demonstrate that the uncertain identity was treated as confirmed. This is limited evidence, not a guarantee for all downstream consumers.
 
-**Status:** No extraction discrepancy observed; downstream behavior not yet audited.
+**Status:** No extraction discrepancy observed. Targeted downstream checks completed; broader downstream behavior remains outside this verification.
 
 ### SF-05 — Conflicting text and image evidence
 
