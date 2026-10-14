@@ -70,7 +70,7 @@ The detector previously accepted a year in any non-identity signal as dated inst
 
 The detector was narrowed to require explicit year-model context or a year directly associated with a recognized instrument identity. Regression coverage now verifies that a year mentioned only in market context does not establish dated instrument context. An arbitrary-number boundary test also verifies that a claim such as "Fender model 2001" is not sufficient.
 
-Validation: **47 tests passed.** The historical `extraction2.json` positive test remains intact.
+**Validation:** 47 tests passed. The historical `extraction2.json` positive test remains intact.
 
 **Conclusion:** The identified false-positive path is covered by regression tests. This does not establish general detector accuracy or validate the underlying listing claims.
 
@@ -135,15 +135,18 @@ Validation: **47 tests passed.** The historical `extraction2.json` positive test
 
 **Observed extraction:** These statements are represented as condition or identity signals.
 
-**Assessment:** The extraction preserves the listing's claims. The concern is whether downstream logic assigns them a stronger technical meaning than the source warrants.
+**Assessment:** The extraction preserves the seller's promotional claims. `detect_explicitly_unusual_configuration` matches the phrase “Tele and Strat in one guitar” and emits an `explicitly_unusual_configuration` pattern. This detects the presence of the claim; it does not verify the instrument's actual construction. The pattern name and evidence role could nevertheless be read as stronger than the underlying evidence supports. A targeted search of the `hedstok` Python files found no separate handling of “AS NEW MINT” or “NEW Series”; this does not establish how every downstream consumer may interpret these signals.
 
-**Verify:**
+**Verification:**
 
-- Promotional wording is not treated as independent technical verification.
-- “Tele and Strat in one guitar” remains a seller claim unless supported by evidence appropriate to the intended interpretation.
-- Condition language is distinguished from verified physical condition where that distinction matters.
+- The detector's unit tests cover the promotional phrase and reject ordinary configuration and modification claims.
+- The extraction-artifact test expects `listing-14` to be the only listing detected by this detector.
+- No independent verification of the seller's configuration or condition claims is performed by this detector.
+- The distinction between seller-reported condition and verified physical condition remains a broader semantic boundary, not something established by this detector review.
 
-**Status:** Downstream semantic boundary to be investigated.
+**Validation:** Focused detector tests passed: **4 passed** (`pytest .\tests\test_detectors.py -k "explicitly_unusual_configuration"`).
+
+**Status:** Detector behavior reviewed; no code change justified by the current evidence. The detector identifies promotional wording, but its output terminology could imply more certainty than the source supports.
 
 ## Cross-case observations
 
