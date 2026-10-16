@@ -1,6 +1,6 @@
 # Phase 5 — Signal Fidelity Audit
 
-**Status:** Investigation in progress  
+**Status:** Audit Complete
 **Purpose:** Compare source listing text with extracted signals and downstream detector interpretation before making detector changes.
 
 ## Objective
@@ -173,27 +173,41 @@ The first identity claim includes model `H954`, but its associated `source_text`
 
 **Classification:** Signal traceability discrepancy. The claim is supported by the overall listing, but its associated source text does not independently support the full claim.
 
+**Status:** Confirmed in the audited `extraction2.json` artifact; corrected in `extraction3.json`. The original listing explicitly includes model H954, but the earlier signal's `source_text` did not. The revised artifact's source span includes the model number and supports the full claim. No downstream detector failure was demonstrated during this review.
+
+**Disposition:** Historical extraction traceability discrepancy, corrected in the revised artifact. No additional prompt, schema, or detector change is justified by this case.
+
 ### CF-03 — Transaction-context category mismatch
 
 The instrument-transaction detector requires at least one `seller_context` signal alongside instrument evidence. It does not recognize `market_context` signals as transaction evidence. Consequently, explicit sale/trade wording in listing-04 and “make an offer” in listing-08 do not satisfy its transaction-context condition. Conversely, generic seller-context wording in listing-06 and promotional wording in listing-12 can satisfy that condition without an explicit transaction offer.
 
-**Classification:** Confirmed mismatch between detector assumptions and signal categories. Whether this is a detector defect depends on the intended definition of `instrument_transaction_context`.
+**Classification:** Confirmed detector-logic limitation interacting with signal semantics. Explicit transaction language in `market_context` signals is missed, while generic or promotional `seller_context` signals can satisfy the detector without an explicit offer.
+
+**Disposition:** Record as a known limitation. Do not broaden detection to all `market_context` signals, because price-only context is insufficient. A future change should define and test the semantic conditions for transaction evidence separately from signal category. No code change is justified within this audit.
 
 ### CF-04 — Configuration claim categorized as identity (listing-14)
 
-“Tele and Strat in one guitar” is extracted as an `identity` signal. The unusual-configuration detector still recognizes it because it matches claim text without checking the signal type.
+In `extraction2.json`, “Tele and Strat in one guitar” is categorized as `identity`, although it describes a configuration. The unusual-configuration detector recognizes the claim through text matching without checking the signal type.
 
-**Classification:** Signal-semantics inconsistency. The detector's behavior is consistent with its current string-matching rule, but the signal category does not match the claim's apparent meaning.
+In `extraction3.json`, the claim is categorized as `configuration`, correcting the observed signal-semantics inconsistency.
 
-These findings document observed discrepancies. They do not, by themselves, authorize schema redesign or broader detector changes.
+**Classification:** Signal-semantics inconsistency in the historical extraction artifact.
 
-## Known limitation: year normalization
+**Status:** Corrected in `extraction3.json`. The detector's existing behavior remains compatible with the revised signal.
 
-Listings 02, 04, and 10 normalize bare years into claims such as “1992 year model,” “2006 year model,” and “2025 year model.” Listing-01 correctly preserves a lower-bound statement rather than converting it into a manufacturing year. Listing-05 also contains years in the context of album releases.
+**Disposition:** No detector or schema change is justified. The historical artifact-level test remains tied to `extraction2.json`, while a separate regression test verifies the revised `extraction3.json` classification and detector behavior.
 
-The audit must determine whether year normalization consistently respects source context. A four-digit year alone must not be assumed to describe the instrument's manufacture date.
+## Year normalization — cross-case review
 
-**Status:** Cross-case question; requires targeted source-to-signal and downstream review.
+The revised extraction handles years differently depending on context, but ambiguity remains. Listing-01 preserves the statement that the guitar cannot be newer than 1970, rather than assigning an exact date. Listing-02 combines `1992` with the Fender SSH Strat identity claim, supported by its source span. Listing-05 keeps the 1986 album dates within a story signal rather than treating them as the guitar's date.
+
+However, listing-04 still identifies the instrument as a “2006 Rickenbacker 12-string,” even though the source only says “rickenbacker 12-string. 2006.” Listing-10 similarly identifies a “2025 Squier Sonic Stratocaster” without the source explicitly stating that 2025 is a manufacture or model year.
+
+**Classification:** Remaining extraction-semantic ambiguity. The source spans are traceable, but the claims assign an interpretation to years whose precise meaning is not explicit.
+
+**Disposition:** Do not assume that every year adjacent to an instrument description is a confirmed manufacture or model year. Record listings 04 and 10 as bounded ambiguities; do not broaden detector logic or redesign the schema on this evidence alone.
+
+**Status:** Classified for this audit. No code change is required to close Phase 5.
 
 ## Exit criteria
 
@@ -209,6 +223,8 @@ Closing this audit does not itself authorize a scoring-model change, a schema re
 
 ## Current conclusion
 
-The sampled extraction is generally faithful, and several cases preserve uncertainty or contradictory evidence appropriately. Potential issues remain around ambiguity, attribution, year normalization, and the boundary between configuration and modification history.
+The reviewed cases have been assessed across extraction fidelity, Signal semantics, and downstream detector behavior. The audit identified bounded context and traceability discrepancies, a transaction-context detector limitation, a corrected configuration categorization, and remaining ambiguity in year interpretation.
 
-No broad extraction or detector changes are justified by this audit alone. The next step is to inspect downstream interpretation for the documented cases and classify concrete discrepancies before implementing fixes.
+The findings do not justify broad extraction, detector, or schema changes. Known limitations and unresolved ambiguities are documented with their dispositions. Any future changes should be driven by concrete evidence and evaluated against the intended semantics, with regression coverage where applicable.
+
+**Status:** Audit complete. Findings classified; no additional code or schema changes are required to close Phase 5.

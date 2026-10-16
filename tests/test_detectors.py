@@ -774,6 +774,30 @@ def test_explicitly_unusual_configuration_against_extraction_artifact():
     assert detected == ["listing-14"]
 
 
+def test_revised_artifact_preserves_unusual_configuration_classification():
+    extraction_path = Path(__file__).parent.parent / "extraction3.json"
+
+    with open(extraction_path, encoding="utf-8") as file:
+        data = json.load(file)
+
+    listing_14 = next(
+        listing for listing in data if listing["listing_id"] == "listing-14"
+    )
+    extraction = ListingExtraction.model_validate(listing_14)
+
+    assert any(
+        signal.type == "configuration"
+        and "tele and strat in one guitar" in signal.claim.lower()
+        for signal in extraction.signals
+    )
+
+    result = detect_explicitly_unusual_configuration(extraction)
+
+    assert result is not None
+    assert result.listing_id == "listing-14"
+    assert result.pattern == "explicitly_unusual_configuration"
+
+
 def test_dated_modification_detector_does_not_treat_arbitrary_numbers_as_dates():
     extraction = ListingExtraction(
         listing_id="test-arbitrary-number",

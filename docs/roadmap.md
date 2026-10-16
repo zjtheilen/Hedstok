@@ -20,13 +20,15 @@ It is not intended to automate purchasing decisions, establish market value, aut
 
 ## Current Status
 
-**Active phase: Phase 5 — Signal Fidelity Audit**
+**Current milestone: Phase 5 complete — audit closed.**
 
 Phases 1–4 established an experimental foundation for extracting structured evidence, detecting evidence patterns, and investigating evidence-grounded interpretation.
 
-Phase 5 is auditing the boundary between source material, extracted Signals, and deterministic detector behavior. The purpose is to identify concrete fidelity and interpretation problems before making broader changes to prompts, schemas, or architecture.
+Phase 5 audited the boundary between source material, extracted Signals, and deterministic detector behavior. The audit identified bounded extraction-fidelity and traceability discrepancies, a transaction-context detector limitation, a corrected configuration categorization, and remaining ambiguity in year interpretation.
 
-The audit is in progress. Some targeted detector behaviors have been corrected or constrained, but several traceability and semantic questions remain unresolved.
+The findings have been classified and documented. Targeted regression coverage has been added where applicable. The audit did not justify broad extraction, detector, schema, or architectural changes.
+
+Phase 5 is closed. Its unresolved limitations remain documented findings, not blockers to audit closure.
 
 See [`docs/phase-5-signal-fidelity-audit.md`](phase-5-signal-fidelity-audit.md) for the detailed record.
 
@@ -89,60 +91,62 @@ Phase 4 is closed as an exploratory investigation, not as a claim that interpret
 
 ### Phase 5 — Signal Fidelity Audit
 
-**Status: In progress**
+**Status: Complete — audit closed**
 
-Phase 5 investigates whether extracted Signals faithfully represent their source material and whether downstream detectors infer more than the evidence supports.
+Phase 5 investigated whether extracted Signals faithfully represent their source material and whether downstream detectors infer more than the evidence supports.
 
-The audit separates three layers:
+The audit separated three layers:
 
 1. **Extraction fidelity:** Does the Signal preserve the source's meaning, uncertainty, attribution, and relevant context?
 2. **Signal semantics:** Does the Signal's type and claim accurately represent the evidence?
 3. **Detector interpretation:** Does the detector's output stay within what its input evidence supports?
 
-These layers must be assessed separately. A source-to-Signal mismatch does not automatically establish a detector defect, and a detector defect should not be hidden by changing extraction wording.
+These layers were assessed separately. A source-to-Signal mismatch does not automatically establish a detector defect, and a detector defect should not be hidden by changing extraction wording.
 
 #### Audited signal-fidelity cases
 
-| Case  | Focus                                       | Current assessment                                                                                                                                                                                         |
-| ----- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SF-01 | Explicit uncertainty                        | The extraction preserves the sampled uncertainty and lower-bound language. Downstream behavior has not been fully audited.                                                                                 |
-| SF-02 | Configuration versus modification history   | The heavy-gauge-string false-positive path was addressed, and dated-instrument context was narrowed and tested. Other configuration-related detector terms have not been comprehensively audited.          |
-| SF-03 | Ambiguity and seller-claim attribution      | The revised extraction preserves ambiguity around the album claim. Consistent explicit representation of attribution remains an open design question.                                                      |
-| SF-04 | Uncertain identity                          | The extraction preserves the uncertain possible brand. Targeted downstream checks produced no detections, but broader behavior is not established.                                                         |
-| SF-05 | Conflicting text and image evidence         | A same-source guard partially mitigates the observed contradiction false-positive path. This is a heuristic, not general provenance tracking or semantic contradiction analysis.                           |
-| SF-06 | Promotional wording versus technical claims | The detector recognizes the seller's unusual-configuration wording, but its output terminology may imply more than the source establishes. No broader code change has been justified by the reviewed case. |
+| Case  | Focus                                       | Final assessment                                                                                                                                                                               |
+| ----- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SF-01 | Explicit uncertainty                        | The sampled extraction preserves uncertainty and lower-bound language. No broader reliability claim is established.                                                                            |
+| SF-02 | Configuration versus modification history   | The heavy-gauge-string false-positive path was addressed, and dated-instrument context was narrowed and tested. The audit did not establish a need for a comprehensive detector-term redesign. |
+| SF-03 | Ambiguity and seller-claim attribution      | The revised extraction preserves ambiguity around the album claim. Consistent explicit representation of attribution remains a broader design question.                                        |
+| SF-04 | Uncertain identity                          | The extraction preserves the uncertain possible brand. Targeted downstream checks produced no detections; broader behavior remains unproven.                                                   |
+| SF-05 | Conflicting text and image evidence         | A same-source guard partially mitigates the observed contradiction false-positive path. It is a heuristic, not general provenance tracking or semantic contradiction analysis.                 |
+| SF-06 | Promotional wording versus technical claims | The detector recognizes the seller's unusual-configuration wording, but its terminology may imply more than the source establishes. No broader code change was justified by the reviewed case. |
 
 The detailed case records and limitations are maintained in `docs/phase-5-signal-fidelity-audit.md`.
 
 #### Confirmed cross-case findings
 
-The audit has also documented four recurring discrepancies:
+The audit documented four recurring discrepancies and their dispositions:
 
-- **CF-01 — Image context loss:** A source caveat about a poor camera angle and fuzzy image quality is omitted from the associated extracted evidence.
-- **CF-02 — Claim/source-text mismatch:** A claim includes a model identifier that its associated `source_text` does not itself contain, even though the identifier appears elsewhere in the listing.
-- **CF-03 — Transaction-context category mismatch:** The instrument-transaction detector relies on `seller_context` Signals, while explicit transaction language can appear under another Signal category. Generic seller context can also satisfy the detector without explicit transaction wording.
-- **CF-04 — Configuration claim categorized as identity:** A claim describing a combined configuration is represented as `identity`, even though the unusual-configuration detector recognizes it from its text.
+- **CF-01 — Image context loss:** The source caveat about a poor camera angle and fuzzy image quality is omitted from the associated extracted evidence. This is a bounded context-fidelity inconsistency. A broader downstream detector failure was not established, so no general provenance redesign was justified.
+- **CF-02 — Claim/source-text mismatch:** The historical extraction included a model identifier in a claim that its associated `source_text` did not contain, although the identifier appeared elsewhere in the listing. The revised extraction includes the identifier in the supporting source text, correcting the documented traceability mismatch.
+- **CF-03 — Transaction-context category mismatch:** The transaction detector relies on `seller_context` Signals, while explicit transaction language can appear under another Signal category. Generic seller context can also satisfy the detector without explicit transaction wording. This remains a detector-logic limitation interacting with Signal semantics. Broader detection changes require explicit semantic criteria and targeted evaluation.
+- **CF-04 — Configuration claim categorized as identity:** The historical extraction categorized a combined Tele/Strat configuration claim as `identity`. The revised extraction categorizes it as `configuration`. The existing unusual-configuration detector recognizes the claim text, and regression coverage now verifies the revised classification and detector behavior.
 
-These are observed discrepancies, but their appropriate remedies differ. Each requires a decision based on intended semantics and downstream behavior rather than an automatic schema change.
+These findings have been dispositioned according to their demonstrated scope. They do not collectively justify automatic schema changes or a broad redesign.
 
 #### Remaining cross-case question: year normalization
 
-The audit also identified normalized claims in which bare years become statements such as "1992 year model." A year may refer to an instrument, a model, a market context, an album release, or something else.
+The audit reviewed cases in which bare years were normalized into claims assigning a year to an instrument. The source context varies: listing-01 expresses a lower bound, listing-02 associates a year with a Fender SSH Strat, listing-05 mentions an album-release year, and listings 04 and 10 leave room for ambiguity about whether the year refers to the instrument.
 
-The presence of a four-digit year is not sufficient to establish a manufacturing date. The source-to-Signal relationship and downstream use of year information require targeted review.
+The remaining ambiguity in listings 04 and 10 does not justify broad changes to year normalization. A four-digit year alone is insufficient to establish a manufacturing date, and future changes should be based on concrete source-context requirements and downstream use.
 
-#### Phase 5 exit criteria
+#### Phase 5 closure
 
-Phase 5 is ready to close when:
+The audit's exit criteria have been met:
 
-- Each documented case has been checked against its source material.
-- Relevant downstream detector behavior has been inspected.
-- Each discrepancy is classified as extraction fidelity, Signal semantics, detector logic, or an unresolved interaction between layers.
-- Any proposed code or schema change is justified by a concrete finding and an appropriate evaluation.
-- Targeted corrections have regression coverage where applicable.
-- The audit records what remains unresolved and avoids claims broader than the evidence supports.
+- Documented cases were checked against their source material.
+- Relevant downstream detector behavior was inspected.
+- Findings were classified across extraction fidelity, Signal semantics, detector logic, and interactions between those layers.
+- Proposed changes were evaluated against concrete findings rather than hypothetical concerns.
+- Targeted regression coverage was added where applicable.
+- Resolved discrepancies, partial mitigations, and unresolved limitations were recorded.
 
-Closing Phase 5 will not automatically authorize a schema redesign, a new scoring system, or a new production feature.
+**Closure decision:** Phase 5 is complete. No additional code or schema changes are required to close the audit.
+
+This closure does not authorize a schema redesign, a new scoring system, or a new production feature.
 
 ## Current Conceptual Pipeline
 
@@ -174,6 +178,8 @@ The investigations so far support the following provisional conclusions:
 These findings should be revisited when new evidence warrants it.
 
 ## Open Questions
+
+The questions below remain available for future investigation. They are not outstanding Phase 5 closure requirements.
 
 ### Extraction and traceability
 
@@ -207,14 +213,15 @@ These questions should be pursued when answering them could affect a concrete de
 
 ## Next Steps
 
-1. **Continue the Phase 5 audit.** Work through CF-01 through CF-04, checking the source-to-Signal relationship and the relevant downstream consumer for each finding.
-2. **Reconcile year normalization.** Confirm how the source context is represented and whether downstream logic receives an appropriately qualified date or year claim.
-3. **Classify each discrepancy before changing code.** Distinguish a source-traceability problem from a Signal-category problem or a detector rule that exceeds its intended boundary.
-4. **Make only justified, testable corrections.** Add focused regression coverage when a confirmed behavior should change. Do not broaden unrelated logic as part of a local correction.
-5. **Close Phase 5 against its exit criteria.** Record resolved issues, partial mitigations, and unresolved limitations in the audit.
-6. **Choose any follow-up investigation deliberately.** After the audit, select a specific unanswered question only if it is important enough to warrant a defined evaluation.
+Phase 5 no longer has outstanding work. The next phase is deliberately undecided.
 
-The next phase is not predetermined. Phase 5 findings should inform that decision.
+1. **Choose a concrete question.** Select an unresolved issue only if its answer could materially affect Hedstok's design or usefulness.
+2. **Define the evaluation before implementation.** Identify the evidence, expected behavior, and criteria that would support a decision.
+3. **Keep the scope narrow.** Prefer a focused experiment or targeted correction over a generalized redesign.
+4. **Preserve the findings.** Document what the experiment demonstrates, what it fails to establish, and whether any follow-up is warranted.
+5. **Defer production commitments.** Do not promote experimental patterns, schemas, scoring, or interpretation approaches into permanent product behavior without sufficient evidence.
+
+No specific next phase is prescribed by the completion of Phase 5.
 
 ## Decision Rule
 
@@ -233,15 +240,15 @@ A completed experiment is a source of evidence, not automatic authorization for 
 
 ## Status Summary
 
-| Area                                           | Status                   | Current position                                                      |
-| ---------------------------------------------- | ------------------------ | --------------------------------------------------------------------- |
-| Initial experiment                             | Completed                | Foundational premise explored                                         |
-| Evidence extraction                            | Explored                 | Source-grounded structure established; fidelity is still under audit  |
-| Discovery experiments                          | Documented               | Deterministic patterns are useful but incomplete                      |
-| Evidence interpretation                        | Exploratory phase closed | Concept established; quality limitations remain                       |
-| Phase 5 signal fidelity audit                  | In progress              | Six cases documented; targeted fixes and partial mitigations recorded |
-| Cross-case traceability and semantics          | Open                     | Four confirmed findings require disposition                           |
-| Year normalization                             | Open                     | Source context and downstream use need reconciliation                 |
-| Production architecture                        | Open                     | Must follow from demonstrated needs                                   |
-| Permanent scoring or confidence model          | Deferred                 | Not justified by current evidence                                     |
-| Automated purchase recommendation or valuation | Out of scope             | Not Hedstok's purpose                                                 |
+| Area                                           | Status                              | Current position                                                                         |
+| ---------------------------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------- |
+| Initial experiment                             | Completed                           | Foundational premise explored                                                            |
+| Evidence extraction                            | Explored                            | Source-grounded structure established; fidelity limitations documented                   |
+| Discovery experiments                          | Documented                          | Deterministic patterns are useful but incomplete                                         |
+| Evidence interpretation                        | Exploratory phase closed            | Concept established; quality limitations remain                                          |
+| Phase 5 signal fidelity audit                  | Complete — audit closed             | Cases reviewed, findings classified, targeted regression coverage added where applicable |
+| Cross-case traceability and semantics          | Findings dispositioned              | CF-01 through CF-04 documented with bounded conclusions                                  |
+| Year normalization                             | Reviewed; bounded ambiguity remains | Listings 04 and 10 retain ambiguity; no broad change justified                           |
+| Production architecture                        | Open                                | Must follow from demonstrated needs                                                      |
+| Permanent scoring or confidence model          | Deferred                            | Not justified by current evidence                                                        |
+| Automated purchase recommendation or valuation | Out of scope                        | Not Hedstok's purpose                                                                    |
