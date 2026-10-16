@@ -17,10 +17,7 @@ def build_review(
 
     extraction_by_id = {listing["listing_id"]: listing for listing in extraction}
 
-    comparison_by_id = {
-        listing["listing_id"]: listing
-        for listing in comparison
-    }
+    comparison_by_id = {listing["listing_id"]: listing for listing in comparison}
 
     expected_by_id = {listing["id"]: listing for listing in expected["listings"]}
 
@@ -31,7 +28,7 @@ def build_review(
         print(f"\n{listing_id}")
         print("-" * len(listing_id))
 
-        print("\n14-call extraction:")
+        print("\nOriginal batch extraction (extraction2):")
 
         result = extraction_by_id.get(listing_id)
 
@@ -44,7 +41,7 @@ def build_review(
                 print(f"  - [{signal['type']}] {signal['claim']}")
                 print(f"    source: {signal['source_text']}")
 
-        print("\n1-call batch extraction:")
+        print("\nRevised prompt extraction (extraction3):")
 
         result = comparison_by_id.get(listing_id)
 
@@ -60,7 +57,7 @@ def build_review(
 
 if __name__ == "__main__":
     build_review(
-        "extraction.json",
         "extraction2.json",
+        "extraction3.json",
         "experiment-0/evaluation/expected-signals.json",
     )

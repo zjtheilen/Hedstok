@@ -32,19 +32,17 @@ class Extraction(BaseModel):
     listings: list[ListingExtraction]
 
 
-client = genai.Client(
-    http_options=types.HttpOptions(timeout=30000)
-)
+client = genai.Client(http_options=types.HttpOptions(timeout=30000))
 
 
 def extract_signals(listings):
     listings_text = "\n\n".join(
-        f"LISTING ID: {listing['id']}\n"
-        f"DESCRIPTION: {listing['description']}"
+        f"LISTING ID: {listing['id']}\nDESCRIPTION: {listing['description']}"
         for listing in listings
     )
 
-    prompt = """
+    prompt = (
+        """
 Extract the observable claims from each guitar listing below.
 
 STRICT RULES:
@@ -60,6 +58,9 @@ STRICT RULES:
 - Do not strengthen the certainty of a claim.
 - Keep signals associated with the correct listing ID.
 - Include every listing, even if it has no unusual signals.
+- Do not interpret a bare year or number as an instrument's model year or manufacturing date unless the listing explicitly establishes that meaning.
+- When a year appears without clear context, preserve the ambiguity rather than assigning it to the instrument.
+- Do not associate years mentioned in recording, ownership, or other historical contexts with the instrument's manufacture.
 
 For each signal provide:
 - type: exactly one of:
@@ -86,7 +87,9 @@ Use these semantic categories:
 
 LISTINGS:
 
-""" + listings_text
+"""
+        + listings_text
+    )
 
     interaction = client.interactions.create(
         model="gemini-3.5-flash-lite",
@@ -98,9 +101,7 @@ LISTINGS:
         },
     )
 
-    return Extraction.model_validate_json(
-        interaction.output_text
-    ).listings
+    return Extraction.model_validate_json(interaction.output_text).listings
 
 
 with open("experiment-0/input/listings.json") as file:
@@ -108,7 +109,4 @@ with open("experiment-0/input/listings.json") as file:
 
 results = extract_signals(data["listings"])
 
-print(json.dumps(
-    [result.model_dump() for result in results],
-    indent=2
-))
+print(json.dumps([result.model_dump() for result in results], indent=2))

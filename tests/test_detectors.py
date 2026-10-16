@@ -237,7 +237,6 @@ def test_dated_configuration_modification_history_listing_02():
     assert [item.signal_index for item in result.evidence] == [
         2,
         3,
-        4,
         5,
         6,
     ]
@@ -245,7 +244,6 @@ def test_dated_configuration_modification_history_listing_02():
     assert [item.role for item in result.evidence] == [
         "establishes dated instrument context",
         "establishes modification and retained original components",
-        "establishes configuration",
         "establishes modification",
         "establishes condition evidence",
     ]
@@ -553,6 +551,60 @@ def test_cross_source_contradiction_detected():
     assert result.evidence[1].signal_index == 1
 
 
+def test_same_source_identity_conflict_is_not_cross_source_contradiction():
+    # Both claims are attributed to the same source passage.
+    source_text = "1958 Les Paul; Stratocaster-style guitar"
+
+    extraction = ListingExtraction(
+        listing_id="test-same-source-conflict",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1958 Les Paul",
+                source_text=source_text,
+            ),
+            Signal(
+                type="identity",
+                claim="Stratocaster-style guitar",
+                source_text=source_text,
+            ),
+            Signal(
+                type="identity",
+                claim="Original case included",
+                source_text="Includes the original case",
+            ),
+        ],
+    )
+
+    result = detect_cross_source_contradiction(extraction)
+
+    assert result is None
+
+
+def test_text_and_image_identity_conflict_is_detected():
+    extraction = ListingExtraction(
+        listing_id="test-text-image-conflict",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1958 Les Paul",
+                source_text="1958 Les Paul",
+            ),
+            Signal(
+                type="identity",
+                claim="Stratocaster-style guitar",
+                source_text="[image shows a Stratocaster-style guitar]",
+            ),
+        ],
+    )
+
+    result = detect_cross_source_contradiction(extraction)
+
+    assert result is not None
+    assert result.pattern == "cross_source_contradiction"
+    assert [item.signal_index for item in result.evidence] == [0, 1]
+
+
 def test_cross_source_contradiction_not_detected_from_consistent_evidence():
     extraction = ListingExtraction(
         listing_id="test-no-contradiction",
@@ -717,8 +769,152 @@ def test_explicitly_unusual_configuration_against_extraction_artifact():
         if result is not None:
             detected.append(result.listing_id)
 
-    print(
-        f"\nExplicitly unusual configurations detected: {detected}"
-    )
+    print(f"\nExplicitly unusual configurations detected: {detected}")
 
     assert detected == ["listing-14"]
+
+
+def test_revised_artifact_preserves_unusual_configuration_classification():
+    extraction_path = Path(__file__).parent.parent / "extraction3.json"
+
+    with open(extraction_path, encoding="utf-8") as file:
+        data = json.load(file)
+
+    listing_14 = next(
+        listing for listing in data if listing["listing_id"] == "listing-14"
+    )
+    extraction = ListingExtraction.model_validate(listing_14)
+
+    assert any(
+        signal.type == "configuration"
+        and "tele and strat in one guitar" in signal.claim.lower()
+        for signal in extraction.signals
+    )
+
+    result = detect_explicitly_unusual_configuration(extraction)
+
+    assert result is not None
+    assert result.listing_id == "listing-14"
+    assert result.pattern == "explicitly_unusual_configuration"
+
+
+def test_dated_modification_detector_does_not_treat_arbitrary_numbers_as_dates():
+    extraction = ListingExtraction(
+        listing_id="test-arbitrary-number",
+        signals=[
+            Signal(
+                type="identity",
+                claim="Fender model 2001",
+                source_text="Fender model 2001",
+            ),
+            Signal(
+                type="configuration",
+                claim="locking nut installed",
+                source_text="locking nut installed",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None
+
+
+def test_dated_modification_history_detected_from_minimal_evidence():
+    extraction = ListingExtraction(
+        listing_id="test-dated-modification",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1992 year model",
+                source_text="1992 year model",
+            ),
+            Signal(
+                type="configuration",
+                claim="locking nut installed",
+                source_text="locking nut installed",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is not None
+    assert result.listing_id == "test-dated-modification"
+    assert result.pattern == "dated_configuration_modification_history"
+    assert [item.signal_index for item in result.evidence] == [0, 1]
+    assert [item.role for item in result.evidence] == [
+        "establishes dated instrument context",
+        "establishes modification",
+    ]
+
+
+def test_dated_instrument_with_configuration_only_is_not_detected():
+    extraction = ListingExtraction(
+        listing_id="test-configuration-only",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1995 year model",
+                source_text="1995 year model",
+            ),
+            Signal(
+                type="configuration",
+                claim="heavy gauge strings",
+                source_text="heavy gauge strings",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None
+
+
+def test_bare_year_does_not_establish_dated_instrument_context():
+    extraction = ListingExtraction(
+        listing_id="test-bare-year",
+        signals=[
+            Signal(
+                type="identity",
+                claim="1992",
+                source_text="1992.",
+            ),
+            Signal(
+                type="configuration",
+                claim="Locking nut installed",
+                source_text="locking nut installed.",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None
+
+
+def test_market_context_year_does_not_establish_dated_instrument_context():
+    extraction = ListingExtraction(
+        listing_id="test-market-context-year",
+        signals=[
+            Signal(
+                type="identity",
+                claim="The manufacturer is fender.",
+                source_text="fender.",
+            ),
+            Signal(
+                type="market_context",
+                claim="A year 1992 is mentioned in the listing.",
+                source_text="1992.",
+            ),
+            Signal(
+                type="configuration",
+                claim="A locking nut is installed.",
+                source_text="locking nut installed.",
+            ),
+        ],
+    )
+
+    result = detect_dated_configuration_modification_history(extraction)
+
+    assert result is None

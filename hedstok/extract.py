@@ -28,6 +28,9 @@ STRICT RULES:
 - Every source_text value must be copied exactly from the listing.
 - Keep each claim concise and faithful to the source.
 - Do not strengthen the certainty of a claim.
+- Do not interpret a bare year or number as an instrument's model year or manufacturing date unless the listing explicitly establishes that meaning.
+- When a year appears without clear context, preserve the ambiguity rather than assigning it to the instrument.
+- Do not associate years mentioned in recording, ownership, or other historical contexts with the instrument's manufacture.
 
 For each signal provide:
 - type: exactly one of:

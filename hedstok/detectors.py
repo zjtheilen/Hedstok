@@ -1,3 +1,5 @@
+import re
+
 from hedstok.models import EvidencePattern, ListingExtraction, PatternEvidence
 
 
@@ -84,17 +86,11 @@ def detect_dated_configuration_modification_history(
     core_evidence = []
     history_evidence = []
 
-    date_terms = (
-        "19",
-        "20",
-    )
-
     core_terms = (
         "modified",
         "modification",
         "installed",
         "locking nut",
-        "heavy gauge",
     )
 
     supporting_terms = (
@@ -107,7 +103,28 @@ def detect_dated_configuration_modification_history(
     for index, signal in enumerate(extraction.signals):
         claim = signal.claim.lower()
 
-        if any(term in claim for term in date_terms):
+        # if re.search(r"\b(?:19|20)\d{2}\b", claim) and (
+        #     signal.type != "identity"
+        #     or "year model" in claim
+        #     or any(
+        #         term in claim
+        #         for term in ("modified", "modification", "installed", "retrofitted")
+        #     )
+        # ):
+        #     dated_evidence.append((index, signal))
+
+        has_year_model_context = "year model" in claim
+
+        has_instrument_identity_context = signal.type == "identity" and bool(
+            re.search(
+                r"\b(?:19|20)\d{2}\b\s+"
+                r"(?:fender|gibson|ibanez|jackson|yamaha|"
+                r"stratocaster|les paul|telecaster|sg)\b",
+                claim,
+            )
+        )
+
+        if has_year_model_context or has_instrument_identity_context:
             dated_evidence.append((index, signal))
 
         if "original" in claim and "installed" in claim:
@@ -247,6 +264,12 @@ def detect_cross_source_contradiction(
 
             second_claim = second_signal.claim.lower()
 
+            same_source_text = (
+                first_signal.source_text.strip() == second_signal.source_text.strip()
+            )
+            if same_source_text:
+                continue
+
             if ("les paul" in first_claim and "stratocaster" in second_claim) or (
                 "stratocaster" in first_claim and "les paul" in second_claim
             ):
@@ -266,6 +289,7 @@ def detect_cross_source_contradiction(
                 )
 
     return None
+
 
 def detect_explicitly_unusual_configuration(
     extraction: ListingExtraction,

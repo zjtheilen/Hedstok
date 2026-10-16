@@ -202,6 +202,39 @@ The frozen extraction output was considered sufficient to proceed to determinist
 
 The original extraction baseline remains preserved as an experimental reference point. The revised schema represents the next extraction iteration and should be evaluated against the discovery failures identified during Experiment 0 rather than treated as an assumption that the revised categories are universally correct.
 
+### Bare-Year Extraction Prompt Adjustment
+
+**Problem**
+
+The original batch extraction converted bare years into unsupported instrument model-year claims. For example, source text containing only `1992.` was extracted as `1992 year model`. The same issue appeared with `2006.` and `2025.`
+
+**Change**
+
+Updated the extraction prompt in:
+
+- `experiment-0/extract_signals.py`
+- `hedstok/extract.py`
+- `hedstok/pipeline.py`
+
+The prompt now instructs the model not to interpret bare years or numbers as instrument model years or manufacturing dates without explicit supporting context, to preserve ambiguity when context is unclear, and not to confuse historical references with instrument manufacture.
+
+**Validation**
+
+- Existing test suite: **46 passed**.
+- Compared the original batch extraction (`extraction2.json`) with the revised extraction (`extraction3.json`) across 14 listings.
+- Listings 02, 04, and 10 no longer assert that the bare years `1992`, `2006`, and `2025` are model years.
+- Listing 05 retains album dates in the seller's story rather than assigning them to instrument manufacture.
+- Listing 11 retains the explicit `1958 Les Paul` wording without independently validating the claim.
+- Listing 12 retains the Harmony guitar's 1950s reference, although the decade also appears in a separate market-context signal.
+
+**Conclusion**
+
+The targeted prompt adjustment resolved the three observed false model-year claims in this comparison. The result supports addressing this failure mode at the extraction layer rather than modifying downstream detectors.
+
+This is a targeted validation across 14 listings, not evidence of general extraction accuracy or consistency across future model runs.
+
+**Artifacts:** `extraction2.json` (original) and `extraction3.json` (revised).
+
 ### Semantic Extraction Schema Finding
 
 The initial extraction vocabulary used several narrowly defined categories, including separate categories for brand, ownership history, recording history, electronics, and miscellaneous information.
@@ -773,10 +806,10 @@ The next experiment narrows the task from general interpretation to **candidate 
 
 Determine whether AI can identify and describe candidate relationships between extracted signals when given:
 
-* a fixed vocabulary of experimental relationship types;
-* frozen, source-grounded signals as input;
-* explicit requirements to reference the supporting signals;
-* no outside knowledge or market context.
+- a fixed vocabulary of experimental relationship types;
+- frozen, source-grounded signals as input;
+- explicit requirements to reference the supporting signals;
+- no outside knowledge or market context.
 
 The experiment does not attempt to determine whether a relationship is significant, valuable, rare, desirable, or sufficient to recommend acquisition.
 
@@ -784,11 +817,11 @@ The experiment does not attempt to determine whether a relationship is significa
 
 The experiment will use the following experimental relationship types:
 
-* **Convergence** — multiple distinct pieces of evidence point toward the same underlying possibility or meaning.
-* **Association** — evidence establishes a meaningful relationship between the instrument and another entity.
-* **Historical Association** — evidence connects the instrument to a person, event, work, or historical context beyond ordinary ownership.
-* **Contradiction** — two or more pieces of evidence make materially incompatible claims about the same aspect.
-* **Distinctiveness** — evidence indicates an unusual or potentially notable characteristic relative to an appropriate reference context.
+- **Convergence** — multiple distinct pieces of evidence point toward the same underlying possibility or meaning.
+- **Association** — evidence establishes a meaningful relationship between the instrument and another entity.
+- **Historical Association** — evidence connects the instrument to a person, event, work, or historical context beyond ordinary ownership.
+- **Contradiction** — two or more pieces of evidence make materially incompatible claims about the same aspect.
+- **Distinctiveness** — evidence indicates an unusual or potentially notable characteristic relative to an appropriate reference context.
 
 These relationship types describe the structure of the evidence. They do not establish significance, value, rarity, desirability, authenticity, or acquisition suitability.
 
@@ -798,16 +831,16 @@ The experiment will use the revised extraction output as frozen input.
 
 The initial fixture set will include:
 
-* **Listing 01** — multi-generational ownership and personal significance
-* **Listing 02** — configuration modifications and retained original pickups
-* **Listing 03** — intentional non-discovery control
-* **Listing 05** — claimed recording history and musician association
-* **Listing 06** — uncertain identification with multiple potentially convergent clues
-* **Listing 08** — identity/configuration clues and associated equipment
-* **Listing 09** — collection and seller-context evidence
-* **Listing 11** — text/image identity contradiction
-* **Listing 12** — original components and associated case/accessories
-* **Listing 14** — claimed unusual instrument configuration
+- **Listing 01** — multi-generational ownership and personal significance
+- **Listing 02** — configuration modifications and retained original pickups
+- **Listing 03** — intentional non-discovery control
+- **Listing 05** — claimed recording history and musician association
+- **Listing 06** — uncertain identification with multiple potentially convergent clues
+- **Listing 08** — identity/configuration clues and associated equipment
+- **Listing 09** — collection and seller-context evidence
+- **Listing 11** — text/image identity contradiction
+- **Listing 12** — original components and associated case/accessories
+- **Listing 14** — claimed unusual instrument configuration
 
 Listings 04, 07, 10, and 13 are excluded from the initial fixture set because meaningful evaluation of some of their possible relationships depends more heavily on external domain or market context.
 
@@ -815,17 +848,17 @@ Listings 04, 07, 10, and 13 are excluded from the initial fixture set because me
 
 The AI will be instructed to:
 
-* derive candidate relationships only from the supplied signals;
-* use only the defined relationship vocabulary;
-* reference the specific signals supporting each proposed relationship;
-* preserve uncertainty present in the source evidence;
-* distinguish claims from established facts;
-* avoid outside knowledge;
-* avoid verification or fact-checking;
-* avoid introducing new factual premises;
-* avoid value, rarity, authenticity, desirability, or acquisition judgments;
-* avoid treating the existence of multiple signals as sufficient by itself;
-* return no relationship when the supplied evidence does not support one.
+- derive candidate relationships only from the supplied signals;
+- use only the defined relationship vocabulary;
+- reference the specific signals supporting each proposed relationship;
+- preserve uncertainty present in the source evidence;
+- distinguish claims from established facts;
+- avoid outside knowledge;
+- avoid verification or fact-checking;
+- avoid introducing new factual premises;
+- avoid value, rarity, authenticity, desirability, or acquisition judgments;
+- avoid treating the existence of multiple signals as sufficient by itself;
+- return no relationship when the supplied evidence does not support one.
 
 For **Distinctiveness**, the experiment will test whether the evidence contains a claim or configuration that may warrant distinctiveness investigation. It will not establish actual rarity or unusualness without an appropriate reference context.
 
@@ -844,21 +877,21 @@ The evaluation will distinguish between a relationship being correctly identifie
 
 The experiment will be considered informative if AI can consistently propose candidate relationships that are:
 
-* grounded in the supplied evidence;
-* assigned an appropriate relationship type;
-* traceable to specific supporting signals;
-* appropriately uncertain where the evidence is uncertain;
-* and free of unsupported value or acquisition judgments.
+- grounded in the supplied evidence;
+- assigned an appropriate relationship type;
+- traceable to specific supporting signals;
+- appropriately uncertain where the evidence is uncertain;
+- and free of unsupported value or acquisition judgments.
 
 Failure modes include:
 
-* invented facts or premises;
-* unsupported domain knowledge;
-* treating plausible explanations as established facts;
-* converting relationships into acquisition judgments;
-* generating relationships solely because multiple signals exist;
-* repeatedly confusing relationship types;
-* or producing descriptions that merely restate individual signals without identifying a meaningful relationship.
+- invented facts or premises;
+- unsupported domain knowledge;
+- treating plausible explanations as established facts;
+- converting relationships into acquisition judgments;
+- generating relationships solely because multiple signals exist;
+- repeatedly confusing relationship types;
+- or producing descriptions that merely restate individual signals without identifying a meaningful relationship.
 
 #### Architectural Boundary
 
@@ -900,10 +933,10 @@ Determine whether the concepts identified during the Experiment 1.2 architectura
 
 The experiment tests four provisional functional categories:
 
-* Evidence Relationship
-* Evidence Pattern
-* Investigation Indicator
-* None / Unsupported
+- Evidence Relationship
+- Evidence Pattern
+- Investigation Indicator
+- None / Unsupported
 
 The purpose is to evaluate conceptual boundaries before deciding whether any of these distinctions should be represented in Hedstok's architecture.
 
@@ -917,11 +950,11 @@ For each representative example, first describe in plain language what the evide
 
 Representative examples:
 
-* Listing 05 — relationship between instrument, people, and historical works
-* Listing 06 — multiple clues concerning an unresolved instrument identity
-* Listing 14 — potentially unusual instrument configuration
-* Listing 03 — control with no meaningful structural relationship
-* Listing 08 — multiple structures occurring within the same evidence set
+- Listing 05 — relationship between instrument, people, and historical works
+- Listing 06 — multiple clues concerning an unresolved instrument identity
+- Listing 14 — potentially unusual instrument configuration
+- Listing 03 — control with no meaningful structural relationship
+- Listing 08 — multiple structures occurring within the same evidence set
 
 **Hypothesis**
 
@@ -931,11 +964,11 @@ If the hypothesis is not supported, the result will inform whether the concepts 
 
 **Evaluation Criteria**
 
-* Conceptual distinguishability
-* Evidence grounding
-* Boundary clarity
-* Ability to represent multiple structures within one evidence set
-* Architectural usefulness
+- Conceptual distinguishability
+- Evidence grounding
+- Boundary clarity
+- Ability to represent multiple structures within one evidence set
+- Architectural usefulness
 
 **Success**
 
@@ -951,14 +984,14 @@ Partial support is allowed.
 
 This experiment does not:
 
-* modify the five Experiment 1.2 relationship definitions;
-* introduce new permanent relationship types;
-* establish a production evidence schema;
-* implement classification or discovery behavior;
-* use AI;
-* use external market or domain data;
-* establish rarity, authenticity, value, desirability, or acquisition suitability;
-* create investigation scores or rankings.
+- modify the five Experiment 1.2 relationship definitions;
+- introduce new permanent relationship types;
+- establish a production evidence schema;
+- implement classification or discovery behavior;
+- use AI;
+- use external market or domain data;
+- establish rarity, authenticity, value, desirability, or acquisition suitability;
+- create investigation scores or rankings.
 
 The experiment asks only whether the provisional categories represent genuinely different kinds of evidence structure.
 
@@ -979,7 +1012,6 @@ Experiment 1.3 result
         ↓
 Architectural decision or another targeted experiment
 ```
-
 
 #### Experiment 1.3 Audit
 
